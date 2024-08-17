@@ -13,8 +13,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="{{asset('dassets/css/card-style.css')}}">
     <style>
-
-
         time.icon {
             font-size: 1em;
             /* change icon size */
@@ -27,7 +25,7 @@
             border-radius: 0.6em;
             box-shadow: 0 1px 0 #bdbdbd, 0 2px 0 #fff, 0 3px 0 #bdbdbd, 0 4px 0 #fff, 0 5px 0 #bdbdbd, 0 0 0 1px #bdbdbd;
             overflow: hidden;
-        
+
             -webkit-transform-origin: 50% 10%;
             transform-origin: 50% 10%;
         }
@@ -73,250 +71,246 @@
 
 
 
-            .calendar-image {
-                background-image: url(/calendar.jpg);
-                width: 120px !important;
-                height: 110px;
-                background-repeat: no-repeat;
-                background-size: contain;
-                background-position: top;
+        .calendar-image {
+            background-image: url(/calendar.jpg);
+            width: 120px !important;
+            height: 110px;
+            background-repeat: no-repeat;
+            background-size: contain;
+            background-position: top;
 
-            }
+        }
 
-            .supporat-card-list-calendar {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                box-sizing: border-box;
-                /* height: 74%; */
-            }
+        .supporat-card-list-calendar {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-sizing: border-box;
+            /* height: 74%; */
+        }
 
-            .no-padding-left {
-                padding-left: 0 !important;
-            }
+        .no-padding-left {
+            padding-left: 0 !important;
+        }
 
-            .oks-support-card-guide {
-                background: #fff;
-                padding: 22px 25px;
-                border-radius: 19px;
-                height: 363px;
-            }
-
-
-            .oks-support-card-session {
-                background: #fcd230;
-                padding: 22px 25px;
-                border-radius: 19px;
-                height: 363px;
-            }
-
-            .oks-support-card-session h3 {
-                font-size: 16px !important;
-                color: black;
-
-            }
-
-            .supporat-card-list-guide {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                box-sizing: border-box;
-                height: unset;
-            }
-
-            .oks-support-card-guide h3 {
-                font-size: 16px !important;
-                color: #1d4bad;
-
-            }
-
-            .oks-support-card-sessions {
-
-                background: #1d4bad;
-                padding: 22px 25px;
-                border-radius: 19px;
-            }
+        .oks-support-card-guide {
+            background: #fff;
+            padding: 22px 25px;
+            border-radius: 19px;
+            height: 363px;
+        }
 
 
-            .oks-support-card-sessions h3 {
-                font-size: 16px !important;
-                color: #fff;
-            }
+        .oks-support-card-session {
+            background: #fcd230;
+            padding: 22px 25px;
+            border-radius: 19px;
+            height: 363px;
+        }
+
+        .oks-support-card-session h3 {
+            font-size: 16px !important;
+            color: black;
+
+        }
+
+        .supporat-card-list-guide {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-sizing: border-box;
+            height: unset;
+        }
+
+        .oks-support-card-guide h3 {
+            font-size: 16px !important;
+            color: #1d4bad;
+
+        }
+
+        .oks-support-card-sessions {
+
+            background: #1d4bad;
+            padding: 22px 25px;
+            border-radius: 19px;
+        }
 
 
-            .circle2 {
-
-                width: 25px;
-                margin: auto;
-
-                height: 25px;
-
-                background-color: #fff;
-
-                border-radius: 50%;
-
-                display: flex;
-
-                align-items: center;
-
-                justify-content: center;
-
-                font-size: 15px;
-
-                font-weight: bold;
-
-                color: red;
-                border: 1px solid red;
+        .oks-support-card-sessions h3 {
+            font-size: 16px !important;
+            color: #fff;
+        }
 
 
-            }
+        .circle2 {
 
-            .circle {
-                width: 50px;
-                margin: auto;
+            width: 25px;
+            margin: auto;
 
-                height: 50px;
+            height: 25px;
 
-                background-color: yellow;
+            background-color: #fff;
 
-                border-radius: 50%;
+            border-radius: 50%;
 
-                display: flex;
+            display: flex;
 
-                align-items: center;
+            align-items: center;
 
-                justify-content: center;
+            justify-content: center;
 
-                font-size: 26px;
+            font-size: 15px;
 
-                font-weight: bold;
+            font-weight: bold;
 
-                color: black;
+            color: red;
+            border: 1px solid red;
 
-            }
 
-            .visa-icon {
-                color: #1a1f71;
-                /* Visa blue */
-            }
+        }
 
-            .mastercard-icon {
-                color: #ff5f00;
-                /* MasterCard orange */
-            }
+        .circle {
+            width: 50px;
+            margin: auto;
 
-            .amex-icon {
-                color: #2e77bc;
-                /* Amex blue */
-            }
+            height: 50px;
 
-            .modalss-header {
-                height: 30vh;
-                /* Set the height to 30% of the viewport height */
-                background-size: cover;
-                color: white;
-                padding: 1em;
-            }
+            background-color: yellow;
 
-            .secondmodal {
-                background-color: white;
-                margin: 15% auto;
-                /* 15% from the top and centered */
-                padding: 20px;
-                border: 1px solid #888;
-                width: 100%;
-                /* Adjusted width */
-                text-align: center;
-            }
+            border-radius: 50%;
 
-            .oks-show-more {
-                width: 141px !important;
-                height: 45px !important;
-                margin-top: 20px;
-                margin-right: 5px;
-                background: #ffffff85;
-                padding: 10px;
-                border-radius: 4px;
-                border: 1px solid #d3d3d37d;
-                font-size: 14px;
-                line-height: 24px;
-                background: #fff;
-                width: 295px;
-                height: 53px;
-            }
+            display: flex;
 
-            .oks-support-card ul li {
-                font-weight: unset !important;
-            }
+            align-items: center;
 
-            .oks-support-card {
-                height: unset !important;
-            }
+            justify-content: center;
 
-            .dashb-course {
-                padding: unset !important;
-                padding: 10px 0px !important;
-                height: 245px !important;
-            }
+            font-size: 26px;
 
-            .oks-dashboard-section {
-                padding: 46px 0 150px !important;
-            }
+            font-weight: bold;
 
-            /* .oks-dashboad-wrap{
+            color: black;
+
+        }
+
+        .visa-icon {
+            color: #1a1f71;
+            /* Visa blue */
+        }
+
+        .mastercard-icon {
+            color: #ff5f00;
+            /* MasterCard orange */
+        }
+
+        .amex-icon {
+            color: #2e77bc;
+            /* Amex blue */
+        }
+
+        .modalss-header {
+            height: 30vh;
+            /* Set the height to 30% of the viewport height */
+            background-size: cover;
+            color: white;
+            padding: 1em;
+        }
+
+        .secondmodal {
+            background-color: white;
+            margin: 15% auto;
+            /* 15% from the top and centered */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 100%;
+            /* Adjusted width */
+            text-align: center;
+        }
+
+        .oks-show-more {
+            width: 141px !important;
+            height: 45px !important;
+            margin-top: 20px;
+            margin-right: 5px;
+            background: #ffffff85;
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #d3d3d37d;
+            font-size: 14px;
+            line-height: 24px;
+            background: #fff;
+            width: 295px;
+            height: 53px;
+        }
+
+        .oks-support-card ul li {
+            font-weight: unset !important;
+        }
+
+        .oks-support-card {
+            height: unset !important;
+        }
+
+        .dashb-course {
+            padding: unset !important;
+            padding: 10px 0px !important;
+            height: 245px !important;
+        }
+
+        .oks-dashboard-section {
+            padding: 46px 0 150px !important;
+        }
+
+        /* .oks-dashboad-wrap{
            margin-bottom:30% !important;   
         } */
 
-            @media (max-width:768px) {
+        @media (max-width:768px) {
 
-                .course_details table tr th,
-                .course_details table tr td {
-                    padding: 8px !important;
-                }
+            .course_details table tr th,
+            .course_details table tr td {
+                padding: 8px !important;
             }
+        }
 
 
-            .resultcard_expanded .course_details table {
-                table-layout: fixed !important;
+        .resultcard_expanded .course_details table {
+            table-layout: fixed !important;
 
-            }
+        }
 
-            .ground {
-                position: absolute !important;
-                bottom: 0 !important;
-                width: 100% !important;
-                height: 120px !important;
-            }
+        .ground {
+            position: absolute !important;
+            bottom: 0 !important;
+            width: 100% !important;
+            height: 120px !important;
+        }
 
-            .mountain-scene {
-                height: 92% !important;
-            }
+        .mountain-scene {
+            height: 92% !important;
+        }
 
-            .tiny-mountains .tri3:nth-child(2) {
-                bottom: -2% !important;
-            }
+        .tiny-mountains .tri3:nth-child(2) {
+            bottom: -2% !important;
+        }
 
-            .tiny-mountains .tri3:nth-child(3) {
-                bottom: -4% !important;
-            }
+        .tiny-mountains .tri3:nth-child(3) {
+            bottom: -4% !important;
+        }
 
-            .tiny-mountains .tri3:nth-child(5) {
-                bottom: -2% !important;
-            }
+        .tiny-mountains .tri3:nth-child(5) {
+            bottom: -2% !important;
+        }
 
-            .oks-support-card {
-                padding-left: 10px !important;
-                padding-right: 10px !important;
+        .oks-support-card {
+            padding-left: 10px !important;
+            padding-right: 10px !important;
 
-            }
+        }
 
-            .text-sm-center {
-                text-align: center;
-            }
-
-            
-
-            
+        .text-sm-center {
+            text-align: center;
+        }
     </style>
     <title>{{App\Services\SettingService::getSetting('site_title')}} | {{App\Services\SettingService::getSetting('tagline')}}</title>
     {{-- jquery toaster --}}
@@ -400,6 +394,7 @@
                                                 <button id="oks-dashboard-tab1">Favourites</button>
                                                 <button id="oks-dashboard-tab2">ekas Guides</button>
                                                 <button id="oks-dashboard-tab3">Sessions</button>
+                                                <button id="oks-dashboard-tab4">Notifications</button>
                                             </div>
                                         </div>
                                         @include('courses._details')
@@ -668,7 +663,7 @@
 
                                                         <div class="supporat-card-list-calendar">
                                                             <div class="row mt-1">
-                                   
+
 
                                                                 <div class="col-md-12">
                                                                     <time datetime="2014-09-20" class="icon">
@@ -689,9 +684,7 @@
                                                                 </div>
 
                                                                 <div class="col-md-12 mt-1" style="text-align: center;">
-                                                                    <a href="" style="font-size: 10px;
-    color: red;
-    font-weight: 700;">Read More</a>
+                                                                    <a href="" style="font-size: 10px;color: red;font-weight: 700;">Read More</a>
 
                                                                 </div>
 
@@ -711,6 +704,26 @@
                                                         </div>
                                                     </div>
                                                 </div>
+
+
+
+
+
+                                            </div>
+                                        </div>
+                                        <div class="notificationtab tab-content d-none">
+                                            <div class="row">
+                                                <div class="col-md-12 col-sm-12">
+                                                    <div class="oks-support-card-sessions">
+                                                        <h3>Notification : guidance bundle purchased - 01/02/24</h3>
+                                                        <h3>Notification : ekas message - how are you ?</h3>
+                                                        <h3>Notification : invoice for guiance bundle - 01/02/2024</h3>
+                                                        <h3>Notification : booking confirmation - next session on 03/02/24-19:00 PST</h3>
+                                                        
+                                                        
+                                                    </div>
+                                                </div>
+
 
 
 
@@ -1085,12 +1098,18 @@
         $('.sessiontab').addClass('d-none');
         $('.support').removeClass('d-none');
         $('#oks-dashboard-tab3').removeClass('active');
+        $('#oks-dashboard-tab4').removeClass('active');
+
+$('.notificationtab').addClass('d-none');
 
     })
     $('#oks-dashboard-tab1').on('click', function() {
         $('#toggle-div').show();
         $('.sessiontab').addClass('d-none');
         $('#oks-dashboard-tab3').removeClass('active');
+        $('#oks-dashboard-tab4').removeClass('active');
+
+        $('.notificationtab').addClass('d-none');
 
     })
     $('#oks-dashboard-tab3').on('click', function() {
@@ -1103,8 +1122,30 @@
         $('#oks-dashboard-tab1').removeClass('active');
         $('#toggle-div').hide();
 
+        $('#oks-dashboard-tab4').removeClass('active');
+
+        $('.notificationtab').addClass('d-none');
+
 
     })
+
+    $('#oks-dashboard-tab4').on('click', function() {
+        //    / alert("true");
+
+        $('.notificationtab').removeClass('d-none');
+        $('.sessiontab').addClass('d-none');
+        $(this).addClass('active');
+        $('.support').addClass('d-none');
+        $('#oks-dashboard-tab2').removeClass('active');
+        $('#oks-dashboard-tab1').removeClass('active');
+        $('#oks-dashboard-tab3').removeClass('active');
+        $('#toggle-div').hide();
+
+
+    })
+
+
+
     $('.oks-show-more').on('click', function() {
         var courseId = $(this).data('course-id');
         var parent = $(this).closest('.oks-course-item-wrap').find('.details_' + courseId);
