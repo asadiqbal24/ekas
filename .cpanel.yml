@@ -1,0 +1,5 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/ope0f06olk7h/public_html/ekas.be
+    - /bin/cp * $DEPLOYPATH

@@ -1,0 +1,1 @@
+[22-May-2024 02:46:10 UTC] PHP Fatal error:  Class App\Services\SettingService contains 1 abstract method and must therefore be declared abstract or implement the remaining methods (App\Services\SettingServiceInterface::getSetting) in /home/ope0f06olk7h/public_html/ekas.be/app/Services/SettingService.php on line 7

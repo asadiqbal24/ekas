@@ -1,0 +1,130 @@
+<?php
+
+use App\Models\bundle1;
+use App\Models\bundle2;
+use App\Models\singlesession;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\User\BlogController;
+use App\Http\Controllers\User\HomeController;
+use App\Http\Controllers\User\UserController;
+use App\Http\Controllers\User\CourseController;
+use App\Http\Controllers\User\ContactUsController;
+use App\Http\Controllers\DocumentCheckerController;
+
+
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider and all of them will
+| be assigned to the "web" middleware group. Make something great!
+|
+*/
+
+Route::get('/', [HomeController::class, 'index']);
+Route::get('/get/courses/{name?}', [CourseController::class, 'getCourse'])->name('course.get');
+Route::get('/get/course/details/{id}', [CourseController::class, 'getCourseDetails'])->name('course.details');
+Route::get('/get/filtered/course', [CourseController::class, 'getFilteredDetails']);
+Route::get('/get/search/courses', [CourseController::class, 'searchCourse']);
+Route::get('/sort/data', [CourseController::class, 'SortData']);
+Route::middleware('verified')->group(function () {
+});
+
+Route::middleware('auth')->group(function () {
+    Route::get('add/to/wishlist/{id}', [CourseController::class, 'addCourseToWishlist']);
+    Route::get('remove/from/wishlist/{id}', [CourseController::class, 'removeFromWishlist']);
+    Route::get('user/dashboard', [UserController::class, 'dashboard']);
+    Route::get('get/todos', [UserController::class, 'getTodos']);
+    Route::get('user/profile', [UserController::class, 'profile']);
+    Route::post('update/user/info', [UserController::class, 'updateInfo']);
+    Route::post('add/to/list', [UserController::class, 'addToList']);
+    Route::get('delete/todo/{id}', [UserController::class, 'deleteToList']);
+
+    Route::get('book/consult', function () {
+        return view('book-consult');
+    }); 
+    // routes/web.php
+Route::get('/document-checker', [DocumentCheckerController::class, 'showForm'])->name('document.checker.form');
+Route::post('/document-checker', [DocumentCheckerController::class, 'submitForm'])->name('document.checker.submit');
+
+    // 
+    Route::post('contact/us', [ContactUsController::class, 'contactUs'])->name('contat.us');
+});
+Route::post('subscribe', [UserController::class, 'subscribe']);
+Route::get('blogs', [BlogController::class, 'index']);
+Route::get('get/blog/details/{id}', [BlogController::class, 'details']);
+Route::get('get/category/blogs/{id}', [BlogController::class, 'catBlogs'])->name('get.category.blogs');
+Route::get('load/more/blogs', [BlogController::class, 'loadMoreBlogs'])->name('load.more.blogs');
+Route::get('load/more/cat/blogs', [BlogController::class, 'loadMoreCatBlogs'])->name('load.more.cat.blogs');
+Route::get('about', function () {
+    return view('about');
+});
+Route::get('services', function () {
+    $singleSession = singlesession::first();
+    $bundle1 = bundle1::first();
+    $bundle2 = bundle2::first();
+    return view('service', compact('singleSession', 'bundle1', 'bundle2'));
+});
+Route::get('austria', function () {
+    return view('austria');
+});
+
+Route::get('austria-guidance', function () {
+
+    $userDocPayment = DB::table('user_guidance_country_document')->where('user_id',auth()->user()->id)->where('guidance_country','austria')->first();
+    $payment_status = "false";
+    if($userDocPayment){
+        $payment_status = "true";
+    }
+    return view('austria-guidance',compact('payment_status'));
+});
+
+Route::get('belgium-guidance', function () {
+
+    $userDocPayment = DB::table('user_guidance_country_document')->where('user_id',auth()->user()->id)->where('guidance_country','belgium')->first();
+    $payment_status = "false";
+    if($userDocPayment){
+        $payment_status = "true";
+    }
+    return view('belgium-guidance',compact('payment_status'));
+
+});
+
+Route::get('finland-guidance', function () {
+
+    $userDocPayment = DB::table('user_guidance_country_document')->where('user_id',auth()->user()->id)->where('guidance_country','finland')->first();
+    $payment_status = "false";
+    if($userDocPayment){
+        $payment_status = "true";
+    }
+    return view('finland-guidance',compact('payment_status'));
+
+
+});
+
+
+Route::get('belgium', function () {
+    return view('belgium');
+});
+Route::get('finland', function () {
+    return view('finland');
+});
+Route::get('explore', function () {
+    return view('explore');
+});
+
+
+
+Auth::routes(['verify' => true]);
+
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+
+Route::post('/process-payment', [UserController::class, 'processPayment'])->name('processPayment');
+Route::get('/download-pdf/{country}/{type}', [UserController::class, 'downloadGuidancePDF'])->name('downloadGuidancePDF');
+
+
