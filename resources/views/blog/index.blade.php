@@ -3,24 +3,35 @@
 <html>
 
 <head>
-     <link rel="icon" type="image/x-icon" href="{{ Storage::url(App\Services\SettingService::getSetting('favicon')) }}">
+    <link rel="icon" type="image/x-icon" href="{{ Storage::url(App\Services\SettingService::getSetting('favicon')) }}">
     <title>{{ App\Services\SettingService::getSetting('site_title') }} |
-        {{ App\Services\SettingService::getSetting('tagline') }}</title>
+        {{ App\Services\SettingService::getSetting('tagline') }}
+    </title>
     <style>
         .oks-blog-content h1,
-        h2,
-        h3,
         h4,
         h5,
         h6 {
             font-size: 20px !important;
         }
-   
+
+        .oks-blog-content h3 {
+            font-size: 15px;
+        }
+
+        .oks-section-heading h2 {
+            font-size: 32px;
+            line-height: 42px;
+            font-weight: 700;
+            margin-bottom: 45px;
+            text-align: center;
+            color: #000;
+        }
     </style>
     @if (!Auth::check())
-        @include('layouts.styles')
+    @include('layouts.styles')
     @else
-        @include('user._styles')
+    @include('user._styles')
     @endif
 </head>
 
@@ -42,12 +53,19 @@
     <!-- Listing Blog -->
     <section class="oks-listing-blog">
         <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="oks-section-heading">
+                        <h2>Latest Blogs</h2>
+                    </div>
+                </div>
+            </div>
             <div class="row" id="blog-list">
                 @include('blog.partials.blogs', ['blogs' => $blogs])
             </div>
             @if ($blogs->hasMorePages())
-                <div class="text-center mt-5">
-                    <button class="btn btn-warning" style="background: #ffcc01;     height: 48px;
+            <div class="text-center mt-5">
+                <button class="btn btn-warning" style="background: #ffcc01;     height: 48px;
     border-top-right-radius: 4px;
     border-bottom-right-radius: 4px;
     border-top-left-radius: 0;
@@ -56,7 +74,7 @@
     line-height: 24px;
     font-weight: 600;
     width: 123px;" id="load-more-blogs" data-page="2">Load More</button>
-                </div>
+            </div>
             @endif
         </div>
     </section>
@@ -97,14 +115,16 @@
         })
     </script>
     @if (session('success'))
-        <script>
-            $.toast({
-                title: "Success!",
-                message: {!! json_encode(session('success')) !!},
-                type: "success",
-                duration: 5000
-            });
-        </script>
+    <script>
+        $.toast({
+            title: "Success!",
+            message: {
+                !!json_encode(session('success')) !!
+            },
+            type: "success",
+            duration: 5000
+        });
+    </script>
     @endif
 </body>
 

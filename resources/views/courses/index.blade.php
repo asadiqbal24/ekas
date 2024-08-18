@@ -170,7 +170,14 @@
                             </div>
                             <div class="oks-filter-program">
                                 <label>University</label>
-                                <select class="oks-university scroll-univeristy-dropdown universities" name="universityname" data-attribute='universityname' id="universityname">
+                                <!-- <select class="oks-university scroll-univeristy-dropdown universities" name="universityname" data-attribute='universityname' id="universityname">
+                                    <option value="" selected>All</option>
+                                   
+                                    @foreach ($univeristies as $univeristy)
+                                        <option {{($univeristy->universityname == request()->universityname)?'selected':''}} value="{{ $univeristy->universityname }}">{{ $univeristy->universityname }}</option>
+                                    @endforeach
+                                </select> -->
+                                <select class="oks-university universities" name="universityname" data-attribute='universityname' id="universityname">
                                     <option value="" selected>All</option>
                                    
                                     @foreach ($univeristies as $univeristy)
@@ -189,7 +196,14 @@
 
                             <div class="oks-filter-program">
                                 <label> Field Of Study</label>
-                                <select class="oks-university scroll-univeristy-dropdown programs" name="program" data-attribute='programmename' id="programmename">
+                                <!-- <select class="oks-university scroll-univeristy-dropdown programs" name="program" data-attribute='programmename' id="programmename">
+                                    <option value="" selected>All</option>
+                                   
+                                    @foreach ($programs as $program)
+                                        <option value="{{ $program }}">{{ $program }}</option>
+                                    @endforeach
+                                </select> -->
+                                <select class="oks-university programs" name="program" data-attribute='programmename' id="programmename">
                                     <option value="" selected>All</option>
                                    
                                     @foreach ($programs as $program)

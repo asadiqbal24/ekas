@@ -3,13 +3,14 @@
 <html>
 
 <head>
-     <link rel="icon" type="image/x-icon" href="{{ Storage::url(App\Services\SettingService::getSetting('favicon')) }}">
+    <link rel="icon" type="image/x-icon" href="{{ Storage::url(App\Services\SettingService::getSetting('favicon')) }}">
     <title>{{ App\Services\SettingService::getSetting('site_title') }} |
-        {{ App\Services\SettingService::getSetting('tagline') }}</title>
+        {{ App\Services\SettingService::getSetting('tagline') }}
+    </title>
     @if (!Auth::check())
-        @include('layouts.styles')
+    @include('layouts.styles')
     @else
-        @include('user._styles')
+    @include('user._styles')
     @endif
 </head>
 
@@ -48,13 +49,30 @@
                 </div>
                 <div class="col-lg-4">
                     <div class="oks-sinlge-sidebar">
+                        <form action="{{route('blogs')}}" method="get">
+                        <div class="search-wrap">
+                            <input type="search" placeholder="Searching..." name="title" class="search-input" value="">
+                            <button type="submit" value="Search"><i class="fa-solid fa-magnifying-glass"></i></button>
+                        </div>
+                        </form>
                         <div class="oks-categories-list">
                             <h3>Category</h3>
                             <ul>
-                                <li>
+                                <!-- <li>
                                     <i class="fa-solid fa-circle"></i>
                                     <a href="{{ route('get.category.blogs', $blog->blogCategory->id) }}">{{ $blog->blogCategory->blogcategory }}</a>
+                                </li> -->
+                                @php
+
+                                $blogcategory = App\Models\BlogCategory::get();
+                                @endphp
+                                @foreach($blogcategory as $category)
+                                <li>
+                                    <i class="fa-solid fa-circle"></i>
+                                    <a href="{{ route('get.category.blogs', $category->id) }}">{{$category->blogcategory}}</a>
+                                    
                                 </li>
+                                @endforeach
                             </ul>
                         </div>
                         <div class="oks-categories-list">

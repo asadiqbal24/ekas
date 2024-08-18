@@ -55,9 +55,10 @@ Route::post('/document-checker', [DocumentCheckerController::class, 'submitForm'
     Route::post('contact/us', [ContactUsController::class, 'contactUs'])->name('contat.us');
 });
 Route::post('subscribe', [UserController::class, 'subscribe']);
-Route::get('blogs', [BlogController::class, 'index']);
+Route::get('blogs', [BlogController::class, 'index'])->name('blogs');
 Route::get('get/blog/details/{id}', [BlogController::class, 'details']);
 Route::get('get/category/blogs/{id}', [BlogController::class, 'catBlogs'])->name('get.category.blogs');
+Route::get('get-blog', [BlogController::class, 'getblog'])->name('get.blog');
 Route::get('load/more/blogs', [BlogController::class, 'loadMoreBlogs'])->name('load.more.blogs');
 Route::get('load/more/cat/blogs', [BlogController::class, 'loadMoreCatBlogs'])->name('load.more.cat.blogs');
 Route::get('about', function () {
