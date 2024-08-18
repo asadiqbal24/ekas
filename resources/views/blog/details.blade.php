@@ -42,7 +42,8 @@
                                 <i class="fa-solid fa-calendar-days"></i>{{ date('F j, Y', strtotime($blog->datetime)) }}
 
                             </li>
-                            <li><i class="fa-solid fa-user"></i>{{ $blog->authorname }}</li>
+                            <!-- <li><i class="fa-solid fa-user"></i>{{ $blog->authorname }}</li> -->
+                            <li><i class="fa-solid fa-user"></i>Ekas</li>
                         </ul>
                         <p>{!! $blog->description !!}</p>
                     </div>
