@@ -25,6 +25,18 @@ use App\Http\Controllers\DocumentCheckerController;
 |
 */
 
+Route::get('send-mail', function () {
+   
+    $details = [
+        'title' => 'Mail from ItSolutionStuff.com',
+        'body' => 'This is for testing email using smtp'
+    ];
+   
+    \Mail::to('asad.pulhr@gmail.com')->send(new \App\Mail\WelcomeMail($details));
+   
+    dd("Email is Sent.");
+});
+
 Route::get('/', [HomeController::class, 'index']);
 Route::get('/get/courses/{name?}', [CourseController::class, 'getCourse'])->name('course.get');
 Route::get('/get/course/details/{id}', [CourseController::class, 'getCourseDetails'])->name('course.details');

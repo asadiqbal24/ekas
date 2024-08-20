@@ -12,7 +12,56 @@
     <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="{{asset('dassets/css/card-style.css')}}">
+    <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+
+    <script>
+        Pusher.logToConsole = true;
+        var pusher = new Pusher('9a564bc8b0ad4031db58', {
+            cluster: 'ap2'
+        });
+
+        // Subscribe to the channel
+        var channel = pusher.subscribe('my-channel');
+
+        // Initialize notification count
+        var notificationCount = 0;
+
+        // Handle incoming events
+        channel.bind('my-event', function(data) {
+
+
+            if (data && data.post && data.post.title && data.post.description) {
+                // Increment notification count
+                notificationCount++;
+
+                var currentDateTime = new Date();
+                var formattedDate = currentDateTime.toLocaleDateString('en-GB');
+
+                // Append new notification to the notifications div
+                $('#notifications').prepend(`
+                    <h3>Notification: ${data.post.title} - ${data.post.description}<span style="    float: right;">  ${formattedDate}</span> </h3>
+                    `);
+
+                // Update the notification count on the button
+                $('#notification-count').text(notificationCount);
+            } else {
+                console.error('Invalid data structure received:', data);
+            }
+        });
+
+        // Reset notification count on button click
+        $('#oks-dashboard-tab4').on('click', function() {
+            notificationCount = 0;
+            $('#notification-count').text(notificationCount);
+        });
+    </script>
+
     <style>
+
+.supporat-card-list{
+    display: unset !important;
+}
         time.icon {
             font-size: 1em;
             /* change icon size */
@@ -337,7 +386,7 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="oks-dashbar-user-name">
-                                <h3><span>{{ Auth::user()->fname }}'s </span>Dashboard</h3>
+                                <h3><span>{{ Auth::user()->fname }}'s</span>Dashboard</h3>
                             </div>
                         </div>
                     </div>
@@ -369,14 +418,15 @@
                                     </div>
                                 </div>
                                 <div class="oks-profile-tabs">
-                                    <h4>Ekas Support</h4>
+                                    <h4>ekas Support</h4>
                                     <div class="oks-profile-sec">
                                         <a href="book/consult">Book Appointment</a>
                                         <ul class="text-center">
+                                        <li><a href="/document-checker" class="text-center">Document Checker</a></li>
                                             <li><a href="/blogs">Blog</a></li>
                                             <li><a href="/#stories">Video</a></li>
                                             <li><a href="/explore">Life in Europe</a></li>
-                                            <li><a href="/document-checker" class="text-center">Document Checker</a></li>
+                                           
 
 
                                         </ul>
@@ -394,7 +444,11 @@
                                                 <button id="oks-dashboard-tab1">Favourites</button>
                                                 <button id="oks-dashboard-tab2">ekas Guides</button>
                                                 <button id="oks-dashboard-tab3">Sessions</button>
-                                                <button id="oks-dashboard-tab4">Notifications</button>
+
+                                                <button id="oks-dashboard-tab4">
+                                                    <i class="ri-notification-3-line"></i> Notifications
+                                                    <span id="notification-count" style="font-size: 12px; background-color: red; color: white; border-radius: 50%; padding: 2px 6px; margin-left: 5px;">0</span>
+                                                </button>
                                             </div>
                                         </div>
                                         @include('courses._details')
@@ -565,41 +619,30 @@
                                                     <div class="oks-support-card-sessions">
                                                         <h3>Session Purcahse</h3>
                                                         <div class="circle">
-                                                            4
+                                                          {{$appointments->count()}}
                                                         </div>
                                                         <div>
                                                             <h4 style="text-align: center;color: #fff;margin-top: 10px;">Schedule Dates</h4>
                                                         </div>
                                                         <div class="supporat-card-list">
+                                                            @foreach($appointments as $appoint)
                                                             <div class="row mt-1">
-                                                                <div class="col-md-7 mt-1 text-sm-center no-padding-left">
-                                                                    <label style="color: #fff;">Session 1</label>
+                                                                <div class="col-md-5 mt-1 text-sm-center no-padding-left">
+                                                                    <label style="color: #fff;font-size:13px">Session {{$loop->iteration}}</label>
                                                                 </div>
 
-                                                                <div class="col-md-5 mt-1 text-sm-center">
-                                                                    <label style="color: #e4d55a; font-size: 14px;">21/01/25</label>
+                                                                <div class="col-md-7 mt-1 text-sm-center">
+                                                                    <label style="color: #e4d55a; font-size: 13px;">{{$appoint->date}}</label>
                                                                 </div>
-                                                                <div class="col-md-7 mt-1 text-sm-center no-padding-left">
-                                                                    <label style="color: #fff;">Session 2</label>
-                                                                </div>
+                                                            </div>
+                                                            @endforeach
+                                                            <div class="clearfix"></div>
+                                                            <div class="row mt-1">
+                                                               
 
-                                                                <div class="col-md-5 mt-1 text-sm-center">
-                                                                    <label style="color: #e4d55a;font-size: 14px;">21/01/25</label>
-                                                                </div>
-                                                                <div class="col-md-7 mt-1 text-sm-center no-padding-left">
-                                                                    <label style="color: #fff;">Session 3</label>
-                                                                </div>
+                                                            
 
-                                                                <div class="col-md-5 mt-1 text-sm-center">
-                                                                    <label style="color: #e4d55a;font-size: 14px;">Schedule</label>
-                                                                </div>
-                                                                <div class="col-md-7 mt-1 text-sm-center no-padding-left">
-                                                                    <label style="color: #fff;font-size: 14px;">Session 4</label>
-                                                                </div>
-
-                                                                <div class="col-md-5 mt-1 text-sm-center">
-                                                                    <label style="color: #e4d55a;font-size: 14px;">Schedule</label>
-                                                                </div>
+                              
 
 
                                                                 <div class="col-md-7 mt-3 text-sm-center">
@@ -613,7 +656,7 @@
                                                                 </div>
 
                                                                 <div class="col-md-12 mt-3">
-                                                                    <label style="color: red;font-size:15px">Expiry-21/03/2025</label>
+                                                                    <label style="color: red;font-size:15px">Expiry-{{ \Carbon\Carbon::parse($appoint->date)->addDay()->format('d/m/Y') }}</label>
                                                                 </div>
 
                                                             </div>
@@ -714,13 +757,12 @@
                                         <div class="notificationtab tab-content d-none">
                                             <div class="row">
                                                 <div class="col-md-12 col-sm-12">
-                                                    <div class="oks-support-card-sessions">
-                                                        <h3>Notification : guidance bundle purchased - 01/02/24</h3>
-                                                        <h3>Notification : ekas message - how are you ?</h3>
-                                                        <h3>Notification : invoice for guiance bundle - 01/02/2024</h3>
-                                                        <h3>Notification : booking confirmation - next session on 03/02/24-19:00 PST</h3>
-                                                        
-                                                        
+                                                    <div class="oks-support-card-sessions" id="notifications">
+
+                                                        <!-- <h3>Notification : guidance bundle purchased - 01/02/24</h3> -->
+
+
+
                                                     </div>
                                                 </div>
 
@@ -1100,7 +1142,7 @@
         $('#oks-dashboard-tab3').removeClass('active');
         $('#oks-dashboard-tab4').removeClass('active');
 
-$('.notificationtab').addClass('d-none');
+        $('.notificationtab').addClass('d-none');
 
     })
     $('#oks-dashboard-tab1').on('click', function() {
