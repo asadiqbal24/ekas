@@ -42,11 +42,11 @@
             </div>
             <div class="col-lg-3 col-md-6">
                 <div class="adtn-disp-card-box">
-                  <a href="https://ekas.be/get/courses?level=Others">
+                  <a href="https://ekas.be/get/courses?level=Masters">
                         <div class="oks-icon">
-                            <img src="image/application.png">
+                            <img src="image/master.png">
                         </div>
-                        <h3>Others</h3>
+                        <h3>Advanced Masters</h3>
                     </a>
                 </div>
             </div>

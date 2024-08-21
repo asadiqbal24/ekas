@@ -221,7 +221,7 @@
                         <div class="col-lg-12">
                             <div class="mb-3">
                                 <label class="form-label">Address</label>
-                                <input type="text" class="form-control" placeholder="">
+                                <input type="text" name="address" class="form-control" placeholder="">
                             </div>
                         </div>
 
@@ -251,7 +251,7 @@
                         <div class="col-lg-6">
                             <div class="mb-3">
                                 <label class="form-label">Country/City</label>
-                                <input type="text" class="form-control" placeholder="">
+                                <input type="text" name="country" class="form-control" placeholder="">
                             </div>
                         </div>
 

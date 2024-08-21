@@ -36,7 +36,7 @@
                                             <li><a href="{{url('get/courses?level=Bachelors')}}">Bachelors</a>
                                             </li>
                                             <li><a href="{{url('get/courses?level=Masters')}}">Masters</a>
-                                            <li><a href="{{url('get/courses?level=Masters')}}">Advance Masters</a>
+                                            <li><a href="{{url('get/courses?level=Masters')}}">Advanced Masters</a>
                                             </li>
                                             <li><a href="{{url('get/courses?level=PhD')}}">PhD</a>
                                             </li>

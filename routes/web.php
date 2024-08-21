@@ -12,6 +12,8 @@ use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\User\CourseController;
 use App\Http\Controllers\User\ContactUsController;
 use App\Http\Controllers\DocumentCheckerController;
+use App\Http\Controllers\AboutUsController;
+
 
 
 /*
@@ -32,7 +34,7 @@ Route::get('send-mail', function () {
         'body' => 'This is for testing email using smtp'
     ];
    
-    \Mail::to('asad.pulhr@gmail.com')->send(new \App\Mail\WelcomeMail($details));
+    \Mail::to('asad.gudgk@gmail.com')->send(new \App\Mail\InvoiceUser($details));
    
     dd("Email is Sent.");
 });
@@ -56,6 +58,10 @@ Route::middleware('auth')->group(function () {
     Route::post('add/to/list', [UserController::class, 'addToList']);
     Route::get('delete/todo/{id}', [UserController::class, 'deleteToList']);
 
+
+    Route::get('download-file/{id}', [UserController::class, 'downloadFile'])->name('download.file');
+
+
     Route::get('book/consult', function () {
         return view('book-consult');
     }); 
@@ -73,9 +79,10 @@ Route::get('get/category/blogs/{id}', [BlogController::class, 'catBlogs'])->name
 Route::get('get-blog', [BlogController::class, 'getblog'])->name('get.blog');
 Route::get('load/more/blogs', [BlogController::class, 'loadMoreBlogs'])->name('load.more.blogs');
 Route::get('load/more/cat/blogs', [BlogController::class, 'loadMoreCatBlogs'])->name('load.more.cat.blogs');
-Route::get('about', function () {
-    return view('about');
-});
+
+
+Route::get('about', [AboutUsController::class, 'about'])->name('about');
+
 Route::get('services', function () {
     $singleSession = singlesession::first();
     $bundle1 = bundle1::first();

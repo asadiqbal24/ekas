@@ -58,10 +58,10 @@
     </script>
 
     <style>
+        .supporat-card-list {
+            display: unset !important;
+        }
 
-.supporat-card-list{
-    display: unset !important;
-}
         time.icon {
             font-size: 1em;
             /* change icon size */
@@ -164,7 +164,7 @@
         }
 
         .supporat-card-list-guide {
-            display: flex;
+            /* display: flex; */
             align-items: center;
             justify-content: center;
             box-sizing: border-box;
@@ -182,6 +182,7 @@
             background: #1d4bad;
             padding: 22px 25px;
             border-radius: 19px;
+            height: 365px;
         }
 
 
@@ -422,11 +423,11 @@
                                     <div class="oks-profile-sec">
                                         <a href="book/consult">Book Appointment</a>
                                         <ul class="text-center">
-                                        <li><a href="/document-checker" class="text-center">Document Checker</a></li>
+                                            <li><a href="/document-checker" class="text-center">Document Checker</a></li>
                                             <li><a href="/blogs">Blog</a></li>
                                             <li><a href="/#stories">Video</a></li>
                                             <li><a href="/explore">Life in Europe</a></li>
-                                           
+
 
 
                                         </ul>
@@ -619,30 +620,38 @@
                                                     <div class="oks-support-card-sessions">
                                                         <h3>Session Purcahse</h3>
                                                         <div class="circle">
-                                                          {{$appointments->count()}}
+                                                            {{$appointments->count()}}
                                                         </div>
                                                         <div>
                                                             <h4 style="text-align: center;color: #fff;margin-top: 10px;">Schedule Dates</h4>
                                                         </div>
                                                         <div class="supporat-card-list">
-                                                            @foreach($appointments as $appoint)
-                                                            <div class="row mt-1">
-                                                                <div class="col-md-5 mt-1 text-sm-center no-padding-left">
-                                                                    <label style="color: #fff;font-size:13px">Session {{$loop->iteration}}</label>
-                                                                </div>
+                                                            <div style="    overflow-y: scroll;overflow-x: hidden;    height: 100px;">@if($appointments)
+                                                                @foreach($appointments as $appoint)
+                                                                <div class="row mt-1">
+                                                                    <div class="col-md-5 mt-1 text-sm-center">
+                                                                        <label style="color: #fff;font-size:12px">Session {{$loop->iteration}}</label>
+                                                                    </div>
 
-                                                                <div class="col-md-7 mt-1 text-sm-center">
-                                                                    <label style="color: #e4d55a; font-size: 13px;">{{$appoint->date}}</label>
+                                                                    <div class="col-md-7 mt-1 text-sm-center">
+                                                                        <label style="color: #e4d55a; font-size: 11px;">{{$appoint->date}}</label>
+                                                                    </div>
                                                                 </div>
+                                                                @endforeach
+                                                                @else
+
+                                                                <div class="row mt-1">
+
+
+                                                                    <div class="col-md-12 mt-1 text-sm-center">
+                                                                        <label style="color: #e4d55a; font-size: 13px;">You have no sessions at the moment</label>
+                                                                    </div>
+                                                                </div>
+                                                                @endif
                                                             </div>
-                                                            @endforeach
+
                                                             <div class="clearfix"></div>
                                                             <div class="row mt-1">
-                                                               
-
-                                                            
-
-                              
 
 
                                                                 <div class="col-md-7 mt-3 text-sm-center">
@@ -673,25 +682,41 @@
 
 
                                                         <div class="supporat-card-list-guide">
-                                                            <div class="row mt-1">
-                                                                <div class="col-md-8 mt-1 text-sm-center no-padding-left">
-                                                                    <label>Session 1</label>
+
+                                                            <div style="    overflow-y: scroll;overflow-x: hidden;       height: 245px;">
+                                                                @if($appointmentsfiles)
+                                                                @foreach($appointmentsfiles as $files)
+                                                                <div class="row mt-1">
+                                                                    <div class="col-md-5 mt-1 text-sm-center">
+                                                                        <label style=";font-size:12px">Session {{$loop->iteration}}</label>
+                                                                    </div>
+
+                                                                    <div class="col-md-7 mt-1 text-sm-center">
+
+
+                                                                        <a href="{{ route('download.file', $files->id) }}">
+                                                                            <i class="fa fa-file-pdf-o" style="font-size:25px;color:red"></i> Download
+                                                                        </a>
+
+
+
+
+                                                                    </div>
                                                                 </div>
+                                                                @endforeach
+                                                                @else
 
-                                                                <div class="col-md-4 mt-1 text-sm-center">
-                                                                    <i class="fa fa-file-pdf-o" style="font-size:25px;color:red"></i>
+                                                                <div class="row mt-1">
+
+
+                                                                    <div class="col-md-12 mt-1 text-sm-center">
+                                                                        <label style="color: #e4d55a; font-size: 13px;">You have no sessions report at the moment</label>
+                                                                    </div>
                                                                 </div>
-
-
-
-
-
-
-
-
-
-
+                                                                @endif
                                                             </div>
+
+
 
 
 

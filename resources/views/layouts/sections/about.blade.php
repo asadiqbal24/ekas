@@ -53,7 +53,7 @@
                 <img src="image/docs.png" alt="Employee">
             </div>
             <h3>E-Guides</h3>
-            <p>Acess the EKAS Guidelines for a smooth and easy</p>
+            <p>Acess the ekas Guidelines for a smooth and easy</p>
         </div>
     </div>
 </div>

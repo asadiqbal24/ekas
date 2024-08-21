@@ -33,7 +33,7 @@
                                                 <option value="Masters"
                                                     @if (!empty($level) && $level == 'Masters') selected @endif>Masters</option>
                                                     <option value="Masters"
-                                                    @if (!empty($level) && $level == 'Masters') selected @endif>Advance Masters</option>
+                                                    @if (!empty($level) && $level == 'Masters') selected @endif>Advanced Masters</option>
                                                 <option value="PhD"
                                                     @if (!empty($level) && $level == 'PhD') selected @endif>PhD</option>
                                                 <option value="Others"

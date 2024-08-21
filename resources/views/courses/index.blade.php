@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @push('title')
-    <title>Ekas | Empower Tomorrow </title>
+    <title>Ekas</title>
 @endpush
 @section('content')
     <style>
