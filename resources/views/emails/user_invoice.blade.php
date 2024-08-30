@@ -1,77 +1,174 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Invoice</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Invoice Email Template</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+      width: 100% !important;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 600px;
+      background-color: #ffffff;
+      margin: 0 auto;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .table-header,
+    .table-bill-info,
+    .table-items,
+    .table-summary,
+    .table-note {
+      width: 100%;
+      margin: 20px 0;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    td {
+      padding: 8px;
+    }
+
+    .invoice-title {
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .summary-table td {
+      text-align: right;
+    }
+
+    .note-section {
+      padding-top: 20px;
+    }
+
+    hr {
+      border: 0;
+      border-top: 1px solid #eee;
+      margin: 20px 0;
+    }
+  </style>
 </head>
-<body style="font-family: Arial, sans-serif; background-color: #f8f8f8; margin: 0; padding: 0;">
 
-<div style="max-width: 800px; margin: 50px auto; background-color: #ffffff; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
-    <!-- Invoice Header -->
-    <div style="border-bottom: 2px solid #007bff; padding-bottom: 20px; margin-bottom: 20px;">
-        <h1 style="font-size: 24px; color: #007bff; margin: 0;">INVOICE</h1>
-        <div style="font-size: 14px; margin-top: 10px;">
-            <strong>Invoice #:</strong>  {{ $details['invoicenumber'] }}<br>
-            <strong>Date:</strong>  @php $date = date('Y-m-d')@endphp {{$date}}
-        </div>
-    </div>
+<body>
+  <table width="100%" bgcolor="#f4f4f4" cellpadding="0" cellspacing="0">
+    <tr>
+      <td align="center">
+        <table class="container" cellpadding="0" cellspacing="0">
+          <!-- Invoice Header -->
+          <tr>
+            <td>
+              <table class="table-header" cellpadding="0" cellspacing="0" bgcolor="#ffffff">
+                <tr>
+                  <td align="left">
+                    <img src="your-logo-url-here.png" alt="Company Logo" width="100" style="display: block;">
+                  </td>
+                  <td align="right">
+                    <span class="invoice-title">Invoice #86423</span><br>
+                    <span>Issued: 01/01/2024</span><br>
+                    <span>Due: 01/01/2024</span>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
 
-    <!-- Company and Customer Details -->
-    <div style="display: flex; justify-content: space-between; margin-bottom: 40px;">
-        <div style="font-size: 14px; line-height: 1.6; width: 45%;">
-            <strong>Ekas</strong> <br>
-            123 Main Street, Suite 600 <br>
-            City, State 12345 <br>
-            Phone: (123) 456-7890 <br>
-            Email: info@ekas.com
-        </div>
+          <!-- Bill Info -->
+          <tr>
+            <td>
+              <table class="table-bill-info" cellpadding="0" cellspacing="0" bgcolor="#ffffff">
+                <tr>
+                  <td align="left">
+                    <strong>From:</strong><br>
+                    ekas<br>
+                    Address<br>
+                    Phone
+                  </td>
+                  <td align="right">
+                    <strong>Bill To:</strong><br>
+                    Name: Name<br>
+                    Email: email@example.com<br>
+                    Phone: 1234567890
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
 
-        <div style="font-size: 14px; line-height: 1.6; width: 45%; text-align: right;">
-            <strong>Bill To:</strong> <br>
-            {{ $details['name'] }}<br>
-            {{ $details['address'] }}<br>
-            Phone:  {{ $details['phone_no'] }}<br>
-            Email: {{ $details['email'] }}
-        </div>
-    </div>
+          <!-- Invoice Items -->
+          <tr>
+            <td>
+              <table class="table-items" cellpadding="0" cellspacing="0" bgcolor="#ffffff" border="1" style="border-color: #eee;">
+                <thead>
+                  <tr>
+                    <th align="left" style="padding: 10px;">Description</th>
+                    <th align="center" style="padding: 10px;">Qty</th>
+                    <th align="right" style="padding: 10px;">Price</th>
+                    <th align="right" style="padding: 10px;">Total</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td style="padding: 10px;">Vuexy Admin Template</td>
+                    <td align="center" style="padding: 10px;">1</td>
+                    <td align="right" style="padding: 10px;">$32</td>
+                    <td align="right" style="padding: 10px;">$32.00</td>
+                  </tr>
+                </tbody>
+              </table>
+            </td>
+          </tr>
 
-    <!-- Invoice Table -->
-    <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
-        <thead>
-            <tr>
-                <th style="padding: 15px; border: 1px solid #ddd; background-color: #007bff; color: #ffffff;">Item</th>
+          <!-- Summary -->
+          <tr>
+            <td>
+              <table class="table-summary" cellpadding="0" cellspacing="0" bgcolor="#ffffff">
+                <tr>
+                  <td align="right" style="padding: 10px;">
+                    <strong>Total:</strong>
+                    $32.00
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
 
-                <th style="padding: 15px; border: 1px solid #ddd; background-color: #007bff; color: #ffffff;">Quantity</th>
-                <th style="padding: 15px; border: 1px solid #ddd; background-color: #007bff; color: #ffffff;">Unit Price</th>
-                <th style="padding: 15px; border: 1px solid #ddd; background-color: #007bff; color: #ffffff;">Total</th>
-            </tr>
-        </thead>
-        <tbody>
-        
-            <tr>
-                <td style="padding: 15px; border: 1px solid #ddd;">{{ $details['service_type'] }}</td>
-               
-                <td style="padding: 15px; border: 1px solid #ddd;">1</td>
-                <td style="padding: 15px; border: 1px solid #ddd;">{{ $details['amount'] }}</td>
-                <td style="padding: 15px; border: 1px solid #ddd;">{{ $details['amount'] }}</td>
-            </tr>
-          
-        </tbody>
-    </table>
+          <tr>
+            <td>
+              <hr>
+            </td>
+          </tr>
 
-    <!-- Invoice Totals -->
-    <div style="text-align: right; margin-top: 20px;">
-       
-        <p style="font-size: 20px; font-weight: bold; color: #333; margin: 0;">Total: {{ $details['amount'] }}</p>
-    </div>
-
-    <!-- Footer -->
-    <div style="text-align: center; font-size: 12px; color: #777; margin-top: 30px;">
-        <p>Thank you for your business!</p>
-        <p>If you have any questions, please contact us at info@ekas.com </p>
-    </div>
-</div>
-
+          <!-- Note -->
+          <tr>
+            <td>
+              <table class="table-note" cellpadding="0" cellspacing="0" bgcolor="#ffffff">
+                <tr>
+                  <td>
+                    <strong>Note:</strong>
+                    <p>It was a pleasure working with you and your team. We hope you will keep us in mind for future freelance projects. Thank you!</p>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
 </body>
+
 </html>

@@ -357,7 +357,9 @@
 								<i class="oks-uni-popup-btn">x</i>
 								<div class="oks-uni-content">
 									<p>KU Leuven, or Katholieke Universiteit Leuven, is a renowned research university located in Leuven, Belgium. Founded in 1425, it is one of the oldest and most prestigious universities in Europe. Known for its high-quality education, cutting-edge research, and international outreach, KU Leuven offers a wide range of undergraduate, graduate, and doctoral programs. It has a strong emphasis on science, engineering, humanities, and social sciences, and is a leading institution in both fundamental and applied research.</p>
-									<a href="{{url('get/courses?universityname=KU Leueven')}}">Discover Course </a>
+									
+
+									<a href="{{ url('get/courses?universityname=KU Leueven&location=Belgium') }}">Discover Course</a>
 								</div>
 							</div>
 						</div>
@@ -372,7 +374,11 @@
 								<i class="oks-uni-popup-btn">x</i>
 								<div class="oks-uni-content">
 									<p>Ghent University, located in Ghent, Belgium, is a prominent public research university. Established in 1817, it's one of the leading higher education and research institutions in the Flemish region. Known for its innovative research, high-quality teaching, and a broad range of undergraduate and postgraduate programs, the university excels in a variety of fields including sciences, humanities, engineering, and social sciences. It is also distinguished for its strong international connections and a vibrant campus life.</p>
-									<a href="{{url('get/courses?universityname=Ghent University')}}">Discover Course </a>
+									<a href="{{ url('get/courses?universityname=Ghent University&location=Belgium') }}">Discover Course</a>
+									
+								
+									
+									
 								</div>
 							</div>
 						</div>
@@ -387,7 +393,9 @@
 								<i class="oks-uni-popup-btn">x</i>
 								<div class="oks-uni-content">
 									<p>The Université Catholique de Louvain (UCLouvain), located in Louvain-la-Neuve, Belgium, is a prominent French-speaking university. Founded in 1425 as the University of Leuven and split in 1968, it's one of the oldest and most respected universities in Europe. UCLouvain is known for its comprehensive research and teaching across a wide range of disciplines, including the humanities, social sciences, natural sciences, engineering, and health sciences. The university is recognized for its strong commitment to international collaboration and innovation in both teaching and research.</p>
-									<a href="{{url('get/courses?universityname=UCLouvain')}}">Discover Course </a>
+									<a href="{{ url('get/courses?universityname=UCLouvain&location=Belgium') }}">Discover Course</a>
+									
+									
 								</div>
 							</div>
 						</div>
@@ -402,7 +410,9 @@
 								<i class="oks-uni-popup-btn">x</i>
 								<div class="oks-uni-content">
 									<p>The Université Libre de Bruxelles (ULB), situated in Brussels, Belgium, is a prominent French-speaking private research university. Established in 1834, it's renowned for its strong emphasis on research and offers a wide array of undergraduate, graduate, and doctoral programs. The university excels in various fields like the sciences, humanities, law, engineering, and social sciences. ULB is known for its vibrant multicultural environment, its commitment to free inquiry, and a strong tradition of liberalism. It also actively participates in international research networks and collaborations.</p>
-									<a href="{{url('get/courses?universityname=Vrije University of Brussels')}}">Discover Course </a>
+									
+									<a href="{{ url('get/courses?universityname=Vrije University of Brussels&location=Belgium') }}">Discover Course</a>
+									
 								</div>
 							</div>
 						</div>
@@ -417,7 +427,9 @@
 								<i class="oks-uni-popup-btn">x</i>
 								<div class="oks-uni-content">
 									<p>The Vrije Universiteit Brussel (VUB) is a Dutch-speaking university located in Brussels, Belgium. Established in 1970, following the split of the Université Libre de Bruxelles, it is known for its high standards in research and education. The university offers a wide range of undergraduate, graduate, and doctoral programs across various disciplines, including the humanities, social sciences, natural sciences, and engineering. VUB is characterized by its emphasis on research, international orientation, and a strong commitment to the principles of free inquiry and critical thinking. It's also recognized for fostering an inclusive, diverse campus environment.</p>
-									<a href="{{url('get/courses?universityname=Vrije University of Brussels')}}">Discover Course </a>
+									<a href="{{ url('get/courses?universityname=Vrije University of Brussels&location=Belgium') }}">Discover Course</a>
+									
+									
 								</div>
 							</div>
 						</div>

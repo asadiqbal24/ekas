@@ -15,7 +15,7 @@
     <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 
-    <script>
+    <!-- <script>
         Pusher.logToConsole = true;
         var pusher = new Pusher('9a564bc8b0ad4031db58', {
             cluster: 'ap2'
@@ -55,7 +55,7 @@
             notificationCount = 0;
             $('#notification-count').text(notificationCount);
         });
-    </script>
+    </script> -->
 
     <style>
         .supporat-card-list {
@@ -146,7 +146,7 @@
             background: #fff;
             padding: 22px 25px;
             border-radius: 19px;
-            height: 363px;
+            height: 400px;
         }
 
 
@@ -154,7 +154,7 @@
             background: #fcd230;
             padding: 22px 25px;
             border-radius: 19px;
-            height: 363px;
+            height: 400px;
         }
 
         .oks-support-card-session h3 {
@@ -182,7 +182,8 @@
             background: #1d4bad;
             padding: 22px 25px;
             border-radius: 19px;
-            height: 365px;
+            height: 400px;
+         
         }
 
 
@@ -442,13 +443,14 @@
                                     <div class="col-sm-12">
                                         <div class="oks-dashboad-btn-wrap">
                                             <div class="oks-dashboad-btn">
-                                                <button id="oks-dashboard-tab1">Favourites</button>
+                                                <button id="oks-dashboard-tab1" class="mb-3">Favourites</button>
                                                 <button id="oks-dashboard-tab2">ekas Guides</button>
                                                 <button id="oks-dashboard-tab3">Sessions</button>
 
                                                 <button id="oks-dashboard-tab4">
                                                     <i class="ri-notification-3-line"></i> Notifications
-                                                    <span id="notification-count" style="font-size: 12px; background-color: red; color: white; border-radius: 50%; padding: 2px 6px; margin-left: 5px;">0</span>
+                                                    <!-- <span id="notification-count" style="font-size: 12px; background-color: red; color: white; border-radius: 50%; padding: 2px 6px; margin-left: 5px;">0</span> -->
+                                                    <span id="notification-count" style="font-size: 12px; background-color: red; color: white; border-radius: 50%; padding: 2px 6px; margin-left: 5px;">{{$user_notification->count()}}</span>
                                                 </button>
                                             </div>
                                         </div>
@@ -616,9 +618,9 @@
                                         </div>
                                         <div class="sessiontab tab-content d-none">
                                             <div class="row">
-                                                <div class="col-md-4 col-sm-12">
+                                                <div class="col-md-4 col-sm-12 mb-3">
                                                     <div class="oks-support-card-sessions">
-                                                        <h3>Session Purcahse</h3>
+                                                        <h3>Session Purchase</h3>
                                                         <div class="circle">
                                                             {{$appointments->count()}}
                                                         </div>
@@ -626,11 +628,14 @@
                                                             <h4 style="text-align: center;color: #fff;margin-top: 10px;">Schedule Dates</h4>
                                                         </div>
                                                         <div class="supporat-card-list">
-                                                            <div style="    overflow-y: scroll;overflow-x: hidden;    height: 100px;">@if($appointments)
+                                                            <!-- <div style="overflow-y: scroll; overflow-x: hidden; height: 100px;"> -->
+
+                                                            <div>
+                                                                @if(!empty($appointments) && count($appointments) > 0)
                                                                 @foreach($appointments as $appoint)
                                                                 <div class="row mt-1">
                                                                     <div class="col-md-5 mt-1 text-sm-center">
-                                                                        <label style="color: #fff;font-size:12px">Session {{$loop->iteration}}</label>
+                                                                        <label style="color: #fff; font-size:12px">Session {{$loop->iteration}}</label>
                                                                     </div>
 
                                                                     <div class="col-md-7 mt-1 text-sm-center">
@@ -639,10 +644,7 @@
                                                                 </div>
                                                                 @endforeach
                                                                 @else
-
                                                                 <div class="row mt-1">
-
-
                                                                     <div class="col-md-12 mt-1 text-sm-center">
                                                                         <label style="color: #e4d55a; font-size: 13px;">You have no sessions at the moment</label>
                                                                     </div>
@@ -652,8 +654,6 @@
 
                                                             <div class="clearfix"></div>
                                                             <div class="row mt-1">
-
-
                                                                 <div class="col-md-7 mt-3 text-sm-center">
                                                                     <label style="color: #fff;">Remaining</label>
                                                                 </div>
@@ -665,86 +665,94 @@
                                                                 </div>
 
                                                                 <div class="col-md-12 mt-3">
-                                                                    <label style="color: red;font-size:15px">Expiry-{{ \Carbon\Carbon::parse($appoint->date)->addDay()->format('d/m/Y') }}</label>
+                                                                    @if(!empty($appointments) && count($appointments) > 0)
+                                                                    <label style="color: red; font-size:15px">Expiry-{{ \Carbon\Carbon::parse($appoint->date)->addDay()->format('d/m/Y') }}</label>
+                                                                    @else
+                                                                    <label style="color: red; font-size:15px">Expiry-</label>
+                                                                    @endif
                                                                 </div>
-
                                                             </div>
-
-
-
                                                         </div>
+
                                                     </div>
                                                 </div>
 
-                                                <div class="col-md-4 col-sm-12">
+                                                <div class="col-md-4 col-sm-12 mb-3">
                                                     <div class="oks-support-card-guide">
                                                         <h3>Guidance Report</h3>
 
 
                                                         <div class="supporat-card-list-guide">
+                                                            
 
-                                                            <div style="    overflow-y: scroll;overflow-x: hidden;       height: 245px;">
-                                                                @if($appointmentsfiles)
+                                                            <div>
+                                                                @if(!empty($appointmentsfiles) && count($appointmentsfiles) > 0)
                                                                 @foreach($appointmentsfiles as $files)
                                                                 <div class="row mt-1">
                                                                     <div class="col-md-5 mt-1 text-sm-center">
-                                                                        <label style=";font-size:12px">Session {{$loop->iteration}}</label>
+                                                                        <label style="font-size:12px">Session {{$loop->iteration}}</label>
                                                                     </div>
 
                                                                     <div class="col-md-7 mt-1 text-sm-center">
-
-
                                                                         <a href="{{ route('download.file', $files->id) }}">
-                                                                            <i class="fa fa-file-pdf-o" style="font-size:25px;color:red"></i> Download
+                                                                            <i class="fa fa-file-pdf-o" style="font-size:25px;color:red"></i>
                                                                         </a>
-
-
-
-
                                                                     </div>
                                                                 </div>
                                                                 @endforeach
                                                                 @else
-
                                                                 <div class="row mt-1">
-
-
                                                                     <div class="col-md-12 mt-1 text-sm-center">
-                                                                        <label style="color: #e4d55a; font-size: 13px;">You have no sessions report at the moment</label>
+                                                                        <label style="color: black; font-size: 13px;">You have no sessions report at the moment</label>
                                                                     </div>
                                                                 </div>
                                                                 @endif
                                                             </div>
-
-
-
-
-
                                                         </div>
+
                                                     </div>
                                                 </div>
 
-                                                <div class="col-md-4 col-sm-12">
+                                                <div class="col-md-4 col-sm-12 mb-3">
                                                     <div class="oks-support-card-session">
                                                         <h3>Upcoming Session</h3>
+
+                                                        @php
+                                                        $nearest_appointment = null;
+                                                        $today = \Carbon\Carbon::today();
+
+                                                        foreach ($appointments as $appoint) {
+
+                                                        $appoint_date = \Carbon\Carbon::parse($appoint->date);
+
+
+                                                        if ($appoint_date > $today) {
+                                                        if ($nearest_appointment == null || $appoint_date->lt($nearest_appointment->date)) {
+                                                        $nearest_appointment = $appoint;
+                                                        }
+                                                        }
+                                                        }
+                                                        @endphp
+
 
 
                                                         <div class="supporat-card-list-calendar">
                                                             <div class="row mt-1">
 
 
+                                                                @if($nearest_appointment)
                                                                 <div class="col-md-12">
-                                                                    <time datetime="2014-09-20" class="icon">
-                                                                        <em>Saturday</em>
-                                                                        <strong>September</strong>
-                                                                        <span>20</span>
+                                                                    <time datetime="{{ $nearest_appointment->date }}" class="icon">
+                                                                        <em>{{ \Carbon\Carbon::parse($nearest_appointment->date)->format('l') }}</em>
+                                                                        <strong>{{ \Carbon\Carbon::parse($nearest_appointment->date)->format('F') }}</strong>
+                                                                        <span>{{ \Carbon\Carbon::parse($nearest_appointment->date)->format('d') }}</span>
                                                                     </time>
-
                                                                 </div>
-
                                                                 <div class="col-md-12" style="text-align: center;">
-                                                                    <label style="font-size: large;">22:00</label>
-
+                                                                    <!-- Display the time in the desired format -->
+                                                                    <label style="font-size: large;">
+                                                                        {{ \Carbon\Carbon::parse($nearest_appointment->time)->format('H:i') }}
+                                                                    </label>
                                                                 </div>
                                                                 <div class="col-md-12 mt-1" style="text-align: center;">
                                                                     <label style="font-size: 15px; background-color: #cfba43;padding: 5px 10px;border-radius: 15px;">Zoom Link</label>
@@ -755,6 +763,13 @@
                                                                     <a href="" style="font-size: 10px;color: red;font-weight: 700;">Read More</a>
 
                                                                 </div>
+
+                                                                @else
+                                                                <div class="col-md-12" style="text-align: center;">
+                                                                    <p style="font-size: 14px; color: red;">There is no upcoming session.</p>
+                                                                </div>
+                                                                @endif
+
 
 
 
@@ -784,8 +799,25 @@
                                                 <div class="col-md-12 col-sm-12">
                                                     <div class="oks-support-card-sessions" id="notifications">
 
-                                                        <!-- <h3>Notification : guidance bundle purchased - 01/02/24</h3> -->
+                                                        @if(!empty($user_notification) && count($user_notification) > 0)
 
+                                                        @foreach($user_notification as $notification )
+
+                                                        <h3>
+                                                            Notification: {{$notification->title}} {{$notification->description}}
+                                                            <span style="float: right;">
+                                                                {{ \Carbon\Carbon::parse($notification->created_at)->format('d/m/y') }}
+                                                                <a href="{{route('user-notification-delete',$notification->id)}}" onclick="return confirmDelete(this);">
+                                                                    <i class="fa fa-trash-o" style="font-size: 20px; color: red; padding-left: 15px;"></i>
+                                                                </a>
+                                                            </span>
+                                                        </h3>
+                                                        @endforeach
+
+                                                        @else
+                                                        <h3>You have no notification at the moment.
+                                                        </h3>
+                                                        @endif
 
 
                                                     </div>
@@ -892,6 +924,16 @@
     <script type="text/javascript" src="dassets/js/scripts.js"></script>
     <script src="{{ asset('toast/toast-plugin.js') }}"></script>
 </body>
+
+<script>
+    function confirmDelete(element) {
+        if (confirm('Are you sure you want to delete it?')) {
+            return true; // Proceed with the delete action
+        } else {
+            return false; // Cancel the delete action
+        }
+    }
+</script>
 <script type="text/javascript">
     $(function() {
         var $form = $(".require-validation");

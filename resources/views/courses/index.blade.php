@@ -203,11 +203,11 @@
                                         <option value="{{ $program }}">{{ $program }}</option>
                                     @endforeach
                                 </select> -->
-                                <select class="oks-university programs" name="program" data-attribute='programmename' id="programmename">
+                                <select class="oks-university programs" name="fieldofstudy" data-attribute='fieldofstudy' id="fieldofstudy">
                                     <option value="" selected>All</option>
                                    
-                                    @foreach ($programs as $program)
-                                        <option value="{{ $program }}">{{ $program }}</option>
+                                    @foreach ($course_category as $category)
+                                        <option value="{{ $category->name }}">{{ $category->name }}</option>
                                     @endforeach
                                 </select>
                             </div> 
@@ -417,7 +417,8 @@
                     $('#handle_output').html('Fee = ' + $('#my_handle').val() + ' €');
                 }
                
-       var search_term =  $("#programmename").val();
+       var fieldofstudy =  $("#fieldofstudy").val();
+      
                 
         // Update filters based on user input
         filters = {
@@ -429,7 +430,7 @@
             tuitionfee: sliderChanged ? Number($('#my_handle').val()) : '',
             levels: $('.level-checkbox:checked').map(function() { return this.value; }).get(),
             sortBy: $('#oks-dis-select-a-z-course').val(),
-            programmename:search_term,
+            fieldofstudy:fieldofstudy,
             page: page
         };
 
@@ -444,6 +445,8 @@
             data: filters,
             success: function(response) {
                 // Update HTML content based on response
+
+                console.log(response);
                 if (append) {
                     $('#filtered_courses').append(response.html);
                     totalDisplayed += response.currentPageCount;

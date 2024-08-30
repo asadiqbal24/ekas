@@ -22,6 +22,7 @@
                 <div class="oks-book-consultent-wrap">
                     <form id="get_user_data_form" method="POST" enctype="multipart/form-data">
                         @csrf
+                       <input type="hidden" readonly name="user_id" value="{{auth()->user()->id}}">
                         <!-- Step 1: Personal Info -->
                         <div class="form-step active" id="step-1">
                             <div class="form-group">
@@ -36,7 +37,7 @@
 
                             <div class="form-group">
                                 <label for="phone">Phone</label>
-                                <input type="tel" class="form-control" id="phone" placeholder="Enter Phone here" required>
+                                <input type="tel" class="form-control" id="phone" name="phone" placeholder="Enter Phone here" required>
                                 <span id="phone-error" class="error">Phone number is required</span>
                             </div>
 
@@ -47,179 +48,181 @@
 
                         <!-- Step 2: Documents -->
                         <div class="form-step" id="step-2">
-    <div class="form-group">
-        <label for="updated_cv">Updated CV</label>
-        <input type="file" name="updated_cv" id="updated_cv" required class="form-control-file">
-    </div>
-    <div class="form-group">
-        <label for="visa_application_form">Visa Application Form</label>
-        <input type="file" name="visa_application_form" id="visa_application_form" required class="form-control-file">
-    </div>
-    <div class="form-group">
-        <label for="passport">Passport</label>
-        <input type="file" name="passport" id="passport" required class="form-control-file">
-    </div>
-    <div class="form-group">
-        <label for="masters_degree">Masters Degree</label>
-        <input type="file" name="masters_degree" id="masters_degree" required class="form-control-file">
-    </div>
-    <div class="form-group">
-        <label for="masters_degree_transcript">Masters Degree Transcript</label>
-        <input type="file" name="masters_degree_transcript" id="masters_degree_transcript" required class="form-control-file">
-    </div>
-    <div class="form-group">
-        <label for="bachelors_degree">Bachelors Degree</label>
-        <input type="file" name="bachelors_degree" id="bachelors_degree" required class="form-control-file">
-    </div>
-    <div class="form-group">
-        <label for="bachelors_degree_transcript">Bachelors Degree Transcript</label>
-        <input type="file" name="bachelors_degree_transcript" id="bachelors_degree_transcript" required class="form-control-file">
-    </div>
-    <div class="form-group">
-        <label for="metric_gcse_diploma">Metric/GCSE Diploma</label>
-        <input type="file" name="metric_gcse_diploma" id="metric_gcse_diploma" required class="form-control-file">
-    </div>
-    <div class="form-group">
-        <label for="higher_secondary_a_level_diploma">Higher Secondary / A-Level Diploma</label>
-        <input type="file" name="higher_secondary_a_level_diploma" id="higher_secondary_a_level_diploma" required class="form-control-file">
-    </div>
-    <div class="form-group">
-        <label for="english_language_test">English Language Test (IELTS, TOEFL, PET or Other)</label>
-        <input type="file" name="english_language_test" id="english_language_test" required class="form-control-file">
-    </div>
-    <div class="form-group">
-        <label for="recommendation_letter">Recommendation Letter</label>
-        <input type="file" name="recommendation_letter" id="recommendation_letter" required class="form-control-file">
-    </div>
-    <div class="form-group">
-        <label for="letter_of_acceptance">Letter of Acceptance</label>
-        <input type="file" name="letter_of_acceptance" id="letter_of_acceptance" required class="form-control-file">
-    </div>
-    <div class="form-group">
-        <label for="proof_of_financial_support">Proof of Financial Support</label>
-        <input type="file" name="proof_of_financial_support" id="proof_of_financial_support" required class="form-control-file">
-    </div>
-    <div class="form-group">
-        <label for="hec_attestations_or_equivalency">HEC Attestations or Equivalency</label>
-        <input type="file" name="hec_attestations_or_equivalency" id="hec_attestations_or_equivalency" required class="form-control-file">
-    </div>
-    <div class="form-group">
-        <label for="any_other_document">Any Other Document</label>
-        <input type="file" name="any_other_document" id="any_other_document" class="form-control-file">
-    </div>
-    <div class="form-group">
-        <label for="customer_message">Additional Details</label>
-        <textarea name="customer_message" id="customer_message" class="form-control" rows="3"></textarea>
-    </div>
-    <div class="book-buttons">
-        <button type="button" class="previous-btn" style="width: calc(50% - 5px); box-sizing: border-box; float: left;">Previous</button>
-        <button type="button" class="next-btn" id="next-btn" style="width: calc(50% - 5px); box-sizing: border-box; float: right; margin-right: 0px;">Next</button>
-    </div>
-</div>
+                            <div class="form-group">
+                                <label for="updated_cv">Updated CV</label>
+                                <input type="file" name="updated_cv" id="updated_cv" class="form-control-file" accept=".pdf,.doc,.docx">
+                            </div>
+                            <div class="form-group">
+                                <label for="visa_application_form">Visa Application Form</label>
+                                <input type="file" name="visa_application_form" id="visa_application_form" class="form-control-file" accept=".pdf,.doc,.docx">
+                            </div>
+                            <div class="form-group">
+                                <label for="passport">Passport</label>
+                                <input type="file" name="passport" id="passport" class="form-control-file" accept=".pdf,.doc,.docx">
+                            </div>
+                            <div class="form-group">
+                                <label for="masters_degree">Masters Degree</label>
+                                <input type="file" name="masters_degree" id="masters_degree" class="form-control-file" accept=".pdf,.doc,.docx">
+                            </div>
+                            <div class="form-group">
+                                <label for="masters_degree_transcript">Masters Degree Transcript</label>
+                                <input type="file" name="masters_degree_transcript" id="masters_degree_transcript" class="form-control-file" accept=".pdf,.doc,.docx">
+                            </div>
+                            <div class="form-group">
+                                <label for="bachelors_degree">Bachelors Degree</label>
+                                <input type="file" name="bachelors_degree" id="bachelors_degree" class="form-control-file" accept=".pdf,.doc,.docx">
+                            </div>
+                            <div class="form-group">
+                                <label for="bachelors_degree_transcript">Bachelors Degree Transcript</label>
+                                <input type="file" name="bachelors_degree_transcript" id="bachelors_degree_transcript" class="form-control-file" accept=".pdf,.doc,.docx">
+                            </div>
+                            <div class="form-group">
+                                <label for="metric_gcse_diploma">Metric/GCSE Diploma</label>
+                                <input type="file" name="metric_gcse_diploma" id="metric_gcse_diploma" class="form-control-file" accept=".pdf,.doc,.docx">
+                            </div>
+                            <div class="form-group">
+                                <label for="higher_secondary_a_level_diploma">Higher Secondary / A-Level Diploma</label>
+                                <input type="file" name="higher_secondary_a_level_diploma" id="higher_secondary_a_level_diploma" class="form-control-file" accept=".pdf,.doc,.docx">
+                            </div>
+                            <div class="form-group">
+                                <label for="english_language_test">English Language Test (IELTS, TOEFL, PET or Other)</label>
+                                <input type="file" name="english_language_test" id="english_language_test" class="form-control-file" accept=".pdf,.doc,.docx">
+                            </div>
+                            <div class="form-group">
+                                <label for="recommendation_letter">Recommendation Letter</label>
+                                <input type="file" name="recommendation_letter" id="recommendation_letter" class="form-control-file" accept=".pdf,.doc,.docx">
+                            </div>
+                            <div class="form-group">
+                                <label for="letter_of_acceptance">Letter of Acceptance</label>
+                                <input type="file" name="letter_of_acceptance" id="letter_of_acceptance" class="form-control-file" accept=".pdf,.doc,.docx">
+                            </div>
+                            <div class="form-group">
+                                <label for="proof_of_financial_support">Proof of Financial Support</label>
+                                <input type="file" name="proof_of_financial_support" id="proof_of_financial_support" class="form-control-file" accept=".pdf,.doc,.docx">
+                            </div>
+                            <div class="form-group">
+                                <label for="hec_attestations_or_equivalency">HEC Attestations or Equivalency</label>
+                                <input type="file" name="hec_attestations_or_equivalency" id="hec_attestations_or_equivalency" class="form-control-file" accept=".pdf,.doc,.docx">
+                            </div>
+                            <div class="form-group">
+                                <label for="any_other_document">Any Other Document</label>
+                                <input type="file" name="any_other_document" id="any_other_document" class="form-control-file" accept=".pdf,.doc,.docx">
+                            </div>
+                            <div class="form-group">
+                                <label for="customer_message">Additional Details</label>
+                                <textarea name="customer_message" id="customer_message" class="form-control" rows="3"></textarea>
+                            </div>
+                            <div class="book-buttons">
+                                <button type="button" class="previous-btn" style="width: calc(50% - 5px); box-sizing: border-box; float: left;">Previous</button>
+                                <button type="button" class="next-btn" id="next-btn" style="width: calc(50% - 5px); box-sizing: border-box; float: right; margin-right: 0px;">Next</button>
+                            </div>
+                        </div>
 
 
                         <!-- Step 3: Payment -->
                         <div class="form-step" id="step-3">
                             <div class="mb-3">
-                            <div class="form-group">
-            <span style="float: right; font-size: 1em;">€15</span><label style="font-weight: bold; font-size: 1.2em;">Document Review</label>
-            <p style="font-size: 0.8em; margin-top: 10px;">
-            Submit your documents for a comprehensive review by our experienced counsellors. You will receive detailed feedback on your submissions within one week, ensuring that your documents meet all necessary requirements and standards.
-        </p>
-            
-        </div>
+                                <div class="form-group">
+                                    <span style="float: right; font-size: 1em;"> <input type="hidden" name="amount" value="15" readonly> €15</span><label style="font-weight: bold; font-size: 1.2em;">Document Review</label>
+                                    <p style="font-size: 0.8em; margin-top: 10px;">
+                                        Submit your documents for a comprehensive review by our experienced counsellors. You will receive detailed feedback on your submissions within one week, ensuring that your documents meet all necessary requirements and standards.
+                                    </p>
 
-        <b>Billing Details</b><hr>
+                                </div>
 
-                                    <div class="row">
-                                        <div class="col-lg-6">
-                                            <div class="mb-3">
-                                                <label class="form-label">First Name</label>
-                                                <input type="text" class="form-control" placeholder="">
-                                            </div>
+                                <b>Billing Details</b>
+                                <hr>
+
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="mb-3">
+                                            <label class="form-label">First Name</label>
+                                            <input type="text" name="first_name" required class="form-control" placeholder="">
                                         </div>
-    
-                                        <div class="col-lg-6">
-                                            <div class="mb-3">
-                                                <label class="form-label">Last Name</label>
-                                                <input type="text" class="form-control" placeholder="">
-                                            </div>
-                                        </div>
-    
                                     </div>
-    
-    
-                                    <div class="row">
-                                        <div class="col-lg-12">
-                                            <div class="mb-3">
-                                                <label class="form-label">Address</label>
-                                                <input type="text" class="form-control" placeholder="">
-                                            </div>
+
+                                    <div class="col-lg-6">
+                                        <div class="mb-3">
+                                            <label class="form-label">Last Name</label>
+                                            <input type="text" name="last_name" required class="form-control" placeholder="">
                                         </div>
-    
-    
                                     </div>
-    
-    
-                                    <div class="row">
-                                        <div class="col-lg-6">
-                                            <div class="mb-3">
-                                                <label class="form-label">Town City</label>
-                                                <input type="text" class="form-control" placeholder="">
-                                            </div>
+
+                                </div>
+
+
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="mb-3">
+                                            <label class="form-label">Address</label>
+                                            <input type="text" name="address" required class="form-control" placeholder="">
                                         </div>
-    
-                                        <div class="col-lg-6">
-                                            <div class="mb-3">
-                                                <label class="form-label">PostCode</label>
-                                                <input type="text" class="form-control" placeholder="">
-                                            </div>
-                                        </div>
-    
                                     </div>
-    
-    
-                                    <div class="row">
-                                        <div class="col-lg-6">
-                                            <div class="mb-3">
-                                                <label class="form-label">Country/City</label>
-                                                <input type="text" class="form-control" placeholder="">
-                                            </div>
+
+
+                                </div>
+
+
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="mb-3">
+                                            <label class="form-label">Town City</label>
+                                            <input type="text" name="city" class="form-control" placeholder="">
                                         </div>
-    
-                                        <div class="col-lg-6">
-                                            <div class="mb-3">
-                                                <label class="form-label">Email</label>
-                                                <input type="text" class="form-control" placeholder="">
-                                            </div>
-                                        </div>
-    
                                     </div>
-                                    <b>Card Details</b><hr>
+
+                                    <div class="col-lg-6">
+                                        <div class="mb-3">
+                                            <label class="form-label">PostCode</label>
+                                            <input type="text" name="postcode" class="form-control" placeholder="">
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="mb-3">
+                                            <label class="form-label">Country/City</label>
+                                            <input type="text" name="country" class="form-control" placeholder="">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-6">
+                                        <div class="mb-3">
+                                            <label class="form-label">Email</label>
+                                            <input type="text" name="billing_email" required class="form-control" placeholder="">
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <b>Card Details</b>
+                                <hr>
 
                                 <label class="form-label">Card Number</label>
                                 <div id="card-element" class="form-control">
                                     <div id="card-number"></div>
-                                    <img id="card-brand" src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Credit_card_font_awesome.svg" alt="Card Brand" style="display:none; width: 40px; float: right; margin-top: -30px;"/>
+                                    <img id="card-brand" src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Credit_card_font_awesome.svg" alt="Card Brand" style="display:none; width: 40px; float: right; margin-top: -30px;" />
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="mb-3">
                                         <label class="form-label">Name on card</label>
-                                        <input type="text" class="form-control" placeholder="">
+                                        <input type="text" required class="form-control" placeholder="">
                                     </div>
                                 </div>
                                 <div class="col-lg-3">
                                     <div class="mb-3">
                                         <label class="form-label">Expiry date</label>
-                                        <div id="card-expiry" class="form-control"></div>
+                                        <div id="card-expiry" required class="form-control"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-3">
                                     <div class="mb-3">
                                         <label class="form-label">CVV Code</label>
-                                        <div id="card-cvc" class="form-control"></div>
+                                        <div id="card-cvc" required class="form-control"></div>
                                     </div>
                                 </div>
                             </div>
@@ -233,7 +236,7 @@
                             </div>
                         </div>
 
-                        
+
 
                         <div id="submission-message" class="modal" style="display: none;">
                             <div class="modal-content">
@@ -248,6 +251,7 @@
     </div>
 </section>
 <!-- Initialization of intl-tel-input -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         var input = document.querySelector("#phone");
@@ -273,8 +277,8 @@
 <script src="https://js.stripe.com/v3/"></script>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const stripe = Stripe('pk_test_TYooMQauvdEDq54NiTphI7jx'); // Replace with your Stripe publishable key
+    document.addEventListener('DOMContentLoaded', function() {
+        const stripe = Stripe('pk_test_51PZx7wRqr2H0WfyWfc3GT3t0wK7FMvO36jHusWZYO4nXVBdfcYvRBhhFyBV5KozrlS38R3t2vZMBHmVXbOiY1HZ9005BZEaZLD'); // Replace with your Stripe publishable key
         const elements = stripe.elements();
 
         const style = {
@@ -293,13 +297,19 @@
             }
         };
 
-        const cardNumber = elements.create('cardNumber', {style: style});
+        const cardNumber = elements.create('cardNumber', {
+            style: style
+        });
         cardNumber.mount('#card-number');
 
-        const cardExpiry = elements.create('cardExpiry', {style: style});
+        const cardExpiry = elements.create('cardExpiry', {
+            style: style
+        });
         cardExpiry.mount('#card-expiry');
 
-        const cardCvc = elements.create('cardCvc', {style: style});
+        const cardCvc = elements.create('cardCvc', {
+            style: style
+        });
         cardCvc.mount('#card-cvc');
 
         cardNumber.addEventListener('change', function(event) {
@@ -436,9 +446,12 @@
 <style>
     /* Style for the disabled Next button */
     #next-btn[disabled] {
-        background-color: #ccc; /* Gray color */
-        color: #666; /* Text color */
-        cursor: not-allowed; /* Change cursor */
+        background-color: #ccc;
+        /* Gray color */
+        color: #666;
+        /* Text color */
+        cursor: not-allowed;
+        /* Change cursor */
     }
 
     .error {
@@ -459,29 +472,40 @@
     }
 
     .form-group input[type="tel"] {
-        padding-left: 58px; /* Ensure enough space for the flag */
+        padding-left: 58px;
+        /* Ensure enough space for the flag */
     }
 
     .modal {
-        display: none; /* Hidden by default */
-        position: fixed; /* Stay in place */
-        z-index: 1; /* Sit on top */
+        display: none;
+        /* Hidden by default */
+        position: fixed;
+        /* Stay in place */
+        z-index: 1;
+        /* Sit on top */
         left: 0;
         top: 0;
-        width: 100%; /* Full width */
-        height: 100%; /* Full height */
-        overflow: auto; /* Enable scroll if needed */
-        background-color: rgb(0,0,0); /* Fallback color */
-        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        width: 100%;
+        /* Full width */
+        height: 100%;
+        /* Full height */
+        overflow: auto;
+        /* Enable scroll if needed */
+        background-color: rgb(0, 0, 0);
+        /* Fallback color */
+        background-color: rgba(0, 0, 0, 0.4);
+        /* Black w/ opacity */
         padding-top: 60px;
     }
 
     .modal-content {
         background-color: #fefefe;
-        margin: 5% auto; /* 15% from the top and centered */
+        margin: 5% auto;
+        /* 15% from the top and centered */
         padding: 20px;
         border: 1px solid #888;
-        width: 80%; /* Could be more or less, depending on screen size */
+        width: 80%;
+        /* Could be more or less, depending on screen size */
     }
 
     .close {

@@ -373,7 +373,9 @@
 								<i class="oks-uni-popup-btn">x</i>
 								<div class="oks-uni-content">
 									<p>The University of Helsinki is the oldest and largest institution of academic education and research in Finland. It is a scientific community of 40,000 students and researchers, and ranks among the top 100 universities in the world. The university offers a wide range of bachelor’s, master’s and doctoral programmes, as well as open university and exchange studies. The university’s mission is to contribute to society, education and welfare through the power of science.</p>
-									<a href="{{url('get/courses?universityname=Lappeenrannan teknillinen yliopisto')}}">Discover Course </a>
+									<a href="{{ url('get/courses?universityname=Lappeenrannan teknillinen yliopisto&location=Finland') }}">Discover Course</a>
+									
+								
 								</div>
 							</div>
 						</div>
@@ -388,7 +390,10 @@
 								<i class="oks-uni-popup-btn">x</i>
 								<div class="oks-uni-content">
 									<p>The University of Oulu is a science university in northern Finland that creates new knowledge, well-being and innovations for the future through research and education. It has over 13,000 students and 2,900 staff members, and offers 24 international degree programmes in English. The university is known for its multidisciplinary research on global challenges, such as environmental change, digital transformation and health and well-being. The university also collaborates with various partners from industry, academia and society.</p>
-									<a href="{{url('get/courses?universityname=Lappeenrannan teknillinen yliopisto')}}">Discover Course </a>
+									
+									<a href="{{ url('get/courses?universityname=Lappeenrannan teknillinen yliopisto&location=Finland') }}">Discover Course</a>
+									
+									
 								</div>
 							</div>
 						</div>
@@ -403,7 +408,10 @@
 								<i class="oks-uni-popup-btn">x</i>
 								<div class="oks-uni-content">
 									<p>The University of Turku is a science university in southern Finland that creates new knowledge, well-being and innovations for the future through research and education. It has over 25,000 students and personnel, and offers 24 international degree programmes in English. The university is known for its multidisciplinary research on global challenges, such as environmental change, digital transformation and health and well-being. The university also collaborates with various partners from industry, academia and society.</p>
-									<a href="{{url('get/courses?universityname=Lappeenrannan teknillinen yliopisto')}}">Discover Course </a>
+									<a href="{{ url('get/courses?universityname=Lappeenrannan teknillinen yliopisto&location=Finland') }}">Discover Course</a>
+									
+									
+									
 								</div>
 							</div>
 						</div>
@@ -418,7 +426,10 @@
 								<i class="oks-uni-popup-btn">x</i>
 								<div class="oks-uni-content">
 									<p>Lappeenranta-Lahti University of Technology LUT Finland is a science university that combines technology, business and social sciences to address global challenges such as climate change, digitalization and well-being. It has two campuses, one in Lappeenranta and one in Lahti, and offers various degree programmes in English. LUT University is one of the top 300 universities in the world and one of the top 15 universities for sustainable consumption and production.</p>
-									<a href="{{url('get/courses?universityname=Lappeenrannan teknillinen yliopisto')}}">Discover Course </a>
+									<a href="{{ url('get/courses?universityname=Lappeenrannan teknillinen yliopisto&location=Finland') }}">Discover Course</a>
+									
+									
+									
 								</div>
 							</div>
 						</div>
@@ -433,7 +444,10 @@
 								<i class="oks-uni-popup-btn">x</i>
 								<div class="oks-uni-content">
 									<p>Tampere University is one of the most multidisciplinary universities in Finland, with research and education in technology, health and society. It has over 21,000 students and 4,000 staff members from more than 80 countries. It offers 24 international degree programmes in English, and collaborates with hundreds of universities and organisations worldwide. It was created in 2019 through a merger between the University of Tampere and Tampere University of Technology.</p>
-									<a href="{{url('get/courses?universityname=Tampereen yliopisto')}}">Discover Course </a>
+									<a href="{{ url('get/courses?universityname=Tampereen yliopisto&location=Finland') }}">Discover Course</a>
+									
+									
+									
 								</div>
 							</div>
 						</div>

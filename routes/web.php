@@ -40,7 +40,7 @@ Route::get('send-mail', function () {
 });
 
 Route::get('/', [HomeController::class, 'index']);
-Route::get('/get/courses/{name?}', [CourseController::class, 'getCourse'])->name('course.get');
+Route::get('/get/courses/{name?}/{location?}', [CourseController::class, 'getCourse'])->name('course.get');
 Route::get('/get/course/details/{id}', [CourseController::class, 'getCourseDetails'])->name('course.details');
 Route::get('/get/filtered/course', [CourseController::class, 'getFilteredDetails']);
 Route::get('/get/search/courses', [CourseController::class, 'searchCourse']);
@@ -52,6 +52,7 @@ Route::middleware('auth')->group(function () {
     Route::get('add/to/wishlist/{id}', [CourseController::class, 'addCourseToWishlist']);
     Route::get('remove/from/wishlist/{id}', [CourseController::class, 'removeFromWishlist']);
     Route::get('user/dashboard', [UserController::class, 'dashboard']);
+    Route::get('user/notification/delete/{id}', [UserController::class, 'user_notification_delete'])->name('user-notification-delete');
     Route::get('get/todos', [UserController::class, 'getTodos']);
     Route::get('user/profile', [UserController::class, 'profile']);
     Route::post('update/user/info', [UserController::class, 'updateInfo']);
@@ -65,6 +66,14 @@ Route::middleware('auth')->group(function () {
     Route::get('book/consult', function () {
         return view('book-consult');
     }); 
+
+
+    Route::post('/check-availability-first', [UserController::class, 'checkAvailabilityfirst'])->name('check-availability-first');
+    Route::post('/check-availability', [UserController::class, 'checkAvailability'])->name('check-availability');
+
+    Route::post('/check-availability-last', [UserController::class, 'checkAvailabilitylast'])->name('check-availability-last');
+
+    
     // routes/web.php
 Route::get('/document-checker', [DocumentCheckerController::class, 'showForm'])->name('document.checker.form');
 Route::post('/document-checker', [DocumentCheckerController::class, 'submitForm'])->name('document.checker.submit');
@@ -96,6 +105,8 @@ Route::get('austria', function () {
 Route::get('austria-guidance', function () {
 
     $userDocPayment = DB::table('user_guidance_country_document')->where('user_id',auth()->user()->id)->where('guidance_country','austria')->first();
+
+//  /   dd($userDocPayment);
     $payment_status = "false";
     if($userDocPayment){
         $payment_status = "true";

@@ -79,7 +79,7 @@
                         </tr>
                         <tr>
                             <th>Subject Field </th>
-                            <td>{{ $course->courseranking }}</td>
+                            <td>{{ $course->fieldofstudy }}</td>
                         </tr>
                         <tr>
                             <th>Tuition Fee</th>

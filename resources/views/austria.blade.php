@@ -377,7 +377,8 @@
 								<i class="oks-uni-popup-btn">x</i>
 								<div class="oks-uni-content">
 									<p>The University of Vienna is a public research university located in Vienna, Austria. It was founded by Duke Rudolph IV in 1365, making it the oldest university in the modern German-speaking world. It has about 89,000 students and 10,000 staff members, and offers a wide range of degree programmes in various fields of study.</p>
-									<a href="{{url('get/courses?universityname=University of Vienna')}}">Discover Course </a>
+									<a href="{{ url('get/courses?universityname=University of Vienna&location=Austria') }}">Discover Course</a>
+
 								</div>
 							</div>
 						</div>
@@ -392,7 +393,8 @@
 								<i class="oks-uni-popup-btn">x</i>
 								<div class="oks-uni-content">
 									<p>The Vienna University of Technology, also known as TU Wien, is a public research university in Vienna, Austria. It was founded in 1815 as the Imperial-Royal Polytechnic Institute, and it focuses on engineering, computer science, and natural sciences. It has about 26,000 students and 4,000 staff members, and it offers 62 degree programmes in various fields of study.</p>
-									<a href="{{url('get/courses?universityname=TU Wien')}}">Discover Course </a>
+								
+									<a href="{{ url('get/courses?universityname=TU Wien&location=Austria') }}">Discover Course</a>
 								</div>
 							</div>
 						</div>
@@ -407,7 +409,8 @@
 								<i class="oks-uni-popup-btn">x</i>
 								<div class="oks-uni-content">
 									<p>The Graz University of Technology (TU Graz) is a public research university that was founded in 1811 by Archduke John of Austria. It offers 19 bachelor’s and 35 master’s programmes in engineering, computer science, and natural sciences. It has about 26,000 students and 4,000 staff members, and it is associated with 16 Nobel Prize winners.</p>
-									<a href="{{url('get/courses?universityname=Graz University of Technology')}}">Discover Course </a>
+									
+									<a href="{{ url('get/courses?universityname=Graz University of Technology&location=Austria') }}">Discover Course</a>
 								</div>
 							</div>
 						</div>
@@ -422,7 +425,9 @@
 								<i class="oks-uni-popup-btn">x</i>
 								<div class="oks-uni-content">
 									<p>The University of Innsbruck is a public research university located in Innsbruck, Austria. It was founded in 1669 and is the largest and oldest university in western Austria. It has about 28,000 students and 5,000 staff members, and offers more than 160 degree programmes in various fields of study.</p>
-									<a href="{{url('get/courses?universityname=University of Innsbruck')}}">Discover Course </a>
+									<a href="{{ url('get/courses?universityname=University of Innsbruck&location=Austria') }}">Discover Course</a>
+									
+									
 								</div>
 							</div>
 						</div>
@@ -437,7 +442,9 @@
 								<i class="oks-uni-popup-btn">x</i>
 								<div class="oks-uni-content">
 									<p>The University of Innsbruck is a public research university located in Innsbruck, Austria. It was founded in 1669 and is the largest and oldest university in western Austria. It has about 28,000 students and 5,000 staff members, and offers more than 160 degree programmes in various fields of study.</p>
-									<a href="{{url('get/courses?universityname=University of Innsbruck')}}">Discover Course </a>
+									<a href="{{ url('get/courses?universityname=University of Innsbruck&location=Austria') }}">Discover Course</a>
+									
+									
 								</div>
 							</div>
 						</div>
