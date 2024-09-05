@@ -123,8 +123,8 @@
                                     
                                     </div>
                                     <div class="form-group">
-                                        <label for="selected_time">Select Time (PKT) Appoitment 2 </label>
-                                        <select id="selected_time" class="form-control"  name="appoitment_time2">
+                                        <label for="selected_time">Select Time (PKT) Appoitment 1 </label>
+                                        <select id="selected_time" class="form-control"  name="appoitment_time1">
                                             <option value="">Select Time</option>
                                             <option value="00:00">00:00 AM </option>
                                             <option value="01:00">01:00 AM </option>
@@ -159,8 +159,8 @@
                                      
                                     </div>
                                     <div class="form-group">
-                                        <label for="selected_time">Select Time (PKT) Appoitment 1 </label>
-                                        <select id="selected_time" class="form-control"  name="appoitment_time1">
+                                        <label for="selected_time">Select Time (PKT) Appoitment 2 </label>
+                                        <select id="selected_time" class="form-control"  name="appoitment_time2">
                                             <option value="">Select Time</option>
                                             <option value="00:00">00:00 AM </option>
                                             <option value="01:00">01:00 AM </option>
@@ -565,16 +565,16 @@
         // Capture changes in the date input field
         $('input[name="appoitment_date"]').on('change', function() {
             selectedDate1 = $(this).val();
-            checkAvailability();
+            checkAvailability1();
         });
 
         // Capture changes in the time select field
         $('select[name="time"]').on('change', function() {
             time1 = $(this).val();
-            checkAvailability();
+            checkAvailability1();
         });
 
-        function checkAvailability() {
+        function checkAvailability1() {
             // Ensure both date and time are selected
             if (selectedDate1 && time1) {
                 $.ajax({
@@ -606,7 +606,7 @@
                         }
                     },
                     error: function() {
-                        alert('An error occurred while checking availability.');
+                        console.log('An error occurred while checking availability.');
                     }
                 });
             }
@@ -624,25 +624,25 @@
         // Capture selected dates and times
         $('input[name="appoitment_1"]').on('change', function() {
             selectedDate1 = $(this).val();
-            checkAvailability(selectedDate1, time1, 'appoitment_1');
+            checkAvailability2(selectedDate1, time1, 'appoitment_1');
         });
 
         $('input[name="appoitment_2"]').on('change', function() {
             selectedDate2 = $(this).val();
-            checkAvailability(selectedDate2, time2, 'appoitment_2');
+            checkAvailability2(selectedDate2, time2, 'appoitment_2');
         });
 
         $('select[name="appoitment_time1"]').on('change', function() {
             time1 = $(this).val();
-            checkAvailability(selectedDate1, time1, 'appoitment_1');
+            checkAvailability2(selectedDate1, time1, 'appoitment_1');
         });
 
         $('select[name="appoitment_time2"]').on('change', function() {
             time2 = $(this).val();
-            checkAvailability(selectedDate2, time2, 'appoitment_2');
+            checkAvailability2(selectedDate2, time2, 'appoitment_2');
         });
 
-        function checkAvailability(date, time, appointmentField) {
+        function checkAvailability2(date, time, appointmentField) {
             // Ensure both date and time are selected
             if (date && time) {
                 $.ajax({
@@ -680,7 +680,7 @@
                         }
                     },
                     error: function() {
-                        alert('An error occurred while checking availability.');
+                        console.log('An error occurred while checking availability.');
                     }
                 });
             }
@@ -695,52 +695,52 @@
         $('input[name="bundle2_appoitment_1"]').on('change', function() {
             let selectedDate1 = $(this).val();
             let time1 = $('select[name="bundle2_appoitment_time1"]').val();
-            checkAvailability(selectedDate1, time1, '1');
+            checkAvailability3(selectedDate1, time1, '1');
         });
 
         $('input[name="bundle2_appoitment_2"]').on('change', function() {
             let selectedDate2 = $(this).val();
             let time2 = $('select[name="bundle2_appoitment_time2"]').val();
-            checkAvailability(selectedDate2, time2, '2');
+            checkAvailability3(selectedDate2, time2, '2');
         });
 
         $('input[name="bundle2_appoitment_3"]').on('change', function() {
             let selectedDate3 = $(this).val();
             let time3 = $('select[name="bundle2_appoitment_time3"]').val();
-            checkAvailability(selectedDate3, time3, '3');
+            checkAvailability3(selectedDate3, time3, '3');
         });
 
         $('input[name="bundle2_appoitment_4"]').on('change', function() {
             let selectedDate4 = $(this).val();
             let time4 = $('select[name="bundle2_appoitment_time4"]').val();
-            checkAvailability(selectedDate4, time4, '4');
+            checkAvailability3(selectedDate4, time4, '4');
         });
 
         $('select[name="bundle2_appoitment_time1"]').on('change', function() {
             let time1 = $(this).val();
             let selectedDate1 = $('input[name="bundle2_appoitment_1"]').val();
-            checkAvailability(selectedDate1, time1, '1');
+            checkAvailability3(selectedDate1, time1, '1');
         });
 
         $('select[name="bundle2_appoitment_time2"]').on('change', function() {
             let time2 = $(this).val();
             let selectedDate2 = $('input[name="bundle2_appoitment_2"]').val();
-            checkAvailability(selectedDate2, time2, '2');
+            checkAvailability3(selectedDate2, time2, '2');
         });
 
         $('select[name="bundle2_appoitment_time3"]').on('change', function() {
             let time3 = $(this).val();
             let selectedDate3 = $('input[name="bundle2_appoitment_3"]').val();
-            checkAvailability(selectedDate3, time3, '3');
+            checkAvailability3(selectedDate3, time3, '3');
         });
 
         $('select[name="bundle2_appoitment_time4"]').on('change', function() {
             let time4 = $(this).val();
             let selectedDate4 = $('input[name="bundle2_appoitment_4"]').val();
-            checkAvailability(selectedDate4, time4, '4');
+            checkAvailability3(selectedDate4, time4, '4');
         });
 
-        function checkAvailability(date, time, index) {
+        function checkAvailability3(date, time, index) {
             if (date && time) {
                 $.ajax({
                     url: '/check-availability-last', // Laravel route
@@ -767,7 +767,7 @@
                         }
                     },
                     error: function() {
-                        alert('An error occurred while checking availability.');
+                        console.log('An error occurred while checking availability.');
                     }
                 });
             }
@@ -787,7 +787,7 @@
 
         // Get the selected value
         const selectedValue = $(this).val();
-        alert(selectedValue);
+        //alert(selectedValue);
 
         if (selectedValue == "single|30") {
 

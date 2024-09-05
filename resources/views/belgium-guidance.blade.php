@@ -76,7 +76,7 @@
                         </ul>
                     </div>
                     <div class="oks-book-consultent-wrap">
-                        <form id="get_user_data_form" method="POST" enctype="multipart/form-data">
+                        <form id="step-1-form"  >
                             @csrf
                             <!-- Step 1: Personal Info -->
                             <div class="form-step active" id="step-1">
@@ -101,23 +101,28 @@
                                     <button type="button" class="next-btn" style="width: calc(50% - 5px); box-sizing: border-box; float: right; margin-right: 0px;">Next</button>
                                 </div>
                             </div>
+
+                            </form>
     
                             
-                            @if($type == 'ekas')
-    
-                                <!-- Step 2: Payment -->
-                                <div class="form-step" id="step-2">
-                                    <div class="mb-3">
-                                        <div class="form-group">
-                                            <span style="float: right; font-size: 1em;">€1</span><label style="font-weight: bold; font-size: 1.2em;">{{ucfirst($type)}} Belgium Guidance Document
-                                            </label>
+                           @if($type == 'ekas')
+                        
+                            <form  method="POST" action="{{route('process-payment-ekas-guide-documents')}}" class="require-validation" role="form" data-cc-on-file="false">
+                                @csrf
+                          
+                            <div class="form-step" id="step-2">
+                                <div class="mb-3">
+                                    <div class="form-group">
+                                        <span style="float: right; font-size: 1em;">€1</span><label style="font-weight: bold; font-size: 1.2em;">{{ucfirst($type)}} Austria Guidance Document
+                                        </label>
 
-                                            <p style="font-size:12px;">
-                                                Discover your educational opportunities in Austria with our comprehensive guide designed especially for international students.
-                                            </p>
-                                        </div>
+                                        <p style="font-size:12px;">
+                                            Discover your educational opportunities in Austria with our comprehensive guide designed especially for international students.
+                                        </p>
+                                    </div>
 
-                                        <b>Billing Details</b><hr>
+                                    <b>Billing Details</b>
+                                    <hr>
 
                                     <div class="row">
                                         <div class="col-lg-6">
@@ -126,17 +131,17 @@
                                                 <input type="text" class="form-control first_name" placeholder="" required name="first_name">
                                             </div>
                                         </div>
-    
+
                                         <div class="col-lg-6">
                                             <div class="mb-3">
                                                 <label class="form-label">Last Name</label>
                                                 <input type="text" class="form-control last_name" placeholder="" required name="last_name">
                                             </div>
                                         </div>
-    
+
                                     </div>
-    
-    
+
+
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <div class="mb-3">
@@ -144,11 +149,11 @@
                                                 <input type="text" class="form-control" placeholder="">
                                             </div>
                                         </div>
-    
-    
+
+
                                     </div>
-    
-    
+
+
                                     <div class="row">
                                         <div class="col-lg-6">
                                             <div class="mb-3">
@@ -156,17 +161,17 @@
                                                 <input type="text" class="form-control" placeholder="">
                                             </div>
                                         </div>
-    
+
                                         <div class="col-lg-6">
                                             <div class="mb-3">
                                                 <label class="form-label">PostCode</label>
                                                 <input type="text" class="form-control" placeholder="">
                                             </div>
                                         </div>
-    
+
                                     </div>
-    
-    
+
+
                                     <div class="row">
                                         <div class="col-lg-6">
                                             <div class="mb-3">
@@ -174,53 +179,59 @@
                                                 <input type="text" class="form-control" placeholder="">
                                             </div>
                                         </div>
-    
+
                                         <div class="col-lg-6">
                                             <div class="mb-3">
                                                 <label class="form-label">Email</label>
                                                 <input type="text" class="form-control" placeholder="">
                                             </div>
                                         </div>
-    
+
                                     </div>
-                                    <b>Card Details</b><hr>
-            
-                                        <label class="form-label">Card Number</label>
-                                        <div id="card-element" class="form-control">
-                                            <div id="card-number"></div>
-                                            <img id="card-brand" src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Credit_card_font_awesome.svg" alt="Card Brand" style="display:none; width: 40px; float: right; margin-top: -30px;"/>
-                                        </div>
+                                    <b>Card Details</b>
+                                    <hr>
+
+                                    <label class="form-label">Card Number</label>
+                                    <div id="card-element" class="form-control">
+                                        <div id="card-number"></div>
+                                        <img id="card-brand" src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Credit_card_font_awesome.svg" alt="Card Brand" style="display:none; width: 40px; float: right; margin-top: -30px;" />
                                     </div>
-                                    <div class="row">
-                                        <div class="col-lg-6">
-                                            <div class="mb-3">
-                                                <label class="form-label">Name on card</label>
-                                                <input type="text" class="form-control" placeholder="">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-3">
-                                            <div class="mb-3">
-                                                <label class="form-label">Expiry date</label>
-                                                <div id="card-expiry" class="form-control"></div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-3">
-                                            <div class="mb-3">
-                                                <label class="form-label">CVV Code</label>
-                                                <div id="card-cvc" class="form-control"></div>
-                                            </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="mb-3">
+                                            <label class="form-label">Name on card</label>
+                                            <input type="text" class="form-control" placeholder="">
                                         </div>
                                     </div>
-                                    <div id="card-errors" role="alert"></div>
-        
-                                    <div class="form-group">
-                                        <div class="book-buttons">
-                                            <button type="button" class="previous-btn" style="width: calc(50% - 5px); box-sizing: border-box; float: left;">Previous</button>
-                                            <button type="submit" class="next-btn" id="next-btn paynow" style="width: calc(50% - 5px); box-sizing: border-box; float: right; margin-right: 0px;"> <i class="fa fa-spinner fa-spin" style="display: none;"></i> Pay Now</button>
+                                    <div class="col-lg-3">
+                                        <div class="mb-3">
+                                            <label class="form-label">Expiry date</label>
+                                            <div id="card-expiry" class="form-control"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="mb-3">
+                                            <label class="form-label">CVV Code</label>
+                                            <div id="card-cvc" class="form-control"></div>
                                         </div>
                                     </div>
                                 </div>
-                            @endif
+                                <div id="card-errors" role="alert"></div>
+
+                                <div class="form-group">
+                                    <div class="book-buttons">
+                                        <button type="button" class="previous-btn" style="width: calc(50% - 5px); box-sizing: border-box; float: left;">Previous</button>
+                                        <button type="submit"  style="width: calc(50% - 5px); box-sizing: border-box; float: right; margin-right: 0px;"> <i class="fa fa-spinner fa-spin" style="display: none;"></i> Pay Now</button>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            </form> 
+
+                    
+                        @endif
 
                             <div class="form-step" id="{{($type=='ekas'?'step-3':'step-2')}}">
                                 <div class="mb-3">
@@ -281,7 +292,7 @@
                                     <p>Thank you for submitting your documents. We will review and get back to you soon.</p>
                                 </div>
                             </div>
-                        </form>
+                      
                     </div>
                 </div>
             </div>
@@ -289,6 +300,100 @@
     </section>
     <!-- Initialization of intl-tel-input -->
     <script src="https://cdn.jsdelivr.net/npm/jquery-toast-plugin@1.3.2/dist/jquery.toast.min.js"></script>
+
+
+    <script>
+        $(document).ready(function() {
+            function submitForm(formId, url, currentStep, nextStep) {
+                // Validate form (Add any custom validation logic here)
+                let isValid = true;
+                $('.error').hide();
+
+                // Example validation
+                if (!$(formId).find('#name').val()) {
+                    isValid = false;
+                    $(formId).find('#name').next('.error').show();
+                }
+
+                if (!$(formId).find('#email').val()) {
+                    isValid = false;
+                    $(formId).find('#email-error').show();
+                }
+
+                // If validation fails, stop the submission
+                if (!isValid) {
+                    return false;
+                }
+
+                // Gather form data
+                var formData = $(formId).serialize();
+
+                // Extract country name and type from the URL
+                const urlPath = window.location.pathname;
+                const urlParams = new URLSearchParams(window.location.search);
+
+                const countryName = urlPath.split('/')[1]; // Extract 'austria-guidance'
+                const country = countryName.split('-')[0]; // Extract 'austria' from 'austria-guidance'
+                const type = urlParams.get('type'); // Extract 'visa' from '?type=visa'
+
+                // Append country name and type to formData
+                formData += '&guidance_country=' + country;
+                formData += '&type=' + type;
+
+                // AJAX call to submit the form data
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    data: formData,
+                    dataType: 'JSON',
+                    success: function(response) {
+                        // Handle success, move to the next step if successful
+                        console.log(response);
+                        if (response.success) {
+                            // Hide current step and show the next step
+                            $(currentStep).removeClass('active').hide();
+                            $(nextStep).addClass('active').show();
+
+                            // Determine which step you're moving from and to
+                            const currentLi = $('#book-progressbar li.active');
+                            let nextLi;
+
+                            // Check if "Payment" is in the flow
+                            if (currentLi.text().trim() === "Personal Info" && $('#book-progressbar li:contains("Payment")').length) {
+                                nextLi = $('#book-progressbar li:contains("Payment")');
+                            } else if (currentLi.text().trim() === "Personal Info" || currentLi.text().trim() === "Payment") {
+                                nextLi = $('#book-progressbar li:contains("Document")');
+                            }
+
+                            // Update progress bar to the next step
+                            currentLi.removeClass('active');
+                            nextLi.addClass('active');
+                        } else {
+                            alert('Error: ' + response.error);
+                        }
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        // Handle error
+                        console.log('Error:', textStatus, errorThrown);
+                        alert('An error occurred while submitting the form.');
+                    }
+                });
+
+                return true;
+            }
+
+            $('.next-btn').on('click', function(e) {
+                e.preventDefault();
+
+                // Call the submitForm function
+                submitForm('#step-1-form', '/submit-form-austria-guidance-visa', '#step-1', '#step-2');
+            });
+
+
+
+        });
+    </script>
+
 
     <script>
         
@@ -316,283 +421,111 @@
     <script src="https://js.stripe.com/v3/"></script>
     
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            var type1 = "{{$type}}";
-            if(type1 === 'ekas'){
+        document.addEventListener('DOMContentLoaded', function() {
+    
 
-                const stripe = Stripe("{{env('STRIPE_KEY')}}"); // Replace with your Stripe publishable key
-                const elements = stripe.elements();
-        
-                const style = {
-                    base: {
-                        color: '#32325d',
-                        fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
-                        fontSmoothing: 'antialiased',
-                        fontSize: '16px',
-                        '::placeholder': {
-                            color: '#aab7c4'
-                        }
-                    },
-                    invalid: {
-                        color: '#fa755a',
-                        iconColor: '#fa755a'
+            const stripe = Stripe("{{env('STRIPE_KEY')}}"); // Replace with your Stripe publishable key
+            const elements = stripe.elements();
+            // alert(stripe);
+
+            const style = {
+                base: {
+                    color: '#32325d',
+                    fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+                    fontSmoothing: 'antialiased',
+                    fontSize: '16px',
+                    '::placeholder': {
+                        color: '#aab7c4'
                     }
-                };
-        
-                const cardNumber = elements.create('cardNumber', {style: style});
-                cardNumber.mount('#card-number');
-        
-                const cardExpiry = elements.create('cardExpiry', {style: style});
-                cardExpiry.mount('#card-expiry');
-        
-                const cardCvc = elements.create('cardCvc', {style: style});
-                cardCvc.mount('#card-cvc');
-        
-                cardNumber.addEventListener('change', function(event) {
-                    const displayError = document.getElementById('card-errors');
-                    if (event.error) {
-                        displayError.textContent = event.error.message;
+                },
+                invalid: {
+                    color: '#fa755a',
+                    iconColor: '#fa755a'
+                }
+            };
+
+            const cardNumber = elements.create('cardNumber', {
+                style: style
+            });
+            cardNumber.mount('#card-number');
+
+            const cardExpiry = elements.create('cardExpiry', {
+                style: style
+            });
+            cardExpiry.mount('#card-expiry');
+
+            const cardCvc = elements.create('cardCvc', {
+                style: style
+            });
+            cardCvc.mount('#card-cvc');
+
+            cardNumber.addEventListener('change', function(event) {
+                const displayError = document.getElementById('card-errors');
+                if (event.error) {
+                    displayError.textContent = event.error.message;
+                } else {
+                    displayError.textContent = '';
+                }
+
+                const cardBrand = event.brand;
+                const cardBrandElement = document.getElementById('card-brand');
+                cardBrandElement.style.display = cardBrand ? 'inline' : 'none';
+                if (cardBrand) {
+                    const brandIcons = {
+                        'visa': 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/200px-Visa_Inc._logo.svg.png',
+                        'mastercard': 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Mastercard-logo.svg/200px-Mastercard-logo.svg.png',
+                        'amex': 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/American_Express_logo_%282018%29.svg/1202px-American_Express_logo_%282018%29.svg.png',
+                        'discover': 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Discover_Card_logo.svg/350px-Discover_Card_logo.svg.png',
+                        'diners': 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Diners_Club_Logo3.svg/440px-Diners_Club_Logo3.svg.png',
+                        'jcb': 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/JCB_logo.svg/400px-JCB_logo.svg.png',
+                        'unionpay': 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/UnionPay_logo.svg/400px-UnionPay_logo.svg.png',
+                        'unknown': 'https://i.ibb.co/ZHrrT4V/vecteezy-no-credit-card-sign-debit-card-not-accepted-vector-icon-6059855-removebg-preview.png'
+                    };
+                    cardBrandElement.src = brandIcons[cardBrand] || brandIcons['unknown'];
+                }
+            });
+
+
+            var consultancyForm = $(".require-validation");
+
+            // consultancyForm.addEventListener('submit', function (e) {
+            consultancyForm.on("submit", function(e) {
+                e.preventDefault();
+
+                stripe.createToken(cardNumber).then(function(result) {
+                    if (result.error) {
+                        const errorElement = document.getElementById('card-errors');
+                        errorElement.textContent = result.error.message;
+
+                        $('.error')
+                            .removeClass('hide')
+                            .find('.alert')
+                            .text(response.error.message);
+
+                        // $('.fa-spin').css("display","none");
+
                     } else {
-                        displayError.textContent = '';
-                    }
-        
-                    const cardBrand = event.brand;
-                    const cardBrandElement = document.getElementById('card-brand');
-                    cardBrandElement.style.display = cardBrand ? 'inline' : 'none';
-                    if (cardBrand) {
-                        const brandIcons = {
-                            'visa': 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/200px-Visa_Inc._logo.svg.png',
-                            'mastercard': 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Mastercard-logo.svg/200px-Mastercard-logo.svg.png',
-                            'amex': 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/American_Express_logo_%282018%29.svg/200px-American_Express_logo_%282018%29.svg.png',
-                            'discover': 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Discover_Card_logo.svg/200px-Discover_Card_logo.svg.png',
-                            'diners': 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/Diners_Club_Logo7.svg/200px-Diners_Club_Logo7.svg.png',
-                            'jcb': 'https://upload.wikimedia.org/wikipedia/en/thumb/6/6a/JCB_%28credit_card%29_logo.svg/200px-JCB_%28credit_card%29_logo.svg.png',
-                            'unionpay': 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/UnionPay_logo.svg/200px-UnionPay_logo.svg.png',
-                            'unknown': 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Credit_card_font_awesome.svg/200px-Credit_card_font_awesome.svg.png'
-                        };
-                        cardBrandElement.src = brandIcons[cardBrand] || brandIcons['unknown'];
+                        stripeTokenHandler(result.token);
+
                     }
                 });
 
-                var form = document.getElementById('get_user_data_form');
-                form.addEventListener('submit', function(event) {
-                    $('.fa-spin').css("display","inline");
+                // alert('Form submitted successfully!');
+            });
 
-                    event.preventDefault();
-                    var type2 = "{{$type}}";
-                    stripe.createToken(cardNumber).then(function(result) {
-                        if (result.error) {
-                            const errorElement = document.getElementById('card-errors');
-                            errorElement.textContent = result.error.message;
-                            $('.fa-spin').css("display","none");
 
-                        } else {
-                            stripeTokenHandler(result.token);
-                        }
-                    });
-                });
-    
-
-            }else{
-                var form = document.getElementById('get_user_data_form');
-                form.addEventListener('submit', function(event) {
-                    $('.fa-spin').css("display","inline");
-
-                    event.preventDefault();
-                    stripeTokenHandler("null");
-                    // var type2 = "{{$type}}";
-                    // stripe.createToken(cardNumber).then(function(result) {
-                    //     if (result.error) {
-                    //         const errorElement = document.getElementById('card-errors');
-                    //         errorElement.textContent = result.error.message;
-                    //         $('.fa-spin').css("display","none");
-
-                    //     } else {
-                    //         stripeTokenHandler(result.token);
-                    //     }
-                    // });
-                });
-            }
-    
             function stripeTokenHandler(token) {
-                // const form = document.getElementById('get_user_data_form');
-                // const hiddenInput = document.createElement('input');
-                // hiddenInput.setAttribute('type', 'hidden');
-                // hiddenInput.setAttribute('name', 'stripeToken');
-                // hiddenInput.setAttribute('value', token.id);
-                // form.appendChild(hiddenInput);
-    
-                // form.submit();
 
-                var name1 = $(".name").val();
-                var email = $(".email").val();
-                var type = "{{$type}}";
-
-
-                var stripeToken = "null";
-                if(type == 'ekas'){
-                    stripeToken = token.id;
-                }
-
-                    $.ajax({
-                        url: '{{ route('processPayment') }}',
-                        method: 'POST',
-                        data: {
-                            _token: '{{ csrf_token() }}',
-                            stripeToken: stripeToken,
-                            first_name:$(".first_name").val(),
-                            last_name:$(".last_name").val(),
-                            name:name1,
-                            email:email,
-                            guidance_country:'belgium',
-                            type: type            
-                        },
-                        
-                        success: function(response) {
-                            $('.fa-spin').css("display","none");
-                            $.toast({
-                                heading: 'Success',
-                                text: 'Payment Succesfull',
-                                showHideTransition: 'slide',
-                                icon: 'info'
-                            });
-
-                            showStep(2);
-                            $(".previous-btn").css("display","none");
-                            // alert('Payment successful!');
-                        },
-                        error: function(error) {
-                            $('.fa-spin').css("display","none");
-                            $.toast({
-                                heading: 'Error',
-                                text: 'Payment Failed',
-                                showHideTransition: 'fade',
-                                icon: 'error'
-                            })
-                        }
-                    });
-                
+                /* token contains id, last4, and card type */
+                consultancyForm.find('input[type=text]').empty();
+                consultancyForm.append("<input type='hidden' name='stripeToken' value='" + token.id + "'/>");
+                consultancyForm.get(0).submit();
 
             }
-    
-            const emailInput = document.getElementById('email');
-            const phoneInput = document.getElementById('phone');
-            const steps = document.querySelectorAll('.form-step');
-            const nextButtons = document.querySelectorAll('.next-btn');
-            const prevButtons = document.querySelectorAll('.previous-btn');
-            const progressBar = document.getElementById('book-progressbar').children;
-            let currentStep = 0;
-    
-            function validateForm() {
-                let isValid = true;
-    
-                if (!emailInput.value) {
-                    emailError.style.display = 'inline';
-                    isValid = false;
-                } else {
-                    emailError.style.display = 'none';
-                }
-    
-                if (!phoneInput.value) {
-                    phoneError.style.display = 'inline';
-                    isValid = false;
-                } else {
-                    phoneError.style.display = 'none';
-                }
-    
-                nextButtons[0].disabled = !isValid;
-            }
-    
-            function showStep(step) {
-                steps.forEach((stepElement, index) => {
-                    stepElement.classList.toggle('active', index === step);
-                    progressBar[index].classList.toggle('active', index <= step);
-                });
-            }
-            
-            var payment_status = '{{$payment_status}}';
-             var type = "{{$type}}"
-            if(payment_status == 'true'){
-                if(type == 'ekas'){
-                    showStep(2);
-                }else{
-                    showStep(1);
-                }
-                
-            }
 
-
-            
-    
-            nextButtons.forEach((button, index) => {
-                button.addEventListener('click', function() {
-                    var targetDiv = $('.form-step').eq(currentStep);
-                    var validate = true;
-
-                    var formElements = targetDiv.find('input, textarea, select');
-
-                    formElements.each(function() {
-                        var element = $(this);
-
-                        if ($.trim(element.val()) === '') {
-                            element.next('.error').attr("style","display:inline !important;");
-                            validate = false; 
-                        } else {
-                            element.next('.error').attr("style","display:none !important;");
-        
-                        }
-                    });
-
-                    if (currentStep < steps.length - 1 && validate) {
-                        currentStep++;
-                        if(currentStep < 2){
-                            showStep(currentStep);
-                        }
-                        
-                    }
-                });
-            });
-    
-            prevButtons.forEach((button, index) => {
-                button.addEventListener('click', function() {
-                    if (currentStep > 0) {
-                        currentStep--;
-                        showStep(currentStep);
-                    }
-                });
-            });
-    
-            // form.addEventListener('submit', function(event) {
-            //     event.preventDefault();
-    
-            //     const modal = document.getElementById('submission-message');
-            //     modal.style.display = 'block';
-    
-            //     modal.querySelector('.close').onclick = function() {
-            //         modal.style.display = 'none';
-            //     };
-    
-            //     window.onclick = function(event) {
-            //         if (event.target === modal) {
-            //             modal.style.display = 'none';
-            //         }
-            //     };
-            // });
-    
-            const emailError = document.getElementById('email-error');
-            const phoneError = document.getElementById('phone-error');
-    
-            validateForm();
-    
-            emailInput.addEventListener('input', validateForm);
-            phoneInput.addEventListener('input', validateForm);
         });
     </script>
-    <script>
-
-        
-
-    </script>
+ 
     
     <style>
         /* Style for the disabled Next button */

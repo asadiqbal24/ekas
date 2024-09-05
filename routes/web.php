@@ -105,14 +105,25 @@ Route::get('austria', function () {
 Route::get('austria-guidance', function () {
 
     $userDocPayment = DB::table('user_guidance_country_document')->where('user_id',auth()->user()->id)->where('guidance_country','austria')->first();
-
-//  /   dd($userDocPayment);
     $payment_status = "false";
     if($userDocPayment){
         $payment_status = "true";
     }
     return view('austria-guidance',compact('payment_status'));
 });
+
+
+
+
+
+
+Route::post('submit-form-austria-guidance-visa', [UserController::class, 'submit_form_austria_guidance_visa'])->name('submit-form-austria-guidance-visa');
+
+
+Route::get('ekas-guidance/{success}/{message}', [UserController::class, 'ekas_guidance'])->name('ekas-guidance');
+
+
+
 
 Route::get('belgium-guidance', function () {
 
@@ -156,6 +167,7 @@ Auth::routes(['verify' => true]);
 
 
 Route::post('/process-payment', [UserController::class, 'processPayment'])->name('processPayment');
+Route::post('process-payment-ekas-guide-documents', [UserController::class, 'process_payment_ekas_guide_documents'])->name('process-payment-ekas-guide-documents');
 Route::get('/download-pdf/{country}/{type}', [UserController::class, 'downloadGuidancePDF'])->name('downloadGuidancePDF');
 
 

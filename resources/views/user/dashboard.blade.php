@@ -4,14 +4,16 @@
 <head>
     <link rel="icon" type="image/x-icon" href="{{ Storage::url(App\Services\SettingService::getSetting('favicon')) }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Poppins:wght@100;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Poppins:wght@100;300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" />
     <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="{{asset('dassets/css/card-style.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('dassets/css/card-style.css') }}">
     <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 
@@ -183,9 +185,34 @@
             padding: 22px 25px;
             border-radius: 19px;
             height: 400px;
-         
+            overflow: hidden;
+            overflow-x: hidden;
         }
 
+        /* Custom scrollbar styles for .oks-support-card-sessions */
+        .oks-support-card-sessions::-webkit-scrollbar {
+            width: 8px;
+            /* Width of the scrollbar */
+        }
+
+        .oks-support-card-sessions::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            /* Track background color */
+            border-radius: 10px;
+            /* Rounded corners for the track */
+        }
+
+        .oks-support-card-sessions::-webkit-scrollbar-thumb {
+            background: #888;
+            /* Scrollbar thumb color */
+            border-radius: 10px;
+            /* Rounded corners for the thumb */
+        }
+
+        .oks-support-card-sessions::-webkit-scrollbar-thumb:hover {
+            background: #555;
+            /* Darker color when hovering */
+        }
 
         .oks-support-card-sessions h3 {
             font-size: 16px !important;
@@ -313,8 +340,12 @@
         }
 
         /* .oks-dashboad-wrap{
-           margin-bottom:30% !important;   
+           margin-bottom:30% !important;
         } */
+
+        .oks-dashboad-wrap h3 {
+            margin-bottom: 15px !important;
+        }
 
         @media (max-width:768px) {
 
@@ -362,8 +393,69 @@
         .text-sm-center {
             text-align: center;
         }
+
+        #thinscroll {
+            overflow-y: scroll;
+            overflow-x: hidden;
+            height: 100px;
+        }
+
+        #thinscroll::-webkit-scrollbar {
+            width: 6px;
+            /* Width of the scrollbar */
+        }
+
+        #thinscroll::-webkit-scrollbar-track {
+            background: #fcd230;
+            /* Track background color */
+            border-radius: 10px;
+            /* Rounded corners for the track */
+        }
+
+        #thinscroll::-webkit-scrollbar-thumb {
+            background: #888;
+            /* Scrollbar thumb color */
+            border-radius: 10px;
+            /* Rounded corners for the thumb */
+        }
+
+        #thinscroll::-webkit-scrollbar-thumb:hover {
+            background: #555;
+            /* Darker color when hovering */
+        }
+
+        #newscroll {
+            overflow-y: hidden;
+            overflow-x: hidden;
+            height: 245px;
+        }
+
+        #newscroll::-webkit-scrollbar {
+            width: 6px;
+            /* Width of the scrollbar */
+        }
+
+        #newscroll::-webkit-scrollbar-track {
+            background: #0d6efd;
+            /* Track background color */
+            border-radius: 10px;
+            /* Rounded corners for the track */
+        }
+
+        #newscroll::-webkit-scrollbar-thumb {
+            background: #888;
+            /* Scrollbar thumb color */
+            border-radius: 10px;
+            /* Rounded corners for the thumb */
+        }
+
+        #newscroll::-webkit-scrollbar-thumb:hover {
+            background: #555;
+            /* Darker color when hovering */
+        }
     </style>
-    <title>{{App\Services\SettingService::getSetting('site_title')}} | {{App\Services\SettingService::getSetting('tagline')}}</title>
+    <title>{{ App\Services\SettingService::getSetting('site_title') }} |
+        {{ App\Services\SettingService::getSetting('tagline') }}</title>
     {{-- jquery toaster --}}
     @include('user._styles')
     {{-- <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script> --}}
@@ -404,7 +496,7 @@
                                         </div>
                                         <div class="oks-profile-info">
                                             @php
-                                            $lookingFor = Auth::user()->lookingfor;
+                                                $lookingFor = Auth::user()->lookingfor;
 
                                             @endphp
 
@@ -413,7 +505,7 @@
                                                 <li><strong>Contact: </strong>{{ Auth::user()->number }}</li>
                                                 <li><strong>Current Level: </strong>{{ Auth::user()->academic }}</li>
                                                 <li><strong>Desired Level: </strong>
-                                                    {{$lookingFor}}
+                                                    {{ $lookingFor }}
                                                 </li>
                                             </ul>
                                         </div>
@@ -424,7 +516,8 @@
                                     <div class="oks-profile-sec">
                                         <a href="book/consult">Book Appointment</a>
                                         <ul class="text-center">
-                                            <li><a href="/document-checker" class="text-center">Document Checker</a></li>
+                                            <li><a href="/document-checker" class="text-center">Document Checker</a>
+                                            </li>
                                             <li><a href="/blogs">Blog</a></li>
                                             <li><a href="/#stories">Video</a></li>
                                             <li><a href="/explore">Life in Europe</a></li>
@@ -445,12 +538,18 @@
                                             <div class="oks-dashboad-btn">
                                                 <button id="oks-dashboard-tab1" class="mb-3">Favourites</button>
                                                 <button id="oks-dashboard-tab2">ekas Guides</button>
-                                                <button id="oks-dashboard-tab3">Sessions</button>
+                                                <button id="oks-dashboard-tab3">
+                                                    {{-- Sessions --}}
+                                                    <i class="ri-notification-3-line"></i> Sessions
+                                                    <span id="notification-count"
+                                                        style="font-size: 12px; background-color: red; color: white; border-radius: 50%; padding: 2px 6px; margin-left: 5px;">{{  $appointments->count() }}</span>
+                                                </button>
 
                                                 <button id="oks-dashboard-tab4">
                                                     <i class="ri-notification-3-line"></i> Notifications
                                                     <!-- <span id="notification-count" style="font-size: 12px; background-color: red; color: white; border-radius: 50%; padding: 2px 6px; margin-left: 5px;">0</span> -->
-                                                    <span id="notification-count" style="font-size: 12px; background-color: red; color: white; border-radius: 50%; padding: 2px 6px; margin-left: 5px;">{{$user_notification->count()}}</span>
+                                                    <span id="notification-count"
+                                                        style="font-size: 12px; background-color: red; color: white; border-radius: 50%; padding: 2px 6px; margin-left: 5px;">{{ $user_notification->count() }}</span>
                                                 </button>
                                             </div>
                                         </div>
@@ -462,11 +561,20 @@
                                                         <h3>Visa Guidance</h3>
                                                         <div class="supporat-card-list">
                                                             <ul>
-                                                                <li style="cursor: pointer; border-radius: 6px; background: #1b4ba6; color: white; padding: 9px;" class=""><a href="{{url('austria-guidance?type=visa')}}" style="text-decoration: none; color:white;padding: 15px 30px;">Austria</a>
+                                                                <li style="cursor: pointer; border-radius: 6px; background: #1b4ba6; color: white; padding: 9px;"
+                                                                    class=""><a
+                                                                        href="{{ url('austria-guidance?type=visa') }}"
+                                                                        style="text-decoration: none; color:white;padding: 15px 30px;">Austria</a>
                                                                 </li>
-                                                                <li style="cursor: pointer; border-radius: 6px; background: #1b4ba6; color: white; padding: 9px;" class=""><a href="{{url('belgium-guidance?type=visa')}}" style="text-decoration: none; color:white;padding: 15px 30px;">Belgium</a>
+                                                                <li style="cursor: pointer; border-radius: 6px; background: #1b4ba6; color: white; padding: 9px;"
+                                                                    class=""><a
+                                                                        href="{{ url('belgium-guidance?type=visa') }}"
+                                                                        style="text-decoration: none; color:white;padding: 15px 30px;">Belgium</a>
                                                                 </li>
-                                                                <li style="cursor: pointer; border-radius: 6px; background: #1b4ba6; color: white; padding: 9px;" class=""><a href="{{url('finland-guidance?type=visa')}}" style="text-decoration: none; color:white; padding: 15px 30px;">Finland</a>
+                                                                <li style="cursor: pointer; border-radius: 6px; background: #1b4ba6; color: white; padding: 9px;"
+                                                                    class=""><a
+                                                                        href="{{ url('finland-guidance?type=visa') }}"
+                                                                        style="text-decoration: none; color:white; padding: 15px 30px;">Finland</a>
                                                                 </li>
                                                             </ul>
                                                         </div>
@@ -477,11 +585,20 @@
                                                         <h3>Academic Guidelines</h3>
                                                         <div class="supporat-card-list">
                                                             <ul>
-                                                                <li style="cursor: pointer; border-radius: 6px; background: #1b4ba6; color: white; padding: 9px;" class=""><a href="{{url('austria-guidance?type=academic')}}" style="text-decoration: none; color:white; padding: 15px 30px;">Austria</a>
+                                                                <li style="cursor: pointer; border-radius: 6px; background: #1b4ba6; color: white; padding: 9px;"
+                                                                    class=""><a
+                                                                        href="{{ url('austria-guidance?type=academic') }}"
+                                                                        style="text-decoration: none; color:white; padding: 15px 30px;">Austria</a>
                                                                 </li>
-                                                                <li style="cursor: pointer; border-radius: 6px; background: #1b4ba6; color: white; padding: 9px;" class=""><a href="{{url('belgium-guidance?type=academic')}}" style="text-decoration: none; color:white; padding: 15px 30px;">Belgium</a>
+                                                                <li style="cursor: pointer; border-radius: 6px; background: #1b4ba6; color: white; padding: 9px;"
+                                                                    class=""><a
+                                                                        href="{{ url('belgium-guidance?type=academic') }}"
+                                                                        style="text-decoration: none; color:white; padding: 15px 30px;">Belgium</a>
                                                                 </li>
-                                                                <li style="cursor: pointer; border-radius: 6px; background: #1b4ba6; color: white; padding: 9px;" class=""><a href="{{url('finland-guidance?type=academic')}}" style="text-decoration: none; color:white; padding: 15px 30px;">Finland</a>
+                                                                <li style="cursor: pointer; border-radius: 6px; background: #1b4ba6; color: white; padding: 9px;"
+                                                                    class=""><a
+                                                                        href="{{ url('finland-guidance?type=academic') }}"
+                                                                        style="text-decoration: none; color:white; padding: 15px 30px;">Finland</a>
                                                                 </li>
                                                             </ul>
                                                         </div>
@@ -492,9 +609,24 @@
                                                         <h3>ekas Guidance</h3>
                                                         <div class="supporat-card-list">
                                                             <ul>
-                                                                <li style="cursor: pointer; border-radius: 6px; background: #1b4ba6; color: white; padding: 9px;" data-title="Austria Guidance €1" data-price="€1" data-image="{{ asset('image/austria-background.jpeg') }}"><a href="{{url('austria-guidance')}}" style="text-decoration: none; color:white; padding: 15px 30px;">Austria</a></li>
-                                                                <li style="cursor: pointer; border-radius: 6px; background: #1b4ba6; color: white; padding: 9px;" data-title="Belgium Guidance €1" data-price="€1" data-image="{{ asset('image/beljium-bg.jpeg') }}"><a href="{{url('belgium-guidance')}}" style="text-decoration: none; color:white; padding: 15px 30px;">Belgium</a></li>
-                                                                <li style="cursor: pointer; border-radius: 6px; background: #1b4ba6; color: white; padding: 9px;" data-title="Finland Guidance €1" data-price="€1" data-image="{{ asset('image/finland-bg.jpeg') }}"><a href="{{url('finland-guidance')}}" style="text-decoration: none; color:white; padding: 15px 30px;">Finland</a></li>
+                                                                <li style="cursor: pointer; border-radius: 6px; background: #1b4ba6; color: white; padding: 9px;"
+                                                                    data-title="Austria Guidance €1" data-price="€1"
+                                                                    data-image="{{ asset('image/austria-background.jpeg') }}">
+                                                                    <a href="{{ url('austria-guidance') }}"
+                                                                        style="text-decoration: none; color:white; padding: 15px 30px;">Austria</a>
+                                                                </li>
+                                                                <li style="cursor: pointer; border-radius: 6px; background: #1b4ba6; color: white; padding: 9px;"
+                                                                    data-title="Belgium Guidance €1" data-price="€1"
+                                                                    data-image="{{ asset('image/beljium-bg.jpeg') }}">
+                                                                    <a href="{{ url('belgium-guidance') }}"
+                                                                        style="text-decoration: none; color:white; padding: 15px 30px;">Belgium</a>
+                                                                </li>
+                                                                <li style="cursor: pointer; border-radius: 6px; background: #1b4ba6; color: white; padding: 9px;"
+                                                                    data-title="Finland Guidance €1" data-price="€1"
+                                                                    data-image="{{ asset('image/finland-bg.jpeg') }}">
+                                                                    <a href="{{ url('finland-guidance') }}"
+                                                                        style="text-decoration: none; color:white; padding: 15px 30px;">Finland</a>
+                                                                </li>
                                                             </ul>
 
 
@@ -502,51 +634,93 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="modal fade" id="paymentModal" tabindex="-1" aria-labelledby="paymentModalLabel" aria-hidden="true" style="padding:2em;">
+                                                <div class="modal fade" id="paymentModal" tabindex="-1"
+                                                    aria-labelledby="paymentModalLabel" aria-hidden="true"
+                                                    style="padding:2em;">
                                                     <div class="modal-dialog modal-dialog-centered modal-lg">
-                                                        <div class="modal-content secondmodal" style="width: 60%; padding:0px;">
+                                                        <div class="modal-content secondmodal"
+                                                            style="width: 60%; padding:0px;">
                                                             <div class="modalss-header">
-                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="float: right; color:white;"></button>
+                                                                <button type="button" class="btn-close"
+                                                                    data-bs-dismiss="modal" aria-label="Close"
+                                                                    style="float: right; color:white;"></button>
                                                             </div>
                                                             <div class="modal-body">
-                                                                <h4 class="modal-title text-center" id="paymentModalLabel" style="font-weight: 700;">Payment Information</h4>
-                                                                <p class="text-center" id="modalDescription">Please fill in the details below to proceed with your payment.</p>
+                                                                <h4 class="modal-title text-center"
+                                                                    id="paymentModalLabel" style="font-weight: 700;">
+                                                                    Payment Information</h4>
+                                                                <p class="text-center" id="modalDescription">Please
+                                                                    fill in the details below to proceed with your
+                                                                    payment.</p>
                                                                 <div class="oks-book-consultent-wrap">
                                                                     <script src='https://js.stripe.com/v2/' type='text/javascript'></script>
-                                                                    <form role="form" action="{{route('stripePost')}}" method="post" class="require-validation" data-cc-on-file="false" data-stripe-publishable-key="{{ env('pk_test_51Owfu5HDyUEvV9bCayz668CJCAwcNZjlHeXi36IFKL5b8bfuJTaaH0IbjQ91u9SXsXQQiOvjwryzDji77CTYycY900ZTXAEwYK') }}" id="payment-form">
+                                                                    <form role="form"
+                                                                        action="{{ route('stripePost') }}"
+                                                                        method="post" class="require-validation"
+                                                                        data-cc-on-file="false"
+                                                                        data-stripe-publishable-key="{{ env('pk_test_51Owfu5HDyUEvV9bCayz668CJCAwcNZjlHeXi36IFKL5b8bfuJTaaH0IbjQ91u9SXsXQQiOvjwryzDji77CTYycY900ZTXAEwYK') }}"
+                                                                        id="payment-form">
                                                                         @csrf
                                                                         <div class="mb-3">
-                                                                            <label for="name" class="form-label">Name</label>
-                                                                            <input type="text" name="name" placeholder="Enter your name" required class="form-control" />
+                                                                            <label for="name"
+                                                                                class="form-label">Name</label>
+                                                                            <input type="text" name="name"
+                                                                                placeholder="Enter your name" required
+                                                                                class="form-control" />
                                                                         </div>
                                                                         <div class="mb-3">
-                                                                            <label for="email" class="form-label">Email</label>
-                                                                            <input type="email" name="email" placeholder="Enter your email" required class="form-control" />
+                                                                            <label for="email"
+                                                                                class="form-label">Email</label>
+                                                                            <input type="email" name="email"
+                                                                                placeholder="Enter your email" required
+                                                                                class="form-control" />
                                                                         </div>
                                                                         <div class="mb-3">
-                                                                            <label for="cardNumber" class="form-label">Card Number</label>
-                                                                            <input type="text" name="cardNumber" placeholder="Valid card number" class="form-control card-number" size='20' autocomplete='off' required />
+                                                                            <label for="cardNumber"
+                                                                                class="form-label">Card Number</label>
+                                                                            <input type="text" name="cardNumber"
+                                                                                placeholder="Valid card number"
+                                                                                class="form-control card-number"
+                                                                                size='20' autocomplete='off'
+                                                                                required />
                                                                             <div class="input-group-append">
                                                                                 <span class="input-group-text mt-3">
-                                                                                    <i class="fab fa-cc-visa visa-icon mx-2"></i>
-                                                                                    <i class="fab fa-cc-mastercard mastercard-icon mx-2"></i>
-                                                                                    <i class="fab fa-cc-amex amex-icon mx-2"></i>
+                                                                                    <i
+                                                                                        class="fab fa-cc-visa visa-icon mx-2"></i>
+                                                                                    <i
+                                                                                        class="fab fa-cc-mastercard mastercard-icon mx-2"></i>
+                                                                                    <i
+                                                                                        class="fab fa-cc-amex amex-icon mx-2"></i>
                                                                                 </span>
                                                                             </div>
                                                                         </div>
                                                                         <div class="mb-3">
-                                                                            <label for="cardExpiry" class="form-label">Expiration Date</label>
+                                                                            <label for="cardExpiry"
+                                                                                class="form-label">Expiration
+                                                                                Date</label>
                                                                             <div class="d-flex">
-                                                                                <input type="number" placeholder="MM" name="card-expiry-month" class="form-control card-expiry-month me-2" required size='2'>
-                                                                                <input type="number" placeholder="YY" name="card-expiry-year" class="form-control card-expiry-year" required size='2'>
+                                                                                <input type="number" placeholder="MM"
+                                                                                    name="card-expiry-month"
+                                                                                    class="form-control card-expiry-month me-2"
+                                                                                    required size='2'>
+                                                                                <input type="number" placeholder="YY"
+                                                                                    name="card-expiry-year"
+                                                                                    class="form-control card-expiry-year"
+                                                                                    required size='2'>
                                                                             </div>
                                                                         </div>
                                                                         <div class="mb-3">
-                                                                            <label for="cardCVC" class="form-label">CVV</label>
-                                                                            <input type="text" autocomplete='off' required class="form-control card-cvc" size='4'>
+                                                                            <label for="cardCVC"
+                                                                                class="form-label">CVV</label>
+                                                                            <input type="text" autocomplete='off'
+                                                                                required class="form-control card-cvc"
+                                                                                size='4'>
                                                                         </div>
-                                                                        <div class="mt-5 d-flex justify-content-between align-items-center">
-                                                                            <button type="submit" class="btn btn-primary" style="background:black; width: 100%;">Pay</button>
+                                                                        <div
+                                                                            class="mt-5 d-flex justify-content-between align-items-center">
+                                                                            <button type="submit"
+                                                                                class="btn btn-primary"
+                                                                                style="background:black; width: 100%;">Pay</button>
                                                                         </div>
                                                                     </form>
                                                                 </div>
@@ -574,9 +748,9 @@
                                                                         placeholder="Enter Description Here"
                                                                         name="task_description" id="task_description">
                                                                     @error('task_description')
-                                                                        <strong
-                                                                            class="text-danger">{{ $message }}</strong>
-                                                                    @enderror
+    <strong
+                                                                                    class="text-danger">{{ $message }}</strong>
+@enderror
                                                                     <span
                                                                         style="background-color: #FFCC01;padding: 8px;border-radius:5px; cursor: pointer;"
                                                                         id="toDoFormSubmit">+</span>
@@ -584,14 +758,14 @@
                                                                 <div id="print_todos"
                                                                     style="height: 100px;overflow-y: scroll;">
                                                                     @forelse ($todos as $todo)
-                                                                        <li
+<li
                                                                             class="d-flex justify-content-between align-items-center main-todo">
                                                                             {{ $todo->task_description }}
                                                                             <i class="fa fa-trash text-danger todo-dlt-btn" data-todoid="{{ $todo->id }}" style="cursor: pointer"></i>
                                                                         </li>
-                                                                    @empty
+                                                            @empty
                                                                         <li>No data found</li>
-                                                                    @endforelse
+@endforelse
                                                                 </div>
                                                             </ul>
                                                         </div>
@@ -602,15 +776,15 @@
                                                         >
                                                         <h3>Upcoming Deadline</h3>
                                                         @foreach ($courses as $course)
-                                                            @if ($course->expiringSoon)
-                                                                <div class="oks-3rd-card">
+@if ($course->expiringSoon)
+<div class="oks-3rd-card">
                                                                     <img src="/image/calendar.png">
                                                                     <p>{{ $course->title }}</p>
                                                                     <p>{{ $course->universityname }}</p>
                                                                     <strong>{{ $course->location }}</strong>
                                                                 </div>
-                                                            @endif
-                                                        @endforeach
+@endif
+@endforeach
 
                                                     </div>
                                                 </div> -->
@@ -622,33 +796,37 @@
                                                     <div class="oks-support-card-sessions">
                                                         <h3>Session Purchase</h3>
                                                         <div class="circle">
-                                                            {{$appointments->count()}}
+                                                            {{ $appointments->count() }}
                                                         </div>
                                                         <div>
-                                                            <h4 style="text-align: center;color: #fff;margin-top: 10px;">Schedule Dates</h4>
+                                                            <h4
+                                                                style="text-align: center;color: #fff;margin-top: 10px;">
+                                                                Schedule Dates</h4>
                                                         </div>
                                                         <div class="supporat-card-list">
-                                                            <!-- <div style="overflow-y: scroll; overflow-x: hidden; height: 100px;"> -->
-
-                                                            <div>
+                                                            <div id="thinscroll">
                                                                 @if(!empty($appointments) && count($appointments) > 0)
                                                                 @foreach($appointments as $appoint)
+                                                                @foreach($appoint->appointment_session_dates as $dates)
                                                                 <div class="row mt-1">
                                                                     <div class="col-md-5 mt-1 text-sm-center">
-                                                                        <label style="color: #fff; font-size:12px">Session {{$loop->iteration}}</label>
+                                                                        <label style="color: #fff; font-size:12px">Session {{$dates->iteration}}</label>
                                                                     </div>
 
                                                                     <div class="col-md-7 mt-1 text-sm-center">
-                                                                        <label style="color: #e4d55a; font-size: 11px;">{{$appoint->date}}</label>
+                                                                        <label style="color: #e4d55a; font-size: 11px;">{{$dates->date}}</label>
                                                                     </div>
                                                                 </div>
                                                                 @endforeach
+                                                                @endforeach
                                                                 @else
-                                                                <div class="row mt-1">
-                                                                    <div class="col-md-12 mt-1 text-sm-center">
-                                                                        <label style="color: #e4d55a; font-size: 13px;">You have no sessions at the moment</label>
+                                                                    <div class="row mt-1">
+                                                                        <div class="col-md-12 mt-1 text-sm-center">
+                                                                            <label
+                                                                                style="color: #e4d55a; font-size: 13px;">You
+                                                                                have no sessions at the moment</label>
+                                                                        </div>
                                                                     </div>
-                                                                </div>
                                                                 @endif
                                                             </div>
 
@@ -660,15 +838,17 @@
 
                                                                 <div class="col-md-5 mt-3 text-sm-center">
                                                                     <div class="circle2">
-                                                                        2
+                                                                        {{ $appointments->count()}}
                                                                     </div>
                                                                 </div>
 
                                                                 <div class="col-md-12 mt-3">
-                                                                    @if(!empty($appointments) && count($appointments) > 0)
-                                                                    <label style="color: red; font-size:15px">Expiry-{{ \Carbon\Carbon::parse($appoint->date)->addDay()->format('d/m/Y') }}</label>
+                                                                    @if (!empty($appointments) && count($appointments) > 0)
+                                                                        <label
+                                                                            style="color: red; font-size:15px">Expiry-{{ \Carbon\Carbon::parse($appoint->date)->addDay()->format('d/m/Y') }}</label>
                                                                     @else
-                                                                    <label style="color: red; font-size:15px">Expiry-</label>
+                                                                        <label
+                                                                            style="color: red; font-size:15px">Expiry-</label>
                                                                     @endif
                                                                 </div>
                                                             </div>
@@ -683,29 +863,33 @@
 
 
                                                         <div class="supporat-card-list-guide">
-                                                            
+                                                            <div id="newscroll">
+                                                                @if (!empty($appointmentsfiles) && count($appointmentsfiles) > 0)
+                                                                    @foreach ($appointmentsfiles as $files)
+                                                                        <div class="row mt-1">
+                                                                            <div class="col-md-5 mt-1 text-sm-center">
+                                                                                <label style="font-size:12px">Session
+                                                                                    {{ $loop->iteration }}</label>
+                                                                            </div>
 
-                                                            <div>
-                                                                @if(!empty($appointmentsfiles) && count($appointmentsfiles) > 0)
-                                                                @foreach($appointmentsfiles as $files)
-                                                                <div class="row mt-1">
-                                                                    <div class="col-md-5 mt-1 text-sm-center">
-                                                                        <label style="font-size:12px">Session {{$loop->iteration}}</label>
-                                                                    </div>
-
-                                                                    <div class="col-md-7 mt-1 text-sm-center">
-                                                                        <a href="{{ route('download.file', $files->id) }}">
-                                                                            <i class="fa fa-file-pdf-o" style="font-size:25px;color:red"></i>
-                                                                        </a>
-                                                                    </div>
-                                                                </div>
-                                                                @endforeach
+                                                                            <div class="col-md-7 mt-1 text-sm-center">
+                                                                                <a
+                                                                                    href="{{ route('download.file', $files->id) }}">
+                                                                                    <i class="fa fa-file-pdf-o"
+                                                                                        style="font-size:25px;color:red"></i>
+                                                                                </a>
+                                                                            </div>
+                                                                        </div>
+                                                                    @endforeach
                                                                 @else
-                                                                <div class="row mt-1">
-                                                                    <div class="col-md-12 mt-1 text-sm-center">
-                                                                        <label style="color: black; font-size: 13px;">You have no sessions report at the moment</label>
+                                                                    <div class="row mt-1">
+                                                                        <div class="col-md-12 mt-1 text-sm-center">
+                                                                            <label
+                                                                                style="color: black; font-size: 13px;">You
+                                                                                have no sessions report at the
+                                                                                moment</label>
+                                                                        </div>
                                                                     </div>
-                                                                </div>
                                                                 @endif
                                                             </div>
                                                         </div>
@@ -718,20 +902,21 @@
                                                         <h3>Upcoming Session</h3>
 
                                                         @php
-                                                        $nearest_appointment = null;
-                                                        $today = \Carbon\Carbon::today();
+                                                            $nearest_appointment = null;
+                                                            $today = \Carbon\Carbon::today();
 
-                                                        foreach ($appointments as $appoint) {
+                                                            foreach ($appointments as $appoint) {
+                                                                $appoint_date = \Carbon\Carbon::parse($appoint->date);
 
-                                                        $appoint_date = \Carbon\Carbon::parse($appoint->date);
-
-
-                                                        if ($appoint_date > $today) {
-                                                        if ($nearest_appointment == null || $appoint_date->lt($nearest_appointment->date)) {
-                                                        $nearest_appointment = $appoint;
-                                                        }
-                                                        }
-                                                        }
+                                                                if ($appoint_date > $today) {
+                                                                    if (
+                                                                        $nearest_appointment == null ||
+                                                                        $appoint_date->lt($nearest_appointment->date)
+                                                                    ) {
+                                                                        $nearest_appointment = $appoint;
+                                                                    }
+                                                                }
+                                                            }
                                                         @endphp
 
 
@@ -740,34 +925,44 @@
                                                             <div class="row mt-1">
 
 
-                                                                @if($nearest_appointment)
-                                                                <div class="col-md-12">
-                                                                    <time datetime="{{ $nearest_appointment->date }}" class="icon">
-                                                                        <em>{{ \Carbon\Carbon::parse($nearest_appointment->date)->format('l') }}</em>
-                                                                        <strong>{{ \Carbon\Carbon::parse($nearest_appointment->date)->format('F') }}</strong>
-                                                                        <span>{{ \Carbon\Carbon::parse($nearest_appointment->date)->format('d') }}</span>
-                                                                    </time>
-                                                                </div>
-                                                                <div class="col-md-12" style="text-align: center;">
-                                                                    <!-- Display the time in the desired format -->
-                                                                    <label style="font-size: large;">
-                                                                        {{ \Carbon\Carbon::parse($nearest_appointment->time)->format('H:i') }}
-                                                                    </label>
-                                                                </div>
-                                                                <div class="col-md-12 mt-1" style="text-align: center;">
-                                                                    <label style="font-size: 15px; background-color: #cfba43;padding: 5px 10px;border-radius: 15px;">Zoom Link</label>
+                                                                @if ($nearest_appointment)
+                                                                    <div class="col-md-12">
+                                                                        <time
+                                                                            datetime="{{ $nearest_appointment->date }}"
+                                                                            class="icon">
+                                                                            <em>{{ \Carbon\Carbon::parse($nearest_appointment->date)->format('l') }}</em>
+                                                                            <strong>{{ \Carbon\Carbon::parse($nearest_appointment->date)->format('F') }}</strong>
+                                                                            <span>{{ \Carbon\Carbon::parse($nearest_appointment->date)->format('d') }}</span>
+                                                                        </time>
+                                                                    </div>
+                                                                    <div class="col-md-12"
+                                                                        style="text-align: center;">
+                                                                        <!-- Display the time in the desired format -->
+                                                                        <label style="font-size: large;">
+                                                                            {{ \Carbon\Carbon::parse($nearest_appointment->time)->format('H:i') }}
+                                                                        </label>
+                                                                    </div>
+                                                                    <div class="col-md-12 mt-1"
+                                                                        style="text-align: center;">
+                                                                        <label
+                                                                            style="font-size: 15px; background-color: #cfba43;padding: 5px 10px;border-radius: 15px;">Zoom
+                                                                            Link</label>
 
-                                                                </div>
+                                                                    </div>
 
-                                                                <div class="col-md-12 mt-1" style="text-align: center;">
-                                                                    <a href="" style="font-size: 10px;color: red;font-weight: 700;">Read More</a>
+                                                                    <div class="col-md-12 mt-1"
+                                                                        style="text-align: center;">
+                                                                        <a href=""
+                                                                            style="font-size: 10px;color: red;font-weight: 700;">Read
+                                                                            More</a>
 
-                                                                </div>
-
+                                                                    </div>
                                                                 @else
-                                                                <div class="col-md-12" style="text-align: center;">
-                                                                    <p style="font-size: 14px; color: red;">There is no upcoming session.</p>
-                                                                </div>
+                                                                    <div class="col-md-12"
+                                                                        style="text-align: center;">
+                                                                        <p style="font-size: 14px; color: red;">There
+                                                                            is no upcoming session.</p>
+                                                                    </div>
                                                                 @endif
 
 
@@ -799,24 +994,25 @@
                                                 <div class="col-md-12 col-sm-12">
                                                     <div class="oks-support-card-sessions" id="notifications">
 
-                                                        @if(!empty($user_notification) && count($user_notification) > 0)
+                                                        @if (!empty($user_notification) && count($user_notification) > 0)
 
-                                                        @foreach($user_notification as $notification )
-
-                                                        <h3>
-                                                            Notification: {{$notification->title}} {{$notification->description}}
-                                                            <span style="float: right;">
-                                                                {{ \Carbon\Carbon::parse($notification->created_at)->format('d/m/y') }}
-                                                                <a href="{{route('user-notification-delete',$notification->id)}}" onclick="return confirmDelete(this);">
-                                                                    <i class="fa fa-trash-o" style="font-size: 20px; color: red; padding-left: 15px;"></i>
-                                                                </a>
-                                                            </span>
-                                                        </h3>
-                                                        @endforeach
-
+                                                            @foreach ($user_notification as $notification)
+                                                                <h3>
+                                                                    Notification: {{ $notification->title }}
+                                                                    {{ $notification->description }}
+                                                                    <span style="float: right;">
+                                                                        {{ \Carbon\Carbon::parse($notification->created_at)->format('d/m/y') }}
+                                                                        <a href="{{ route('user-notification-delete', $notification->id) }}"
+                                                                            onclick="return confirmDelete(this);">
+                                                                            <i class="fa fa-trash-o"
+                                                                                style="font-size: 20px; color: red; padding-left: 15px;"></i>
+                                                                        </a>
+                                                                    </span>
+                                                                </h3>
+                                                            @endforeach
                                                         @else
-                                                        <h3>You have no notification at the moment.
-                                                        </h3>
+                                                            <h3>You have no notification at the moment.
+                                                            </h3>
                                                         @endif
 
 
@@ -939,7 +1135,9 @@
         var $form = $(".require-validation");
         $('form.require-validation').bind('submit', function(e) {
             var $form = $(".require-validation"),
-                inputSelector = ['input[type=email]', 'input[type=password]', 'input[type=text]', 'input[type=file]', 'textarea'].join(', '),
+                inputSelector = ['input[type=email]', 'input[type=password]', 'input[type=text]',
+                    'input[type=file]', 'textarea'
+                ].join(', '),
                 $inputs = $form.find('.required').find(inputSelector),
                 $errorMessage = $form.find('div.error'),
                 valid = true;
@@ -955,7 +1153,9 @@
             });
             if (!$form.data('cc-on-file')) {
                 e.preventDefault();
-                Stripe.setPublishableKey('pk_test_51Owfu5HDyUEvV9bCayz668CJCAwcNZjlHeXi36IFKL5b8bfuJTaaH0IbjQ91u9SXsXQQiOvjwryzDji77CTYycY900ZTXAEwYK');
+                Stripe.setPublishableKey(
+                    'pk_test_51Owfu5HDyUEvV9bCayz668CJCAwcNZjlHeXi36IFKL5b8bfuJTaaH0IbjQ91u9SXsXQQiOvjwryzDji77CTYycY900ZTXAEwYK'
+                );
 
                 // Capture the expiration month input
                 var expMonth = $('.card-expiry-month').val();
@@ -1116,9 +1316,12 @@
             var image = $(this).data('image');
 
             $('#paymentModalLabel').text(title);
-            $('#modalDescription').text('Discover your educational opportunities in ' + title.split(' ')[0] + ' with our comprehensive guide designed especially for international students.');
+            $('#modalDescription').text('Discover your educational opportunities in ' + title.split(
+                    ' ')[0] +
+                ' with our comprehensive guide designed especially for international students.');
             $('#totalDue').text('Total due: ' + price);
-            $('.modalss-header').css('background', 'url(' + image + ') no-repeat center center').css('background-size', 'cover');
+            $('.modalss-header').css('background', 'url(' + image + ') no-repeat center center').css(
+                'background-size', 'cover');
             $('#paymentModal button[type="submit"]').text('Pay ' + price);
         });
     });
