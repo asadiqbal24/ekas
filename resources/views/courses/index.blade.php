@@ -422,7 +422,7 @@
                 
         // Update filters based on user input
         filters = {
-            location: $('[name="country"]').val(),
+            country: $('[name="country"]').val(),
             universityname: $('[name="universityname"]').val(),
             studymode: $('[name="studymode"]').val(),
             programme: $('[name="program"]').val(),
