@@ -1,0 +1,47 @@
+<?php
+
+namespace App\Http\Controllers\User;
+
+use App\Http\Controllers\Controller;
+use App\Models\Contact;
+use App\Mail\ContacUs;
+use Illuminate\Http\Request;
+
+class ContactUsController extends Controller
+{
+    public function index()
+    {
+        $contacts = Contact::all();
+        return view('admin.contact-us.index' , compact('contacts'));
+    }
+    public function contactUs(Request $request)
+    {
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|email',
+            'subject' => 'required',
+            'message' => 'required',
+        ]);
+        Contact::create($request->all());   
+            $details = [
+                'username' => $request->name,
+                'email' => $request->email,
+                'subject' => $request->subject,
+                'message' => $request->message,
+               
+            ];
+           
+            \Mail::to($request->email)->send(new \App\Mail\ContacUs($details));
+        return redirect()->back()->with('success', 'Contact Form Submitted Successfully');
+    }
+    public function view($id)
+    {
+        $contact = Contact::findOrFail($id);
+        return view('admin.contact-us.view' , compact('contact'));
+    }
+    public function delete($id)
+    {
+        Contact::findOrFail($id)->delete();
+        return redirect()->back()->with('success', 'Record Deleted Successfully');
+    }
+}
