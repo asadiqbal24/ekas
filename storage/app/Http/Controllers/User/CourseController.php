@@ -93,6 +93,9 @@ class CourseController extends Controller
         if ($request->has('levels') && !empty($request->levels)) {
             $query->whereIn('level', $request->levels);
         }
+        if ($request->has('location') && !empty($request->location)) {
+            $query->whereIn('location', $request->location);
+        }
 
         if ($request->has('ApplicationDeadline') && !empty($request->ApplicationDeadline)) {
             $now = Carbon::now('UTC');

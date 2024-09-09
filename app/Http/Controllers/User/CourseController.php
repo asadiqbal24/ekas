@@ -12,6 +12,84 @@ use DB;
 
 class CourseController extends Controller
 {
+    // public function getCourse(Request $request, $name = null)
+    // {
+
+
+
+    //     if ($request->ajax() || $request->wantsJson()) {
+    //         if ($request->uni != '') {
+    //             $programmename = AddCourse::select('programmename')->where('universityname', $request->uni)->distinct()->pluck('programmename');
+    //         } else {
+    //             $programmename = AddCourse::select('programmename')->distinct()->pluck('programmename');
+    //         }
+
+    //         return response()->json($programmename);
+    //     }
+
+
+
+
+        
+    //     $level = $request->level ?? null;
+    //     $programmename = $request->programmename ?? null;
+    //     $location = $request->location ?? null;
+
+    //     $query = AddCourse::query();
+    //     if ($request->has('level') && !empty($request->level)) {
+    //         $query->where('level', $request->level);
+    //     }
+    //     if ($request->has('location') && !empty($request->location)) {
+    //         $query->where('location', $request->location);
+    //     }
+    //     if ($request->has('programmename') && !empty($request->programmename)) {
+    //         $query->where('fieldofstudy', 'LIKE', '%' . $request->programmename . '%');
+    //     }
+
+
+    //     if (!empty($name)) {
+    //         $query->where('level', 'LIKE', '%' . $name . '%');
+    //     }
+    //     $courses = $query->get();
+
+
+
+
+    //     $totalCourses = $courses->count();
+    //     if (!empty(Auth::id())) {
+    //         $userId = auth()->user()->id;
+    //         $wishlistCourseIds = Wishlist::where('userID', $userId)->pluck('courseId')->toArray();
+    //         $courses->each(function ($course) use ($wishlistCourseIds) {
+    //             $course->inWishlist = in_array($course->id, $wishlistCourseIds);
+    //         });
+    //     }
+    //     $locations = AddCourse::select('location')->distinct()->pluck('location');
+        
+    //     $univeristies = AddCourse::select('universityname', 'location')->distinct()->get();
+
+    //     $programs = AddCourse::select('programmename')->distinct()->pluck('programmename');
+
+    //     $course_category = DB::table('course_category')->get();
+    //   //  dd($course_category);
+    //     $programname = AddCourse::select('programmename', 'universityname')->distinct()->get();
+
+    //     $programnames = $programname->map(function ($program) {
+    //         $program->programmename = addcslashes($program->programmename, '/');
+    //         $program->universityname = addcslashes($program->universityname, '/');
+    //         return $program;
+    //     });
+
+    //     // dd($programnames);
+
+    //     $filters = [$request->level, $request->location, $request->programmename];
+    //     if ($request->ajax()) {
+    //         $htmlContent = view('courses._details', compact('courses'))->render();
+    //         return response()->json(['html' => $htmlContent, 'totalCourses' => $totalCourses, 'filters' => $filters]);
+    //     } else {
+    //         return view('courses.index', compact('courses', 'programnames', 'locations', 'univeristies', 'programs', 'level', 'programmename','course_category'))->with('fragment', 'course_details_section');
+    //     }
+    // }
+
     public function getCourse(Request $request, $name = null)
     {
 
@@ -30,21 +108,24 @@ class CourseController extends Controller
 
 
 
-        $country = $request->country ?? null;
+        $country = $request->location ?? null;
         $level = $request->level ?? null;
         $programmename = $request->programmename ?? null;
         $location = $request->location ?? null;
+        $universityname = $request->universityname ?? null;
 
         $query = AddCourse::query();
         if ($request->has('level') && !empty($request->level)) {
             $query->where('level', $request->level);
         }
-        if ($request->has('country') && !empty($request->country)) {
-            $query->where('country', $request->country);
+        if ($request->has('location') && !empty($request->location)) {
+            $query->where('location', $request->location);
         }
         if ($request->has('programmename') && !empty($request->programmename)) {
             $query->where('fieldofstudy', 'LIKE', '%' . $request->programmename . '%');
         }
+
+    
 
 
 
@@ -54,10 +135,12 @@ class CourseController extends Controller
         }
         $courses = $query->get();
 
-
+     
 
 
         $totalCourses = $courses->count();
+
+      //  dd($totalCourses);
         if (!empty(Auth::id())) {
             $userId = auth()->user()->id;
             $wishlistCourseIds = Wishlist::where('userID', $userId)->pluck('courseId')->toArray();
@@ -82,7 +165,7 @@ class CourseController extends Controller
 
         // dd($programnames);
 
-        $filters = [$request->level, $request->country, $request->programmename];
+        $filters = [$request->level, $request->location, $request->programmename];
         if ($request->ajax()) {
             $htmlContent = view('courses._details', compact('courses'))->render();
             return response()->json(['html' => $htmlContent, 'totalCourses' => $totalCourses, 'filters' => $filters]);
@@ -91,6 +174,9 @@ class CourseController extends Controller
         }
     }
 
+
+
+    
     // public function getUniCourses(Request $request){
     //     $programmename = AddCourse::select('programmename')->where('universityname',$request->uni)->distinct()->pluck('programmename');
     //     return response()->json($programmename);

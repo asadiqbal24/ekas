@@ -93,7 +93,7 @@
                     </tr>
                     <tr>
                         <th>Tuition Fee</th>
-                        <td>{{ $course->tuitionfee }}</td>
+                        <td>€ {{ $course->tuitionfee }}</td>
                     </tr>
 
 

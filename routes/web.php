@@ -40,7 +40,11 @@ Route::get('send-mail', function () {
 });
 
 Route::get('/', [HomeController::class, 'index']);
-Route::get('/get/courses/{name?}/{location?}', [CourseController::class, 'getCourse'])->name('course.get');
+Route::get('/get/courses', [CourseController::class, 'getCourse'])->name('course.get');
+
+
+
+Route::get('/get/courses/location/{name?}/{location?}', [CourseController::class, 'getCourselocation'])->name('get.courses.location');
 Route::get('/get/course/details/{id}', [CourseController::class, 'getCourseDetails'])->name('course.details');
 Route::get('/get/filtered/course', [CourseController::class, 'getFilteredDetails']);
 Route::get('/get/search/courses', [CourseController::class, 'searchCourse']);

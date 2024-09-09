@@ -333,7 +333,8 @@
                 });
             }
             $('#reset').click(function() {
-                window.location.reload();
+               // window.location.reload();
+               window.location.href = 'get/courses';
             });
 
         });
@@ -422,7 +423,7 @@
                 
         // Update filters based on user input
         filters = {
-            country: $('[name="country"]').val(),
+            location: $('[name="country"]').val(),
             universityname: $('[name="universityname"]').val(),
             studymode: $('[name="studymode"]').val(),
             programme: $('[name="program"]').val(),

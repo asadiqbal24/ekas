@@ -790,13 +790,20 @@
                                                 </div> -->
                                             </div>
                                         </div>
+                                        @php
+    $totalSessions = 0;
+    foreach($appointments as $appoint) {
+        $totalSessions += $appoint->appointment_session_dates->count(); // Add the count of session dates for each appointment
+    }
+@endphp
                                         <div class="sessiontab tab-content d-none">
                                             <div class="row">
                                                 <div class="col-md-4 col-sm-12 mb-3">
                                                     <div class="oks-support-card-sessions">
                                                         <h3>Session Purchase</h3>
                                                         <div class="circle">
-                                                            {{ $appointments->count() }}
+                                                        
+                                                            {{ $totalSessions }}
                                                         </div>
                                                         <div>
                                                             <h4
@@ -804,31 +811,39 @@
                                                                 Schedule Dates</h4>
                                                         </div>
                                                         <div class="supporat-card-list">
-                                                            <div id="thinscroll">
-                                                                @if(!empty($appointments) && count($appointments) > 0)
-                                                                @foreach($appointments as $appoint)
-                                                                @foreach($appoint->appointment_session_dates as $dates)
-                                                                <div class="row mt-1">
-                                                                    <div class="col-md-5 mt-1 text-sm-center">
-                                                                        <label style="color: #fff; font-size:12px">Session {{$dates->iteration}}</label>
-                                                                    </div>
+                                                           <div id="thinscroll">
+   <div id="thinscroll">
+    @if(!empty($appointments) && count($appointments) > 0)
+        @php
+            $sessionCount = 1; // Initialize session counter
+        @endphp
+        @foreach($appointments as $appoint)
+            @foreach($appoint->appointment_session_dates as $sessionDate)
+                <div class="row mt-1">
+                    <div class="col-md-5 mt-1 text-sm-center">
+                        <label style="color: #fff; font-size:10px">Session - {{$sessionCount}}</label> <!-- Use the counter -->
+                    </div>
 
-                                                                    <div class="col-md-7 mt-1 text-sm-center">
-                                                                        <label style="color: #e4d55a; font-size: 11px;">{{$dates->date}}</label>
-                                                                    </div>
-                                                                </div>
-                                                                @endforeach
-                                                                @endforeach
-                                                                @else
-                                                                    <div class="row mt-1">
-                                                                        <div class="col-md-12 mt-1 text-sm-center">
-                                                                            <label
-                                                                                style="color: #e4d55a; font-size: 13px;">You
-                                                                                have no sessions at the moment</label>
-                                                                        </div>
-                                                                    </div>
-                                                                @endif
-                                                            </div>
+                    <div class="col-md-7 mt-1 text-sm-center">
+                        <label style="color: #e4d55a; font-size: 9px;">{{ \Carbon\Carbon::parse($sessionDate->date)->format('F j, Y h:i A') }}</label> <!-- Format the date -->
+                    </div>
+                </div>
+                @php
+                    $sessionCount++; // Increment session counter
+                @endphp
+            @endforeach
+        @endforeach
+    @else
+        <div class="row mt-1">
+            <div class="col-md-12 mt-1 text-sm-center">
+                <label style="color: #e4d55a; font-size: 13px;">You have no sessions at the moment</label>
+            </div>
+        </div>
+    @endif
+</div>
+
+</div>
+
 
                                                             <div class="clearfix"></div>
                                                             <div class="row mt-1">
@@ -838,7 +853,7 @@
 
                                                                 <div class="col-md-5 mt-3 text-sm-center">
                                                                     <div class="circle2">
-                                                                        {{ $appointments->count()}}
+                                                                        {{ $totalSessions }}
                                                                     </div>
                                                                 </div>
 
@@ -897,91 +912,68 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="col-md-4 col-sm-12 mb-3">
-                                                    <div class="oks-support-card-session">
-                                                        <h3>Upcoming Session</h3>
+<div class="col-md-4 col-sm-12 mb-3">
+    <div class="oks-support-card-session">
+        <h3>Upcoming Session</h3>
 
-                                                        @php
-                                                            $nearest_appointment = null;
-                                                            $today = \Carbon\Carbon::today();
+        @php
+            $nearest_appointment = null;
+            $nearest_session = null;
+            $today = \Carbon\Carbon::today();
 
-                                                            foreach ($appointments as $appoint) {
-                                                                $appoint_date = \Carbon\Carbon::parse($appoint->date);
+            // Iterate through all appointments
+            foreach ($appointments as $appoint) {
+                // Iterate through each session date of the appointment
+                foreach ($appoint->appointment_session_dates as $sessionDate) {
+                    $appoint_date = \Carbon\Carbon::parse($sessionDate->date);
 
-                                                                if ($appoint_date > $today) {
-                                                                    if (
-                                                                        $nearest_appointment == null ||
-                                                                        $appoint_date->lt($nearest_appointment->date)
-                                                                    ) {
-                                                                        $nearest_appointment = $appoint;
-                                                                    }
-                                                                }
-                                                            }
-                                                        @endphp
+                    // Check if the session date is in the future
+                    if ($appoint_date > $today) {
+                        // Determine if this session is the nearest upcoming one
+                        if ($nearest_appointment == null || $appoint_date->lt($nearest_appointment)) {
+                            $nearest_appointment = $appoint_date;
+                            $nearest_session = $sessionDate; // Store the nearest session
+                        }
+                    }
+                }
+            }
+        @endphp
 
+        <div class="supporat-card-list-calendar">
+            <div class="row mt-1">
 
+                @if ($nearest_session)
+                    <div class="col-md-12">
+                        <time datetime="{{ $nearest_session->date }}" class="icon">
+                            <em>{{ \Carbon\Carbon::parse($nearest_session->date)->format('l') }}</em>
+                            <strong>{{ \Carbon\Carbon::parse($nearest_session->date)->format('F') }}</strong>
+                            <span>{{ \Carbon\Carbon::parse($nearest_session->date)->format('d') }}</span>
+                        </time>
+                    </div>
+                    <div class="col-md-12" style="text-align: center;">
+                        <!-- Display the time in the desired format -->
+                        <label style="font-size: large;">
+                            {{ \Carbon\Carbon::parse($nearest_session->time)->format('H:i') }}
+                        </label>
+                    </div>
+                    <div class="col-md-12 mt-1" style="text-align: center;">
+                        <label style="font-size: 15px; background-color: #cfba43;padding: 5px 10px;border-radius: 15px;">
+                            Zoom Link
+                        </label>
+                    </div>
+                    <div class="col-md-12 mt-1" style="text-align: center;">
+                        <a href="" style="font-size: 10px;color: red;font-weight: 700;">Read More</a>
+                    </div>
+                @else
+                    <div class="col-md-12" style="text-align: center;">
+                        <p style="font-size: 14px; color: red;">There is no upcoming session.</p>
+                    </div>
+                @endif
 
-                                                        <div class="supporat-card-list-calendar">
-                                                            <div class="row mt-1">
-
-
-                                                                @if ($nearest_appointment)
-                                                                    <div class="col-md-12">
-                                                                        <time
-                                                                            datetime="{{ $nearest_appointment->date }}"
-                                                                            class="icon">
-                                                                            <em>{{ \Carbon\Carbon::parse($nearest_appointment->date)->format('l') }}</em>
-                                                                            <strong>{{ \Carbon\Carbon::parse($nearest_appointment->date)->format('F') }}</strong>
-                                                                            <span>{{ \Carbon\Carbon::parse($nearest_appointment->date)->format('d') }}</span>
-                                                                        </time>
-                                                                    </div>
-                                                                    <div class="col-md-12"
-                                                                        style="text-align: center;">
-                                                                        <!-- Display the time in the desired format -->
-                                                                        <label style="font-size: large;">
-                                                                            {{ \Carbon\Carbon::parse($nearest_appointment->time)->format('H:i') }}
-                                                                        </label>
-                                                                    </div>
-                                                                    <div class="col-md-12 mt-1"
-                                                                        style="text-align: center;">
-                                                                        <label
-                                                                            style="font-size: 15px; background-color: #cfba43;padding: 5px 10px;border-radius: 15px;">Zoom
-                                                                            Link</label>
-
-                                                                    </div>
-
-                                                                    <div class="col-md-12 mt-1"
-                                                                        style="text-align: center;">
-                                                                        <a href=""
-                                                                            style="font-size: 10px;color: red;font-weight: 700;">Read
-                                                                            More</a>
-
-                                                                    </div>
-                                                                @else
-                                                                    <div class="col-md-12"
-                                                                        style="text-align: center;">
-                                                                        <p style="font-size: 14px; color: red;">There
-                                                                            is no upcoming session.</p>
-                                                                    </div>
-                                                                @endif
-
-
-
-
-
-
-
-
-
-
-
-                                                            </div>
-
-
-
-                                                        </div>
-                                                    </div>
-                                                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 
