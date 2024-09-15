@@ -277,10 +277,12 @@
                                 <div id="card-errors" role="alert"></div>
     
                                 <div class="form-group">
-                                    {{-- <div class="book-buttons">
+
+                                
+                                    <div class="book-buttons">
                                         <button type="button" class="previous-btn" style="width: calc(50% - 5px); box-sizing: border-box; float: left;">Previous</button>
-                                        <button type="submit" class="next-btn" id="next-btn paynow" style="width: calc(50% - 5px); box-sizing: border-box; float: right; margin-right: 0px;">Pay Now</button>
-                                    </div> --}}
+                                      
+                                    </div> 
                                 </div>
                             </div>
     
@@ -300,7 +302,15 @@
     </section>
     <!-- Initialization of intl-tel-input -->
     <script src="https://cdn.jsdelivr.net/npm/jquery-toast-plugin@1.3.2/dist/jquery.toast.min.js"></script>
+    <script>
+    $('.previous-btn').on('click', function(e) {
+        // Prevent default action if needed
+        e.preventDefault();
 
+        // Reload the page
+        window.location.reload();
+    });
+</script>
 
     <script>
         $(document).ready(function() {

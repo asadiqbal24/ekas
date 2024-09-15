@@ -13,6 +13,8 @@ class CourseController extends Controller
 {
     public function getCourse(Request $request, $name = null)
     {
+
+
         $country = $request->location ?? null;
         $level = $request->level ?? null;
         $programmename = $request->programmename ?? null;
@@ -77,29 +79,82 @@ class CourseController extends Controller
         $course = AddCourse::find($id);
         return view('courses.details', compact('course'));
     }
+    // public function getFilteredDetails(Request $request)
+    // {
+    //     $deadline = $request->ApplicationDeadline;
+    //     $query = AddCourse::query();
+    //     if ($request->has('tuitionfee') && !empty($request->tuitionfee)) {
+    //         $tuitionFee = (int) $request->tuitionfee; // Convert to integer
+    //         $query->where('tuitionfee', '<=', $tuitionFee);
+    //     }
+    //     foreach ($request->except(['levels', 'tuitionfee', 'ApplicationDeadline']) as $filter => $value) {
+    //         if (!empty($value)) {
+    //             $query->where($filter, $value);
+    //         }
+    //     }
+    //     if ($request->has('levels') && !empty($request->levels)) {
+    //         $query->whereIn('level', $request->levels);
+    //     }
+    //     if ($request->has('location') && !empty($request->location)) {
+    //         $query->whereIn('location', $request->location);
+    //     }
+
+    //     if ($request->has('ApplicationDeadline') && !empty($request->ApplicationDeadline)) {
+    //         $now = Carbon::now('UTC');
+    //         $karachiOffset = Carbon::now('Asia/Karachi')->offsetHours;
+    //         if ($deadline === 'open') {
+    //             $query->where('ApplicationDeadline', '>', $now->copy()->addHours($karachiOffset));
+    //         } elseif ($deadline === 'closed') {
+    //             $query->where('ApplicationDeadline', '<', $now->copy()->addHours($karachiOffset));
+    //         } elseif ($deadline === 'closing soon') {
+    //             $query->where('ApplicationDeadline', '>', $now->copy()->addHours($karachiOffset))
+    //                 ->where('ApplicationDeadline', '<', $now->copy()->addDays(21)->addHours($karachiOffset))
+    //                 ->where('ApplicationDeadline', '>', $now->copy()->addDay()->addHours($karachiOffset));
+    //         }
+    //     }
+    //     $filters = [$request->all()];
+    //     $courses = $query->get();
+    //     $totalCourses = $courses->count();
+    //     $htmlContent = view('courses._details', compact('courses'))->render();
+    //     return response()->json(['html' => $htmlContent, 'totalCourses' => $totalCourses, 'filters' => $filters]);
+    // }
+
+
     public function getFilteredDetails(Request $request)
     {
         $deadline = $request->ApplicationDeadline;
         $query = AddCourse::query();
-        if ($request->has('tuitionfee') && !empty($request->tuitionfee)) {
-            $tuitionFee = (int) $request->tuitionfee; // Convert to integer
+
+        // Filter by tuition fee if present
+        if ($request->filled('tuitionfee')) {
+            $tuitionFee = (int) $request->tuitionfee;
             $query->where('tuitionfee', '<=', $tuitionFee);
         }
-        foreach ($request->except(['levels', 'tuitionfee', 'ApplicationDeadline']) as $filter => $value) {
-            if (!empty($value)) {
-                $query->where($filter, $value);
+
+        // Process remaining filters except the special ones
+        $allowedFilters = ['universityname', 'studymode', 'programme', 'fieldofstudy'];
+        foreach ($allowedFilters as $filter) {
+            if ($request->filled($filter)) {
+                $query->where($filter, $request->input($filter));
             }
         }
-        if ($request->has('levels') && !empty($request->levels)) {
-            $query->whereIn('level', $request->levels);
-        }
-        if ($request->has('location') && !empty($request->location)) {
-            $query->whereIn('location', $request->location);
+
+        // Filter by course level (multiple values)
+        if ($request->filled('levels')) {
+            $query->whereIn('level', (array) $request->levels);
         }
 
-        if ($request->has('ApplicationDeadline') && !empty($request->ApplicationDeadline)) {
+        // Filter by location (ensure it's an array)
+        if ($request->filled('location')) {
+            $locations = is_array($request->location) ? $request->location : [$request->location];
+            $query->whereIn('location', $locations);
+        }
+
+        // Handle Application Deadline filters
+        if ($request->filled('ApplicationDeadline')) {
             $now = Carbon::now('UTC');
             $karachiOffset = Carbon::now('Asia/Karachi')->offsetHours;
+
             if ($deadline === 'open') {
                 $query->where('ApplicationDeadline', '>', $now->copy()->addHours($karachiOffset));
             } elseif ($deadline === 'closed') {
@@ -110,12 +165,21 @@ class CourseController extends Controller
                     ->where('ApplicationDeadline', '>', $now->copy()->addDay()->addHours($karachiOffset));
             }
         }
-        $filters = [$request->all()];
+
+        // Fetch the filtered courses
         $courses = $query->get();
         $totalCourses = $courses->count();
+
+        // Render the HTML response
         $htmlContent = view('courses._details', compact('courses'))->render();
-        return response()->json(['html' => $htmlContent, 'totalCourses' => $totalCourses, 'filters' => $filters]);
+
+        return response()->json([
+            'html' => $htmlContent,
+            'totalCourses' => $totalCourses,
+            'filters' => $request->all()
+        ]);
     }
+
     public function addCourseToWishlist(Request $request, $id)
     {
         if (empty(Auth::id())) {

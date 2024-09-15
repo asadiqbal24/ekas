@@ -41,7 +41,11 @@ Route::get('send-mail', function () {
 
 Route::get('/', [HomeController::class, 'index']);
 Route::get('/get/courses', [CourseController::class, 'getCourse'])->name('course.get');
+Route::get('get/courses-top-university/{universityname}/{location}', [CourseController::class, 'getCoursebytopUniversity'])->name('get-courses-top-university');
 
+Route::get('/get/courses/search/{location?}/{level?}/{programmename?}', [CourseController::class, 'getCoursesearch'])->name('get-courses-search');
+
+Route::post('/get-universities-by-country', [CourseController::class, 'getUniversitiesByCountry']);
 
 
 Route::get('/get/courses/location/{name?}/{location?}', [CourseController::class, 'getCourselocation'])->name('get.courses.location');
@@ -53,7 +57,7 @@ Route::middleware('verified')->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
-    Route::get('add/to/wishlist/{id}', [CourseController::class, 'addCourseToWishlist']);
+    Route::post('add/to/wishlist/{id}', [CourseController::class, 'addCourseToWishlist']);
     Route::get('remove/from/wishlist/{id}', [CourseController::class, 'removeFromWishlist']);
     Route::get('user/dashboard', [UserController::class, 'dashboard']);
     Route::get('user/notification/delete/{id}', [UserController::class, 'user_notification_delete'])->name('user-notification-delete');

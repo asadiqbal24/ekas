@@ -394,7 +394,7 @@
 								<div class="oks-uni-content">
 									<p>The Vienna University of Technology, also known as TU Wien, is a public research university in Vienna, Austria. It was founded in 1815 as the Imperial-Royal Polytechnic Institute, and it focuses on engineering, computer science, and natural sciences. It has about 26,000 students and 4,000 staff members, and it offers 62 degree programmes in various fields of study.</p>
 								
-									<a href="{{ url('get/courses?universityname=TU Wien&location=Austria') }}">Discover Course</a>
+									<a href="{{ url('get/courses?location=Austria&universityname=TU Wien') }}">Discover Course</a>
 								</div>
 							</div>
 						</div>

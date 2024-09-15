@@ -55,7 +55,7 @@
                         <td> {{ $course->level }}</td>
                     </tr>
                     <tr>
-                        <th>Subject Field </th>
+                        <th>Field of study</th>
                         <td> {{ $course->ranking }}</td>
                     </tr>
                     <tr>

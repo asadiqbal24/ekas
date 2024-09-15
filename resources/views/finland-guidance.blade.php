@@ -93,11 +93,7 @@
                                     <span id="email-error" class="error">Email is required</span>
                                 </div>
     
-                                {{-- <div class="form-group">
-                                    <label for="phone">Phone</label>
-                                    <input type="tel" class="form-control" id="phone" placeholder="Enter Phone here" required>
-                                    <span id="phone-error" class="error">Phone number is required</span>
-                                </div> --}}
+                              
     
                                 <div class="book-buttons">
                                     <button type="button" class="next-btn" style="width: calc(50% - 5px); box-sizing: border-box; float: right; margin-right: 0px;">Next</button>
@@ -252,39 +248,15 @@
                                         <img src="https://static-00.iconduck.com/assets.00/file-type-pdf-icon-1962x2048-ydoe3jot.png" alt="Download PDF" width="50" height="50"> {{ucfirst($type)}} Finland Guidance.pdf
                                       </a>
         
-                                    {{-- <label class="form-label">Card Number</label> --}}
-                                    {{-- <div id="card-element" class="form-control">
-                                        <div id="card-number"></div>
-                                        <img id="card-brand" src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Credit_card_font_awesome.svg" alt="Card Brand" style="display:none; width: 40px; float: right; margin-top: -30px;"/>
-                                    </div> --}}
+                                  
                                 </div>
-                                {{-- <div class="row">
-                                    <div class="col-lg-6">
-                                        <div class="mb-3">
-                                            <label class="form-label">Name on card</label>
-                                            <input type="text" class="form-control" placeholder="">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3">
-                                        <div class="mb-3">
-                                            <label class="form-label">Expiry date</label>
-                                            <div id="card-expiry" class="form-control"></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3">
-                                        <div class="mb-3">
-                                            <label class="form-label">CVV Code</label>
-                                            <div id="card-cvc" class="form-control"></div>
-                                        </div>
-                                    </div>
-                                </div> --}}
-                                <div id="card-errors" role="alert"></div>
+                              
     
                                 <div class="form-group">
-                                    {{-- <div class="book-buttons">
+                                     <div class="book-buttons">
                                         <button type="button" class="previous-btn" style="width: calc(50% - 5px); box-sizing: border-box; float: left;">Previous</button>
-                                        <button type="submit" class="next-btn" id="next-btn paynow" style="width: calc(50% - 5px); box-sizing: border-box; float: right; margin-right: 0px;">Pay Now</button>
-                                    </div> --}}
+                                    
+                                    </div> 
                                 </div>
                             </div>
     
@@ -305,7 +277,15 @@
     <!-- Initialization of intl-tel-input -->
     <script src="https://cdn.jsdelivr.net/npm/jquery-toast-plugin@1.3.2/dist/jquery.toast.min.js"></script>
 
+    <script>
+    $('.previous-btn').on('click', function(e) {
+        // Prevent default action if needed
+        e.preventDefault();
 
+        // Reload the page
+        window.location.reload();
+    });
+</script>
     <script>
         $(document).ready(function() {
             function submitForm(formId, url, currentStep, nextStep) {

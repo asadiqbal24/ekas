@@ -329,6 +329,15 @@
 
 
     <script src="https://cdn.jsdelivr.net/npm/jquery-toast-plugin@1.3.2/dist/jquery.toast.min.js"></script>
+    <script>
+    $('.previous-btn').on('click', function(e) {
+        // Prevent default action if needed
+        e.preventDefault();
+
+        // Reload the page
+        window.location.reload();
+    });
+</script>
 
     <script>
         $(document).ready(function() {

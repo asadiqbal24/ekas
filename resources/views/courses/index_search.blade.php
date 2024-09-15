@@ -112,15 +112,20 @@
                 <div class="col-sm-4">
                     <div class="oks-dis-after-bann-main-div-heading">
 
-                       
+
+
+
+
+
+
                         <p id="result-count-container">
-                            Showing <span class="course_count_top"></span> {{$TotalCountCourses}} results
+                            Showing <span class="course_count_top"></span><span class="course_count_search">{{$totalCourses}} of </span> {{$TotalCountCourses}} results
 
                             <br>
                             <span id="active_filters"></span>
                         </p>
-                        
-                      
+
+
 
 
                     </div>
@@ -153,7 +158,7 @@
                         <div class="oks-filter-program">
                             <label>Filter by Fee</label>
                             <div class="">
-                                <input type="range" name="tuitionfee" class="my_handle" id="my_handle" min="100"
+                                <input type="range" name="tuitionfee" class="my_handle" id="my_handle" min="800"
                                     max="16000" step="100" value="0">
                                 <span id="handle_output"></span>
                             </div>
@@ -167,29 +172,28 @@
                                 <option {{($location == request()->location)?'selected':''}} value="{{ $location }}">{{ $location }}</option>
                                 @endforeach
                             </select>
+                            
+              
                         </div>
                         <div class="oks-filter-program">
                             <label>University</label>
-                            <!-- <select class="oks-university scroll-univeristy-dropdown universities" name="universityname" data-attribute='universityname' id="universityname">
-                                    <option value="" selected>All</option>
-                                   
-                                    @foreach ($univeristies as $univeristy)
-                                        <option {{($univeristy->universityname == request()->universityname)?'selected':''}} value="{{ $univeristy->universityname }}">{{ $univeristy->universityname }}</option>
-                                    @endforeach
-                                </select> -->
-                            <select class="oks-university universities" name="universityname" data-attribute='universityname' id="universityname">
-                                <option value="" selected>All</option>
 
-                                @foreach ($univeristies as $univeristy)
-                                <option {{($univeristy->universityname == request()->universityname)?'selected':''}} value="{{ $univeristy->universityname }}">{{ $univeristy->universityname }}</option>
-                                @endforeach
-                            </select>
-                        </div>
+                                      <select class="oks-university universities" name="universityname" data-attribute='universityname' id="universityname">
+    <option value="" selected>All</option>
+    @foreach ($univeristies as $university)
+        <option {{ ($university->universityname == request()->input('universityname')) ? 'selected' : '' }} value="{{ $university->universityname }}">
+            {{ $university->universityname }}
+        </option>
+    @endforeach
+</select>
+
+                            
+                            
+               </div>
                         <div class="oks-filter-program">
                             <label>Study Mode</label>
                             <select class="oks-university " name="studymode" data-attribute='studymode'>
                                 <option value="" selected>All</option>
-                               
                                 <option value="half time">Half Time</option>
                                 <option value="full time">Full Time</option>
                             </select>
@@ -226,20 +230,28 @@
                         </div>
                         <div class="oks-dis-study-level">
                             <p>Course Level</p>
-                            <div><input {{('Bachelors' == request()->level)?'checked':''}} type="checkbox" class="level-checkbox" value="Bachelors"
-                                    data-attribute='level'><span>Bachelors</span>
+                            <div>
+                                <input {{('Bachelors' == request()->level)?'checked':''}} type="checkbox" class="level-checkbox" value="Bachelors" data-attribute='level'>
+                                <span>Bachelors</span>
                             </div>
-                            <div><input {{('Masters' == request()->level)?'checked':''}} type="checkbox" class="level-checkbox" value="Masters"
-                                    data-attribute='level'><span>Masters</span>
+                            <div>
+                                <input {{('Masters' == request()->level)?'checked':''}} type="checkbox" class="level-checkbox" value="Masters" data-attribute='level'>
+                                <span>Masters</span>
                             </div>
-                            <div><input {{('Masters' == request()->level)?'checked':''}} type="checkbox" class="level-checkbox" value="Masters"
-                                    data-attribute='level'><span>Advance Masters</span>
+                            <div>
+                                <input {{('Advanced Masters' == request()->level)?'checked':''}} type="checkbox" class="level-checkbox" value="Advanced Masters" data-attribute='level'>
+                                <span>Advanced Masters</span>
                             </div>
-                            <div><input {{('PhD' == request()->level)?'checked':''}} type="checkbox" class="level-checkbox" value="PhD"
-                                    data-attribute='level'><span>PhD</span></div>
-                            <div><input {{('Others' == request()->level)?'checked':''}} type="checkbox" class="level-checkbox" value="Others"
-                                    data-attribute='level'><span>Others</span></div>
+                            <div>
+                                <input {{('PhD' == request()->level)?'checked':''}} type="checkbox" class="level-checkbox" value="PhD" data-attribute='level'>
+                                <span>PhD</span>
+                            </div>
+                            <div>
+                                <input {{('Others' == request()->level)?'checked':''}} type="checkbox" class="level-checkbox" value="Others" data-attribute='level'>
+                                <span>Others</span>
+                            </div>
                         </div>
+
                     </div>
                     <hr>
                 </div>
@@ -316,8 +328,8 @@
         const appliedFilters = new Set();
         let selectedLevelCount = 0;
         // $('#oks-dis-select-a-z-course').change(function() {
-        //     const sortDirection = $(this).val();
-        //     sortDataInPage(sortDirection);
+        //     // const sortDirection = $(this).val();
+        //     // sortDataInPage(sortDirection);
         //     fetchFilteredCourses();
         // });
 
@@ -381,6 +393,8 @@
                     return;
                 }
                 $('#filtered_courses').append(response.html);
+
+
                 $('#load_more').text('Load More');
             },
             error: function(error) {
@@ -406,21 +420,25 @@
 </style>
 
 <script>
-    // Attach click event to the document for dynamic elements
-    $(document).on('click', '.oks-show-more-btn', function() {
-        var courseId = $(this).data('course-id');
-        $('.oks-show-more-btn').toggleClass('show');
-        $('.details_' + courseId).toggleClass('show');
+    var html = '';
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
     });
-    $(document).ready(function() {
+
     var currentPage = 1;
-    var lastPage = false;
-    var totalDisplayed = 0;
-    var filters = {};
-    var sliderChanged = false;
-    var limit = 5;  
+        var lastPage = false;
+        var totalDisplayed = 0;
+        var filters = {};
+        var sliderChanged = false;
+        var limit = 5;
+
+  
 
     function fetchFilteredCourses(page = 1, append = false) {
+
+      
         if (sliderChanged) {
             $('#handle_output').html('Fee = ' + $('#my_handle').val() + ' €');
         }
@@ -490,32 +508,63 @@
         });
     }
 
-    // Event listeners for filter changes
-    $('.oks-university, .level-checkbox').change(function() {
-        currentPage = 1;
-        fetchFilteredCourses();
+
+    function initializeEventListeners() {
+        $('.oks-university, .level-checkbox').change(function() {
+            currentPage = 1;
+            fetchFilteredCourses();
+        });
+
+        // $('.locations').change(function() {
+        //     var currentLocation = $(this).val();
+        //     var univeristies = JSON.parse('<?= json_encode($univeristies) ?>');
+
+        //     $(".universities").html("<option value='' selected>All</option>");
+
+        //     if (currentLocation != '') {
+        //         univeristies.forEach(function(item) {
+        //             if (item.location == currentLocation) {
+        //                 $(".universities").append("<option value='" + item.universityname + "'>" + item.universityname + "</option>");
+        //             }
+        //         });
+        //     } else {
+        //         univeristies.forEach(function(item) {
+        //             $(".universities").append("<option value='" + item.universityname + "'>" + item.universityname + "</option>");
+        //         });
+        //     }
+        // });
+
+        $('#oks-dis-select-a-z-course').change(function() {
+            fetchFilteredCourses();
+        });
+
+        $('#my_handle').on('change', function() {
+            sliderChanged = true;
+            currentPage = 1;
+            fetchFilteredCourses();
+        });
+
+        $('#load_more').on('click', function() {
+            //  fetchFilteredCourses(currentPage + 1, true);
+
+            fetchFilteredCourses(true);
+        });
+    }
+
+    // Call this function to initialize event listeners after the document is ready
+    $(document).ready(function() {
+        initializeEventListeners();
     });
+</script>
 
-    $('#oks-dis-select-a-z-course').change(function() {
-        fetchFilteredCourses();
+
+<script>
+    // Attach click event to the document for dynamic elements
+    $(document).on('click', '.oks-show-more-btn', function() {
+        var courseId = $(this).data('course-id');
+        $('.oks-show-more-btn').toggleClass('show');
+        $('.details_' + courseId).toggleClass('show');
     });
-
-
-
-$('#my_handle').on('input change', function() {
-    sliderChanged = true;
-    currentPage = 1;
-    fetchFilteredCourses();
-});
-
-    // Load more button click event
-    $('#load_more').on('click', function() {
-        fetchFilteredCourses(currentPage + 1, true); // Fetch the next page, append results
-    });
-
-    // Initial fetch on page load
-    fetchFilteredCourses();
-});
 
 
 
@@ -537,29 +586,7 @@ $('#my_handle').on('input change', function() {
         this.size = 0;
         this.style.height = '50px';
     });
-
-
-    $(document).on('click', '.removeFromWishlist', function() {
-        var btn = $(this);
-        var heartIcon = $(this).find('.fa-solid.fa-heart');
-        var courseId = $(this).attr('id');
-        $.ajax({
-            type: "get",
-            url: "/remove/from/wishlist/" + courseId,
-            success: function(response) {
-                showSuccessToast(response.message);
-                btn.removeClass("removeFromWishlist");
-                btn.addClass("addToWishlist");
-                heartIcon.removeClass('fa-solid fa-heart');
-                heartIcon.addClass('far fa-heart');
-            },
-            error: function(error) {
-                showErrorToast(error)
-            }
-        });
-    });
 </script>
-
 
 
 
@@ -572,15 +599,15 @@ $('#my_handle').on('input change', function() {
         var heartIcon = btn.find('i'); // Find the <i> inside the button
         var courseId = btn.attr('id'); // Get the course ID from the button
 
-       // alert(courseId); // Debug to ensure the ID is correct
+        // alert(courseId); // Debug to ensure the ID is correct
 
         $.ajax({
             type: "POST",
             url: "/add/to/wishlist/" + courseId,
             success: function(response) {
 
-              //  console.log(response);
-               showSuccessToast(response.message);
+                //  console.log(response);
+                showSuccessToast(response.message);
                 // Toggle the classes
                 btn.removeClass("addToWishlist").addClass("removeFromWishlist");
                 heartIcon.removeClass('far fa-heart').addClass('fa-solid fa-heart');
@@ -596,7 +623,7 @@ $('#my_handle').on('input change', function() {
 
 <script>
     $(document).on('click', '.removeFromWishlist', function(e) {
-        e.preventDefault(); 
+        e.preventDefault();
 
         var btn = $(this);
         var heartIcon = $(this).find('.fa-solid.fa-heart');
@@ -623,44 +650,42 @@ $('#my_handle').on('input change', function() {
 </script>
 
 
-
-
-
 <script>
     $(document).ready(function() {
         $('#location').change(function() {
             var currentLocation = $(this).val();
-            
-            // If the current location is empty, set it to 'all'
-            if (currentLocation === '') {
-                currentLocation = 'all';
-            }
+
+            alert(currentLocation);
             
             // Clear the universities dropdown
             $(".universities").html("<option value='' selected>All</option>");
 
-            // Make AJAX request to get universities based on selected country
-            $.ajax({
-                url: '/get-universities-by-country',
-                type: 'POST',
-                data: {
-                    country: currentLocation,
-                    _token: '{{ csrf_token() }}' // Include CSRF token for security
-                },
-                success: function(data) {
-                    // Append the universities to the dropdown
-                    console.log(data);
-                    data.forEach(function(item) {
-                        $("#universityname").append("<option value='" + item.universityname + "'>" + item.universityname + "</option>");
-                    });
-                },
-                error: function(xhr, status, error) {
-                    console.log('Error: ' + error);
-                }
-            });
+            if (currentLocation != '') {
+                // Make AJAX request to get universities based on selected country
+                $.ajax({
+                    url: '/get-universities-by-country',
+                    type: 'POST',
+                    data: {
+                        country: currentLocation,
+                        _token: '{{ csrf_token() }}' // Include CSRF token for security
+                    },
+                    success: function(data) {
+                        // Append the universities to the dropdown
+                        
+                        
+                        data.forEach(function(item) {
+                            $("#universityname").append("<option value='" + item.universityname + "'>" + item.universityname + "</option>");
+                        });
+                    },
+                    error: function(xhr, status, error) {
+                        console.log('Error: ' + error);
+                    }
+                });
+            }
         });
     });
 </script>
+
 
 
 

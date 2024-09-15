@@ -30,16 +30,7 @@
                     </a>
                 </div>
             </div>
-            <div class="col-lg-3 col-md-6">
-                <div class="adtn-disp-card-box">
-                  <a href="https://ekas.be/get/courses?level=PhD">
-                        <div class="oks-icon">
-                            <img src="image/degree-cap.png">
-                        </div>
-                        <h3>PhD</h3>
-                    </a>
-                </div>
-            </div>
+           
             <div class="col-lg-3 col-md-6">
                 <div class="adtn-disp-card-box">
                   <a href="https://ekas.be/get/courses?level=Masters">
@@ -47,6 +38,16 @@
                             <img src="image/master.png">
                         </div>
                         <h3>Advanced Masters</h3>
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="adtn-disp-card-box">
+                  <a href="https://ekas.be/get/courses?level=PhD">
+                        <div class="oks-icon">
+                            <img src="image/degree-cap.png">
+                        </div>
+                        <h3>PhD</h3>
                     </a>
                 </div>
             </div>
