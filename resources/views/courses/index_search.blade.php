@@ -117,9 +117,8 @@
 
 
 
-
-                        <p id="result-count-container">
-                            Showing <span class="course_count_top"></span><span class="course_count_search">{{$totalCourses}} of </span> {{$TotalCountCourses}} results
+                    <p id="result-count-container">
+                            Showing <span class="course_count_top"></span> {{$TotalCountCourses}} results
 
                             <br>
                             <span id="active_filters"></span>
@@ -545,9 +544,9 @@
         });
 
         $('#load_more').on('click', function() {
-            //  fetchFilteredCourses(currentPage + 1, true);
+             fetchFilteredCourses(currentPage + 1, true);
 
-            fetchFilteredCourses(true);
+            //fetchFilteredCourses(true);
         });
     }
 
@@ -655,7 +654,7 @@
         $('#location').change(function() {
             var currentLocation = $(this).val();
 
-            alert(currentLocation);
+           // alert(currentLocation);
             
             // Clear the universities dropdown
             $(".universities").html("<option value='' selected>All</option>");

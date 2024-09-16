@@ -77,7 +77,17 @@ class CourseController extends Controller
     $totalCourses = $courses->count();
     $locations = AddCourse::select('location')->distinct()->pluck('location');
 
-    return view('courses.index_search', compact('courses', 'locations', 'univeristies', 'programs', 'programnames', 'course_category', 'totalCourses', 'country', 'TotalCountCourses'))->with('fragment', 'course_details_section');
+
+    if ($request->ajax()) {
+        $htmlContent = view('courses._details', compact('courses'))->render();
+        return response()->json(['html' => $htmlContent, 'totalCourses' => $totalCourses, 'filters' => $filters]);
+    } else {
+        //   dd($courses);
+
+        return view('courses.index_search', compact('courses', 'locations', 'univeristies', 'programs', 'programnames', 'course_category', 'totalCourses', 'country', 'TotalCountCourses'))->with('fragment', 'course_details_section');
+    }
+
+  
 }
 
 
@@ -343,9 +353,6 @@ class CourseController extends Controller
 
         }
 
-
-       
-        
     
         $allowedFilters = ['universityname', 'studymode', 'programme', 'fieldofstudy'];
         foreach ($allowedFilters as $filter) {
