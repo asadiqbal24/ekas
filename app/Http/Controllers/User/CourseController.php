@@ -14,81 +14,254 @@ class CourseController extends Controller
 {
 
 
-
-    
-    
-    
     public function getCoursesearch(Request $request, $location = null, $level = null, $programmename = null)
-{
-    // Retrieve query parameters from the request if not passed via route
-    $location = $location ?? $request->input('location');
-    $level = $level ?? $request->input('level');
-    $programmename = $programmename ?? $request->input('programmename');
+    {
+        // Retrieve query parameters from the request if not passed via route
+        $location = $location ?? $request->input('location');
+        $level = $level ?? $request->input('level');
+        $programmename = $programmename ?? $request->input('programmename');
 
-    $query = AddCourse::query();
+        $limit = (int) $request->input('limit', 5); // Default to 5 results per page
+        $page = (int) $request->input('page', 1);   // Default to the first page
 
-    if (!empty($location) && $location !== 'All') {
-        $query->where('country', $location);
-    }
+        $query = AddCourse::query();
 
-    if (!empty($level) && $level !== 'All') {
-        $query->where('level', $level);
-    }
+        if (!empty($location) && $location !== 'All') {
+            $query->where('country', $location);
+        }
 
-    if (!empty($programmename)) {
-        $query->where('title', 'like', '%' . $programmename . '%');
-    }
+        if (!empty($level) && $level !== 'All') {
+            $query->where('level', $level);
+        }
 
-    // Get the results of the query
-    $courses = $query->get();
+        if (!empty($programmename)) {
+            $query->where('title', 'like', '%' . $programmename . '%');
+        }
 
-    $TotalCountCourses = AddCourse::get()->count();
-    if (!empty(Auth::id())) {
-        $userId = auth()->user()->id;
-        $wishlistCourseIds = Wishlist::where('userID', $userId)->pluck('courseId')->toArray();
-        $courses->each(function ($course) use ($wishlistCourseIds) {
-            $course->inWishlist = in_array($course->id, $wishlistCourseIds);
+        // Get total filtered courses count
+        $totalFilteredCourses = $query->count();
+
+          //  dd($totalFilteredCourses);
+
+        // Apply pagination
+        $courses = $query->skip(($page - 1) * $limit) // Offset calculation
+            ->take($limit)               // Limit the results
+            ->get();
+
+        //    dd($courses);
+
+        $TotalCountCourses = AddCourse::count();
+        if (!empty(Auth::id())) {
+            $userId = auth()->user()->id;
+            $wishlistCourseIds = Wishlist::where('userID', $userId)->pluck('courseId')->toArray();
+            $courses->each(function ($course) use ($wishlistCourseIds) {
+                $course->inWishlist = in_array($course->id, $wishlistCourseIds);
+            });
+        }
+
+        $country = AddCourse::select('country')->distinct()->pluck('country');
+
+        // Get universities according to the selected country
+        $universitiesQuery = AddCourse::select('universityname')->distinct();
+        if (!empty($location) && $location !== 'All') {
+            $universitiesQuery->where('country', $location);
+        }
+        $univeristies = $universitiesQuery->get();
+
+        $programs = AddCourse::select('programmename')->distinct()->pluck('programmename');
+
+        $course_category = DB::table('course_category')->get();
+
+        $programname = AddCourse::select('programmename', 'universityname')->distinct()->get();
+
+        $programnames = $programname->map(function ($program) {
+            $program->programmename = addcslashes($program->programmename, '/');
+            $program->universityname = addcslashes($program->universityname, '/');
+            return $program;
         });
-    }
 
-    $country = AddCourse::select('country')->distinct()->pluck('country');
+        $totalCourses = $totalFilteredCourses;
+        $locations = AddCourse::select('location')->distinct()->pluck('location');
 
-    // Get universities according to the selected country
-    $universitiesQuery = AddCourse::select('universityname')->distinct();
-    if (!empty($location) && $location !== 'All') {
-        $universitiesQuery->where('country', $location);
-    }
-    $univeristies = $universitiesQuery->get();
+        // Calculate total pages
+        $totalPages = ceil($totalFilteredCourses / $limit);
+
+        $TotalCountCourses = AddCourse::get()->count();
+
+
+        
+
+
+     //dd($courses);
+
     
-   // dd($univeristies);
-
-    $programs = AddCourse::select('programmename')->distinct()->pluck('programmename');
-
-    $course_category = DB::table('course_category')->get();
-
-    $programname = AddCourse::select('programmename', 'universityname')->distinct()->get();
-
-    $programnames = $programname->map(function ($program) {
-        $program->programmename = addcslashes($program->programmename, '/');
-        $program->universityname = addcslashes($program->universityname, '/');
-        return $program;
-    });
-
-    $totalCourses = $courses->count();
-    $locations = AddCourse::select('location')->distinct()->pluck('location');
-
-
-    if ($request->ajax()) {
-        $htmlContent = view('courses._details', compact('courses'))->render();
-        return response()->json(['html' => $htmlContent, 'totalCourses' => $totalCourses, 'filters' => $filters]);
-    } else {
-        //   dd($courses);
-
-        return view('courses.index_search', compact('courses', 'locations', 'univeristies', 'programs', 'programnames', 'course_category', 'totalCourses', 'country', 'TotalCountCourses'))->with('fragment', 'course_details_section');
+            return view('courses.index_search', compact('courses', 'locations', 'univeristies', 'programs', 'programnames', 'course_category', 'totalCourses', 'country', 'TotalCountCourses', 'totalPages'))
+                ->with('fragment', 'course_details_section');
+        
     }
 
-  
-}
+
+
+    // public function getCoursesearch(Request $request, $location = null, $level = null, $programmename = null)
+    // {
+    //     // Retrieve query parameters from the request if not passed via route
+    //     $location = $location ?? $request->input('location');
+    //     $level = $level ?? $request->input('level');
+    //     $programmename = $programmename ?? $request->input('programmename');
+
+    //     $limit = $request->input('limit', 5); // Default to 10 results per page
+    //     $page = $request->input('page', 1);    // Default to the first page
+
+    //     $query = AddCourse::query();
+
+    //     if (!empty($location) && $location !== 'All') {
+    //         $query->where('country', $location);
+    //     }
+
+    //     if (!empty($level) && $level !== 'All') {
+    //         $query->where('level', $level);
+    //     }
+
+    //     if (!empty($programmename)) {
+    //         $query->where('title', 'like', '%' . $programmename . '%');
+    //     }
+
+    //     // Get total filtered courses count
+    //     $totalFilteredCourses = $query->count();
+
+    //     // Apply pagination
+    //     $courses = $query->skip(($page - 1) * $limit) // Offset calculation
+    //                      ->take($limit)               // Limit the results
+    //                      ->get();
+
+
+    //    //  dd($courses);                 
+
+    //     $TotalCountCourses = AddCourse::count();
+    //     if (!empty(Auth::id())) {
+    //         $userId = auth()->user()->id;
+    //         $wishlistCourseIds = Wishlist::where('userID', $userId)->pluck('courseId')->toArray();
+    //         $courses->each(function ($course) use ($wishlistCourseIds) {
+    //             $course->inWishlist = in_array($course->id, $wishlistCourseIds);
+    //         });
+    //     }
+
+    //     $country = AddCourse::select('country')->distinct()->pluck('country');
+
+    //     // Get universities according to the selected country
+    //     $universitiesQuery = AddCourse::select('universityname')->distinct();
+    //     if (!empty($location) && $location !== 'All') {
+    //         $universitiesQuery->where('country', $location);
+    //     }
+    //     $univeristies = $universitiesQuery->get();
+
+    //     $programs = AddCourse::select('programmename')->distinct()->pluck('programmename');
+
+    //     $course_category = DB::table('course_category')->get();
+
+    //     $programname = AddCourse::select('programmename', 'universityname')->distinct()->get();
+
+    //     $programnames = $programname->map(function ($program) {
+    //         $program->programmename = addcslashes($program->programmename, '/');
+    //         $program->universityname = addcslashes($program->universityname, '/');
+    //         return $program;
+    //     });
+
+    //     $totalCourses = $totalFilteredCourses;
+    //     $locations = AddCourse::select('location')->distinct()->pluck('location');
+
+    //     // Calculate total pages
+    //     $totalPages = ceil($totalFilteredCourses / $limit);
+
+    //     if ($request->ajax()) {
+    //         $htmlContent = view('courses._details', compact('courses'))->render();
+    //         return response()->json([
+    //             'html' => $htmlContent,
+    //             'totalCourses' => $totalCourses,
+    //             'totalPages' => $totalPages,
+    //             'currentPage' => $page,
+    //         ]);
+    //     } else {
+    //         return view('courses.index_search', compact('courses', 'locations', 'univeristies', 'programs', 'programnames', 'course_category', 'totalCourses', 'country', 'TotalCountCourses', 'totalPages'))
+    //             ->with('fragment', 'course_details_section');
+    //     }
+    // }
+
+
+
+
+
+    //     public function getCoursesearch(Request $request, $location = null, $level = null, $programmename = null)
+    // {
+    //     // Retrieve query parameters from the request if not passed via route
+    //     $location = $location ?? $request->input('location');
+    //     $level = $level ?? $request->input('level');
+    //     $programmename = $programmename ?? $request->input('programmename');
+
+    //     $query = AddCourse::query();
+
+    //     if (!empty($location) && $location !== 'All') {
+    //         $query->where('country', $location);
+    //     }
+
+    //     if (!empty($level) && $level !== 'All') {
+    //         $query->where('level', $level);
+    //     }
+
+    //     if (!empty($programmename)) {
+    //         $query->where('title', 'like', '%' . $programmename . '%');
+    //     }
+
+    //     // Get the results of the query
+    //     $courses = $query->get();
+
+    //     $TotalCountCourses = AddCourse::get()->count();
+    //     if (!empty(Auth::id())) {
+    //         $userId = auth()->user()->id;
+    //         $wishlistCourseIds = Wishlist::where('userID', $userId)->pluck('courseId')->toArray();
+    //         $courses->each(function ($course) use ($wishlistCourseIds) {
+    //             $course->inWishlist = in_array($course->id, $wishlistCourseIds);
+    //         });
+    //     }
+
+    //     $country = AddCourse::select('country')->distinct()->pluck('country');
+
+    //     // Get universities according to the selected country
+    //     $universitiesQuery = AddCourse::select('universityname')->distinct();
+    //     if (!empty($location) && $location !== 'All') {
+    //         $universitiesQuery->where('country', $location);
+    //     }
+    //     $univeristies = $universitiesQuery->get();
+
+    //    // dd($univeristies);
+
+    //     $programs = AddCourse::select('programmename')->distinct()->pluck('programmename');
+
+    //     $course_category = DB::table('course_category')->get();
+
+    //     $programname = AddCourse::select('programmename', 'universityname')->distinct()->get();
+
+    //     $programnames = $programname->map(function ($program) {
+    //         $program->programmename = addcslashes($program->programmename, '/');
+    //         $program->universityname = addcslashes($program->universityname, '/');
+    //         return $program;
+    //     });
+
+    //     $totalCourses = $courses->count();
+    //     $locations = AddCourse::select('location')->distinct()->pluck('location');
+
+
+    //     if ($request->ajax()) {
+    //         $htmlContent = view('courses._details', compact('courses'))->render();
+    //         return response()->json(['html' => $htmlContent, 'totalCourses' => $totalCourses, 'filters' => $filters]);
+    //     } else {
+    //         //   dd($courses);
+
+    //         return view('courses.index_search', compact('courses', 'locations', 'univeristies', 'programs', 'programnames', 'course_category', 'totalCourses', 'country', 'TotalCountCourses'))->with('fragment', 'course_details_section');
+    //     }
+
+
+    // }
 
 
 
@@ -201,8 +374,8 @@ class CourseController extends Controller
         }
         $country = AddCourse::select('country')->distinct()->pluck('country');
         $univeristies = AddCourse::select('universityname', 'country')->distinct()->get();
-        
-       // dd($univeristies);
+
+        // dd($univeristies);
 
         $programs = AddCourse::select('programmename')->distinct()->pluck('programmename');
 
@@ -274,106 +447,39 @@ class CourseController extends Controller
     }
 
 
-    // public function getFilteredDetails(Request $request)
-    // {
-
-    //     $TotalCountCourses = AddCourse::get()->count();
-    //     $deadline = $request->ApplicationDeadline;
-    //     $query = AddCourse::query();
-
-    //     // Filter by tuition fee if present
-    //     if ($request->filled('tuitionfee')) {
-    //         $tuitionFee = (int) $request->tuitionfee;
-    //         $query->where('tuitionfee', '<=', $tuitionFee);
-    //     }
-
-    //     // Process remaining filters except the special ones
-    //     $allowedFilters = ['universityname', 'studymode', 'programme', 'fieldofstudy'];
-    //     foreach ($allowedFilters as $filter) {
-    //         if ($request->filled($filter)) {
-    //             $query->where($filter, $request->input($filter));
-    //         }
-    //     }
-
-    //     // Filter by course level (multiple values)
-    //     if ($request->filled('levels')) {
-    //         $query->whereIn('level', (array) $request->levels);
-    //     }
-
-    //     // Filter by location (ensure it's an array)
-    //     if ($request->filled('location')) {
-    //         $locations = is_array($request->location) ? $request->location : [$request->location];
-    //         $query->whereIn('country', $locations);
-    //     }
-
-    //     // Handle Application Deadline filters
-    //     if ($request->filled('ApplicationDeadline')) {
-    //         $now = Carbon::now('UTC');
-    //         $karachiOffset = Carbon::now('Asia/Karachi')->offsetHours;
-
-    //         if ($deadline === 'open') {
-    //             $query->where('ApplicationDeadline', '>', $now->copy()->addHours($karachiOffset));
-    //         } elseif ($deadline === 'closed') {
-    //             $query->where('ApplicationDeadline', '<', $now->copy()->addHours($karachiOffset));
-    //         } elseif ($deadline === 'closing soon') {
-    //             $query->where('ApplicationDeadline', '>', $now->copy()->addHours($karachiOffset))
-    //                 ->where('ApplicationDeadline', '<', $now->copy()->addDays(21)->addHours($karachiOffset))
-    //                 ->where('ApplicationDeadline', '>', $now->copy()->addDay()->addHours($karachiOffset));
-    //         }
-    //     }
-
-    //     // Fetch the filtered courses
-    //     $courses = $query->get();
-    //     $totalCourses = $courses->count();
-
-    //     // Render the HTML response
-    //     $htmlContent = view('courses._details', compact('courses'))->render();
-
-    //     return response()->json([
-    //         'html' => $htmlContent,
-    //         'totalCourses' => $totalCourses,
-    //         'filters' => $request->all(),
-    //         'TotalCountCourses' => $TotalCountCourses
-    //     ]);
-    // }
-
     public function getFilteredDetails(Request $request)
     {
-        $limit = $request->input('limit', 5);  // Default to 5 results per page
-        $page = $request->input('page', 1);    // Default to page 1
-    
+        $limit = (int) $request->input('limit', 5);  // Default to 5 results per page
+        $page = (int) $request->input('page', 1);    // Default to page 1
+
         $TotalCountCourses = AddCourse::count();  // Total count of all courses
         $query = AddCourse::query();
-    
+
         // Apply filters
         if ($request->filled('tuitionfee')) {
-          //  $query->where('tuitionfee', '<=', $request->tuitionfee);
-
             $query->whereRaw('CAST(tuitionfee AS UNSIGNED) <= ?', [$request->tuitionfee]);
-
         }
 
-    
         $allowedFilters = ['universityname', 'studymode', 'programme', 'fieldofstudy'];
         foreach ($allowedFilters as $filter) {
             if ($request->filled($filter)) {
                 $query->where($filter, $request->input($filter));
             }
         }
-    
+
         if ($request->filled('levels')) {
             $query->whereIn('level', (array)$request->levels);
         }
-    
+
         if ($request->filled('location')) {
             $locations = is_array($request->location) ? $request->location : [$request->location];
             $query->whereIn('country', $locations);
         }
-    
+
         if ($request->filled('ApplicationDeadline')) {
             $now = Carbon::now('UTC');
             $karachiOffset = Carbon::now('Asia/Karachi')->offsetHours;
-    
+
             if ($request->ApplicationDeadline === 'open') {
                 $query->where('ApplicationDeadline', '>', $now->copy()->addHours($karachiOffset));
             } elseif ($request->ApplicationDeadline === 'closed') {
@@ -394,20 +500,19 @@ class CourseController extends Controller
                 $query->orderBy('title', 'desc'); // Z to A
             }
         }
-        
-    
+
         // Apply pagination
         $totalFilteredCourses = $query->count();  // Get total filtered courses count
         $courses = $query->skip(($page - 1) * $limit)  // Offset calculation
-                         ->take($limit)                // Limit the results
-                         ->get();
-    
+            ->take($limit)                // Limit the results
+            ->get();
+
         // Calculate total pages
         $totalPages = ceil($totalFilteredCourses / $limit);
-    
+
         // Render the HTML for the courses
         $htmlContent = view('courses._details', compact('courses'))->render();
-    
+
         return response()->json([
             'html' => $htmlContent,
             'totalCourses' => $totalFilteredCourses,    // Total filtered courses count
@@ -417,7 +522,7 @@ class CourseController extends Controller
             'filters' => $request->all(),
         ]);
     }
-    
+
 
 
 
@@ -452,29 +557,24 @@ class CourseController extends Controller
             return response()->json(['message' => 'Course is removed from wishlist.']);
         }
     }
-    
 
 
-public function getUniversitiesByCountry(Request $request)
-{
-    $country = $request->input('country');
 
-    // Initialize the query to fetch universities
-    $universitiesQuery = AddCourse::select('universityname')->distinct();
+    public function getUniversitiesByCountry(Request $request)
+    {
+        $country = $request->input('country');
 
-    // If a specific country is provided and it's not 'all', filter by that country
-    if (!empty($country) && $country !== 'all') {
-        $universitiesQuery->where('country', $country);
+        // Initialize the query to fetch universities
+        $universitiesQuery = AddCourse::select('universityname')->distinct();
+
+        // If a specific country is provided and it's not 'all', filter by that country
+        if (!empty($country) && $country !== 'all') {
+            $universitiesQuery->where('country', $country);
+        }
+
+        // Fetch the universities, either filtered by country or all if 'all' is specified
+        $universities = $universitiesQuery->get();
+
+        return response()->json($universities);
     }
-
-    // Fetch the universities, either filtered by country or all if 'all' is specified
-    $universities = $universitiesQuery->get();
-
-    return response()->json($universities);
-}
-
-
-
-
-
 }

@@ -116,9 +116,11 @@
 
 
 
+                
 
-                    <p id="result-count-container">
-                            Showing <span class="course_count_top"></span> {{$TotalCountCourses}} results
+
+                        <p id="result-count-container">
+                            Showing <span class="course_count_top"></span> <span class="first_results">{{$totalCourses}} of</span> {{$TotalCountCourses}} results
 
                             <br>
                             <span id="active_filters"></span>
@@ -171,24 +173,24 @@
                                 <option {{($location == request()->location)?'selected':''}} value="{{ $location }}">{{ $location }}</option>
                                 @endforeach
                             </select>
-                            
-              
+
+
                         </div>
                         <div class="oks-filter-program">
                             <label>University</label>
 
-                                      <select class="oks-university universities" name="universityname" data-attribute='universityname' id="universityname">
-    <option value="" selected>All</option>
-    @foreach ($univeristies as $university)
-        <option {{ ($university->universityname == request()->input('universityname')) ? 'selected' : '' }} value="{{ $university->universityname }}">
-            {{ $university->universityname }}
-        </option>
-    @endforeach
-</select>
+                            <select class="oks-university universities" name="universityname" data-attribute='universityname' id="universityname">
+                                <option value="" selected>All</option>
+                                @foreach ($univeristies as $university)
+                                <option {{ ($university->universityname == request()->input('universityname')) ? 'selected' : '' }} value="{{ $university->universityname }}">
+                                    {{ $university->universityname }}
+                                </option>
+                                @endforeach
+                            </select>
 
-                            
-                            
-               </div>
+
+
+                        </div>
                         <div class="oks-filter-program">
                             <label>Study Mode</label>
                             <select class="oks-university " name="studymode" data-attribute='studymode'>
@@ -300,12 +302,7 @@
 
 
             </div>
-            {{-- <div class="row">
-                <div class="col-sm-12 text-center">
-                <button id="load_more" style="display: none;" class="btn btn-primary">Load More</button>
-                 <span class="course_count"></span>
-                </div>
-            </div>  --}}
+
         </div>
 </section>
 
@@ -326,11 +323,7 @@
 
         const appliedFilters = new Set();
         let selectedLevelCount = 0;
-        // $('#oks-dis-select-a-z-course').change(function() {
-        //     // const sortDirection = $(this).val();
-        //     // sortDataInPage(sortDirection);
-        //     fetchFilteredCourses();
-        // });
+
 
         function sortDataInPage(sortDirection) {
             var items = $('#print_details').children('div')
@@ -377,24 +370,45 @@
     });
 
     // Lazy Load and Load More Button
+
+
     let coursePage = 1;
+    var totalDisplayed = 0;
+
+
+    var  TotalCountCourses = <?php echo $TotalCountCourses; ?>;
+    var  totalCourses = <?php echo $courses->count(); ?>;
+    var  totalPages = <?php echo $totalPages; ?>;
 
     function fetchCourses(page) {
         $.ajax({
-            url: '/get/courses?page=' + page,
+            url: '/get/courses/search?page=' + page,
             type: 'get',
-            beforeSend: function() {
-                $('#load_more').text('Loading...');
-            },
             success: function(response) {
-                if (response.html === '') {
-                    $('#load-more-courses').text('No more courses');
-                    return;
+                console.log(response);
+
+             
+
+                if (page === 1) {
+                    // If this is the first page, replace the content
+                    $('#filtered_courses').html(response.html);
+                    totalDisplayed = totalCourses;
+                } else {
+                    // Otherwise, append the new content
+                    $('#filtered_courses').append(response.html);
+                    totalDisplayed += totalCourses;
                 }
-                $('#filtered_courses').append(response.html);
 
+                $('.course_count').html(totalCourses + ' of ' + TotalCountCourses + ' results');
 
-                $('#load_more').text('Load More');
+                currentPage = page;
+                lastPage = currentPage >= totalPages;
+
+                if (lastPage) {
+                    $('#load_more').hide();
+                } else {
+                    $('#load_more').show();
+                }
             },
             error: function(error) {
                 console.log(error);
@@ -402,15 +416,15 @@
         });
     }
 
-    // $(document).ready(function() {
-    //     // Initial Load
-    //     fetchCourses(coursePage);
+    $(document).ready(function() {
+        // Initial Load
+        fetchCourses(coursePage);
 
-    //     $('#load-more-courses').click(function() {
-    //         coursePage++;
-    //         fetchCourses(coursePage);
-    //     });
-    // });
+        $('#load-more-courses').click(function() {
+            coursePage++;
+            fetchCourses(coursePage);
+        });
+    });
 </script>
 <style>
     .eks-login-discover {
@@ -427,17 +441,17 @@
     });
 
     var currentPage = 1;
-        var lastPage = false;
-        var totalDisplayed = 0;
-        var filters = {};
-        var sliderChanged = false;
-        var limit = 5;
+    var lastPage = false;
+    var totalDisplayed = 0;
+    var filters = {};
+    var sliderChanged = false;
+    var limit = 5;
 
-  
+
 
     function fetchFilteredCourses(page = 1, append = false) {
 
-      
+
         if (sliderChanged) {
             $('#handle_output').html('Fee = ' + $('#my_handle').val() + ' €');
         }
@@ -482,9 +496,11 @@
                     totalDisplayed = response.currentPageCount;
                 }
 
+                $('.first_results').addClass('d-none');
+
                 // Update pagination information
                 $('.course_count_top').html(response.totalCourses + ' of');
-                $('.course_count').html(response.totalCourses + ' of ' + response.TotalCountCourses + ' results');
+                $('.course_count').html(totalDisplayed + ' of ' + response.TotalCountCourses + ' results');
 
                 currentPage = page;
                 lastPage = currentPage >= response.totalPages;
@@ -544,7 +560,7 @@
         });
 
         $('#load_more').on('click', function() {
-             fetchFilteredCourses(currentPage + 1, true);
+            fetchFilteredCourses(currentPage + 1, true);
 
             //fetchFilteredCourses(true);
         });
@@ -654,8 +670,8 @@
         $('#location').change(function() {
             var currentLocation = $(this).val();
 
-           // alert(currentLocation);
-            
+            // alert(currentLocation);
+
             // Clear the universities dropdown
             $(".universities").html("<option value='' selected>All</option>");
 
@@ -670,8 +686,8 @@
                     },
                     success: function(data) {
                         // Append the universities to the dropdown
-                        
-                        
+
+
                         data.forEach(function(item) {
                             $("#universityname").append("<option value='" + item.universityname + "'>" + item.universityname + "</option>");
                         });
