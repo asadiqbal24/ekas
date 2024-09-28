@@ -41,7 +41,7 @@ class CourseController extends Controller
         // Get total filtered courses count
         $totalFilteredCourses = $query->count();
 
-          //  dd($totalFilteredCourses);
+        //  dd($totalFilteredCourses);
 
         // Apply pagination
         $courses = $query->skip(($page - 1) * $limit) // Offset calculation
@@ -89,15 +89,14 @@ class CourseController extends Controller
         $TotalCountCourses = AddCourse::get()->count();
 
 
-        
 
 
-     //dd($courses);
 
-    
-            return view('courses.index_search', compact('courses', 'locations', 'univeristies', 'programs', 'programnames', 'course_category', 'totalCourses', 'country', 'TotalCountCourses', 'totalPages'))
-                ->with('fragment', 'course_details_section');
-        
+        //dd($courses);
+
+
+        return view('courses.index_search', compact('courses', 'locations', 'univeristies', 'programs', 'programnames', 'course_category', 'totalCourses', 'country', 'TotalCountCourses', 'totalPages'))
+            ->with('fragment', 'course_details_section');
     }
 
 
@@ -460,12 +459,26 @@ class CourseController extends Controller
             $query->whereRaw('CAST(tuitionfee AS UNSIGNED) <= ?', [$request->tuitionfee]);
         }
 
+        // $allowedFilters = ['universityname', 'studymode', 'programme', 'fieldofstudy'];
+        // foreach ($allowedFilters as $filter) {
+        //     if ($request->filled($filter)) {
+        //         $query->where($filter, $request->input($filter));
+        //     }
+        // }
+
         $allowedFilters = ['universityname', 'studymode', 'programme', 'fieldofstudy'];
+
         foreach ($allowedFilters as $filter) {
             if ($request->filled($filter)) {
-                $query->where($filter, $request->input($filter));
+                if ($filter === 'fieldofstudy') {
+                    // Use LIKE for fieldofstudy to allow partial matches
+                    $query->where($filter, 'LIKE', '%' . $request->input($filter) . '%');
+                } else {
+                    $query->where($filter, $request->input($filter));
+                }
             }
         }
+
 
         if ($request->filled('levels')) {
             $query->whereIn('level', (array)$request->levels);

@@ -553,7 +553,10 @@
                                                 </button>
                                             </div>
                                         </div>
+                                        <div id="course-available">
                                         @include('courses._details')
+                                        </div>
+                                       
                                         <div class="support tab-content">
                                             <div class="row">
                                                 <div class="col-sm-4">
@@ -1405,6 +1408,7 @@
         $('#oks-dashboard-tab4').removeClass('active');
 
         $('.notificationtab').addClass('d-none');
+        $('#course-available').addClass('d-none');
 
     })
     $('#oks-dashboard-tab1').on('click', function() {
@@ -1414,6 +1418,7 @@
         $('#oks-dashboard-tab4').removeClass('active');
 
         $('.notificationtab').addClass('d-none');
+        $('#course-available').removeClass('d-none');
 
     })
     $('#oks-dashboard-tab3').on('click', function() {
@@ -1429,6 +1434,7 @@
         $('#oks-dashboard-tab4').removeClass('active');
 
         $('.notificationtab').addClass('d-none');
+        $('#course-available').addClass('d-none');
 
 
     })
@@ -1443,6 +1449,7 @@
         $('#oks-dashboard-tab2').removeClass('active');
         $('#oks-dashboard-tab1').removeClass('active');
         $('#oks-dashboard-tab3').removeClass('active');
+        $('#course-available').addClass('d-none');
         $('#toggle-div').hide();
 
 

@@ -65,7 +65,10 @@ class DocumentCheckerController extends Controller
         try {
             // Set Stripe secret key and create a customer
 
-            $stripeSecretKey = env('STRIPE_SECRET');
+            //$stripeSecretKey = env('STRIPE_SECRET');
+    $stripeSecretKey ="sk_test_51PZx7wRqr2H0WfyWzyA7WXx75Z5z44aFwuaz44OApk8btzGrLJLridjJl7bKbBduqu0RAsgiicS03TW65ZaYNEIw00gwsHHbcv";
+
+
             if (empty($stripeSecretKey)) {
                 throw new \Exception('Stripe API key not set.');
             }
@@ -88,7 +91,6 @@ class DocumentCheckerController extends Controller
 
             // Validate file uploads
             // $request->validate([
-            //     'updated_cv' => 'nullable|mimes:pdf,doc,docx',
             //     'visa_application_form' => 'nullable|mimes:pdf,doc,docx',
             //     'passport' => 'nullable|mimes:pdf,doc,docx',
             //     'masters_degree' => 'nullable|mimes:pdf,doc,docx',
@@ -181,13 +183,32 @@ class DocumentCheckerController extends Controller
 
 
 
-    private function storeFile($file, $directory)
+    // private function storeFile($file, $directory)
+    // {
+    //     $filenameWithExt = $file->getClientOriginalName();
+    //     $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+    //     $extension = $file->getClientOriginalExtension();
+    //     $fileNameToStore = $filename . '-' . time() . '.' . $extension;
+    //     $path = $file->storeAs('public/' . $directory, $fileNameToStore);
+    //     return $fileNameToStore;
+    // }
+    
+    protected function storeFile($file, $directory)
     {
-        $filenameWithExt = $file->getClientOriginalName();
-        $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
-        $extension = $file->getClientOriginalExtension();
-        $fileNameToStore = $filename . '-' . time() . '.' . $extension;
-        $path = $file->storeAs('public/' . $directory, $fileNameToStore);
-        return $fileNameToStore;
+        // Define the storage path
+        $path = public_path($directory);
+    
+        // Get the original filename
+        $originalName = $file->getClientOriginalName();
+        
+        // Generate a unique filename
+        $filename = time() . '_' . pathinfo($originalName, PATHINFO_FILENAME) . '.' . $file->getClientOriginalExtension();
+    
+        // Move the uploaded file to the desired location
+        $file->move($path, $filename);
+    
+        // Return just the filename
+        return $filename;
     }
+    
 }

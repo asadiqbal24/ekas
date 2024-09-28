@@ -564,19 +564,19 @@ $('#my_handle').on('input change', function() {
 
 
 
-<script>
+<!-- <script>
     $(document).on('click', '.addToWishlist', function(e) {
         e.preventDefault(); // Prevent any default behavior (though not required for buttons)
 
         var btn = $(this);
-        var heartIcon = btn.find('i'); // Find the <i> inside the button
-        var courseId = btn.attr('id'); // Get the course ID from the button
+        var heartIcon = btn.find('i'); 
+        var courseId = btn.attr('id');
 
-       // alert(courseId); // Debug to ensure the ID is correct
+        alert(courseId); 
 
         $.ajax({
             type: "POST",
-            url: "/add/to/wishlist/" + courseId,
+            url: "add/to/wishlist/" + courseId,
             success: function(response) {
 
               //  console.log(response);
@@ -590,11 +590,51 @@ $('#my_handle').on('input change', function() {
             }
         });
     });
+</script> -->
+
+<script>
+    // Set up CSRF token globally
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    $(document).on('click', '.addToWishlist', function(e) {
+        e.preventDefault(); // Prevent default behavior (though not required for buttons)
+
+        var btn = $(this);
+        var heartIcon = btn.find('i');
+        var courseId = btn.attr('id');
+
+        alert(courseId);
+
+        $.ajax({
+            type: "POST",
+            url: "add/to/wishlist/" + courseId,
+            success: function(response) {
+                showSuccessToast(response.message);
+                // Toggle the classes
+                btn.removeClass("addToWishlist").addClass("removeFromWishlist");
+                heartIcon.removeClass('far fa-heart').addClass('fa-solid fa-heart');
+            },
+            error: function(error) {
+                showErrorToast(error.responseJSON.message);
+            }
+        });
+    });
 </script>
 
 
 
+
 <script>
+
+$.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
     $(document).on('click', '.removeFromWishlist', function(e) {
         e.preventDefault(); 
 
